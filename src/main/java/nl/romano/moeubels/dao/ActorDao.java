@@ -33,5 +33,6 @@ public class ActorDao implements Dao<Actor> {
     public void delete(UUID uuid) throws ResourceNotFoundException {
         Actor actor = this.actorRepository.findById(uuid)
                 .orElseThrow(() -> new ResourceNotFoundException("Actor with uuid: " + uuid + " not found"));
+        actorRepository.delete(actor);
     }
 }

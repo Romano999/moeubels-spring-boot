@@ -21,7 +21,7 @@ import java.util.UUID;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Actor {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "actor_id", nullable = false)
     @JsonProperty("actorId")
     private UUID actorId;
@@ -38,9 +38,9 @@ public class Actor {
     @JsonProperty("lastName")
     private String lastName;
     @Column(name = "created_at", nullable = false)
-    @JsonProperty("created_at")
+    @JsonProperty("createdAt")
     private ZonedDateTime createdAt;
     @Column(name = "modified_at", nullable = false)
-    @JsonProperty("modified_at")
+    @JsonProperty("modifiedAt")
     private ZonedDateTime modifiedAt;
 }

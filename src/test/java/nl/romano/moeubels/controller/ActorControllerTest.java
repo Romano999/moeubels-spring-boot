@@ -77,7 +77,8 @@ class ActorControllerTest {
         testActor.setCreatedAt(ZonedDateTime.now());
         testActor.setModifiedAt(ZonedDateTime.now());
 
-        this.mvc.perform(MockMvcRequestBuilders.put("/actors").secure(true).content(asJsonString(testActor)))
+        this.mvc.perform(MockMvcRequestBuilders.put("/actors")
+                .secure(true).content(asJsonString(testActor)).contentType("application/json"))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
@@ -85,7 +86,8 @@ class ActorControllerTest {
     void update() throws Exception {
         Actor testActor = this.actor;
 
-        this.mvc.perform(MockMvcRequestBuilders.post("/actors").secure(true))
+        this.mvc.perform(MockMvcRequestBuilders.post("/actors")
+                .secure(true).content(asJsonString(testActor)).contentType("application/json"))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
