@@ -1,9 +1,10 @@
 package nl.romano.moeubels.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
+import lombok.extern.jackson.Jacksonized;
 import org.json.JSONObject;
 
 import javax.persistence.*;
@@ -13,24 +14,33 @@ import java.util.UUID;
 @Entity
 @Table(name= "actor")
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor(force = true)
 @Builder
+@Jacksonized
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Actor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "actor_id", nullable = false)
+    @JsonProperty("actorId")
     private UUID actorId;
     @Column(name = "username", nullable = false)
+    @JsonProperty("username")
     private String username;
     @Column(name = "password", nullable = false)
+    @JsonProperty("password")
     private String password;
     @Column(name = "first_name", nullable = false)
+    @JsonProperty("firstName")
     private String firstName;
     @Column(name = "last_name", nullable = false)
+    @JsonProperty("lastName")
     private String lastName;
     @Column(name = "created_at", nullable = false)
+    @JsonProperty("created_at")
     private ZonedDateTime createdAt;
     @Column(name = "modified_at", nullable = false)
+    @JsonProperty("modified_at")
     private ZonedDateTime modifiedAt;
 }
