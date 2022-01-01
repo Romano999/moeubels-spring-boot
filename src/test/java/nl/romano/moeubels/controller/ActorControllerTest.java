@@ -60,7 +60,7 @@ class ActorControllerTest {
     void getById() throws Exception {
         Actor testActor = this.actor;
         UUID actorId = testActor.getActorId();
-        String actorJsonString = new JSONObject(testActor).toString();
+        //String actorJsonString = new JSONObject(testActor).toString();
         String requestPath = String.format("/actors/%s", actorId.toString());
 
         given(actorDao.getById(actorId)).willReturn(Optional.of(testActor));
@@ -68,7 +68,7 @@ class ActorControllerTest {
         this.mvc.perform(MockMvcRequestBuilders
                 .get(requestPath).secure(true))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().json(actorJsonString));
+                .andExpect(MockMvcResultMatchers.content().json(asJsonString(testActor)));
     }
 
     @Test
