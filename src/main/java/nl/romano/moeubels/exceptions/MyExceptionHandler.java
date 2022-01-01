@@ -16,16 +16,16 @@ public class MyExceptionHandler extends ResponseEntityExceptionHandler{
 
     @ExceptionHandler(ActorNotFoundException.class)
     public ResponseEntity<String> handleActorNotFoundException() {
-        return Responses.jsonNotFoundResponseEntityWithMessage("");
+        return Responses.jsonNotFoundResponseEntityWithMessage("Actor not found.");
     }
 
     @ExceptionHandler(CategoryNotFoundException.class)
     public ResponseEntity<String> handleCategoryNotFoundException() {
-        return Responses.jsonNotFoundResponseEntityWithMessage("");
+        return Responses.jsonNotFoundResponseEntityWithMessage("Category not found.");
     }
 
     @ExceptionHandler(ProductNotFoundException.class)
     public ResponseEntity<String> handleProductNotFoundException() {
-        return Responses.jsonNotFoundResponseEntityWithMessage("");
+        return Responses.jsonNotFoundResponseEntityWithMessage("Product not found.");
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -24,9 +25,16 @@ public class ProductController implements CrudOperations<Product> {
         return Responses.ResponseEntityOk(products);
     }
 
+    @GetMapping("/{searchTerm}/{page}")
+    public ResponseEntity<Page<Product>> getByName(@PathVariable String searchTerm,
+                                                   @PathVariable int page) {
+        Page<Product> products = productDao.getByName(searchTerm, Pageable.ofSize(5).withPage(page));
+        return Responses.ResponseEntityOk(products);
+    }
+
     @Override
     @GetMapping("/{uuid}")
-    public ResponseEntity<?> getById(@PathVariable UUID uuid) throws ResourceNotFoundException {
+    public ResponseEntity<Product> getById(@PathVariable UUID uuid) throws ResourceNotFoundException {
         Product product = productDao.getById(uuid)
                 .orElseThrow(() -> new ProductNotFoundException("Product with id: " + uuid + "not found"));
         return Responses.ResponseEntityOk(product);

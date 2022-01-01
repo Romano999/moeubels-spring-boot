@@ -21,6 +21,10 @@ public class ProductDao implements Dao<Product> {
         return productRepository.findAll(pageable);
     }
 
+    public Page<Product> getByName(String searchTerm, Pageable pageable) {
+        return productRepository.getByName(searchTerm, pageable);
+    }
+
     @Override
     public Optional<Product> getById(UUID uuid) {
         return productRepository.findById(uuid);
