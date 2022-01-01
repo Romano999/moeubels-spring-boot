@@ -1,12 +1,12 @@
 package nl.romano.moeubels.controller;
 import nl.romano.moeubels.dao.ActorDao;
+import nl.romano.moeubels.exceptions.ActorNotFoundException;
 import nl.romano.moeubels.exceptions.ResourceNotFoundException;
 import nl.romano.moeubels.model.Actor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -17,9 +17,9 @@ public class ActorController implements CrudOperations<Actor> {
 
     @Override
     @GetMapping("/{uuid}")
-    public ResponseEntity<?> getById(@PathVariable(value = "uuid") UUID uuid) throws Exception {
+    public ResponseEntity<?> getById(@PathVariable(value = "uuid") UUID uuid) throws ResourceNotFoundException {
         Actor actor = actorDao.getById(uuid)
-                .orElseThrow(() -> new ResourceNotFoundException("Actor with uuid: " + uuid + " not found"));
+                .orElseThrow(() -> new ActorNotFoundException("Actor with uuid: " + uuid + " not found"));
         return Responses.ResponseEntityOk(actor);
     }
 
@@ -39,7 +39,7 @@ public class ActorController implements CrudOperations<Actor> {
 
     @Override
     @DeleteMapping("/{uuid}")
-    public ResponseEntity<?> delete(@PathVariable UUID uuid) throws Exception {
+    public ResponseEntity<?> delete(@PathVariable UUID uuid) throws ResourceNotFoundException {
         actorDao.delete(uuid);
         return Responses.jsonOkResponseEntity();
     }

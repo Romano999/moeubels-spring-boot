@@ -1,6 +1,7 @@
 package nl.romano.moeubels.controller;
 
 import nl.romano.moeubels.dao.CategoryDao;
+import nl.romano.moeubels.exceptions.CategoryNotFoundException;
 import nl.romano.moeubels.exceptions.ResourceNotFoundException;
 import nl.romano.moeubels.model.Category;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +26,9 @@ public class CategoryController implements CrudOperations<Category> {
 
     @Override
     @GetMapping("/{uuid}")
-    public ResponseEntity<?> getById(@PathVariable UUID uuid) throws Exception {
+    public ResponseEntity<?> getById(@PathVariable UUID uuid) throws ResourceNotFoundException {
         Category category = categoryDao.getById(uuid)
-                .orElseThrow(() -> new ResourceNotFoundException("Category with id: " + uuid + "not found"));
+                .orElseThrow(() -> new CategoryNotFoundException("Category with id: " + uuid + "not found"));
         return Responses.ResponseEntityOk(category);
     }
 
@@ -47,7 +48,7 @@ public class CategoryController implements CrudOperations<Category> {
 
     @Override
     @DeleteMapping("/{uuid}")
-    public ResponseEntity<?> delete(@PathVariable UUID uuid) throws Exception {
+    public ResponseEntity<?> delete(@PathVariable UUID uuid) throws ResourceNotFoundException {
         categoryDao.delete(uuid);
         return Responses.jsonOkResponseEntity();
     }

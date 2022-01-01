@@ -29,6 +29,18 @@ public class Responses {
         );
     }
 
+    public static ResponseEntity<String> jsonNotFoundResponseEntityWithMessage(String message) {
+        JSONObject status = new JSONObject();
+        status.put("status" , "404");
+        status.put("message", message);
+
+        return new ResponseEntity<String>(
+                status.toString(),
+                new HttpHeaders(),
+                HttpStatus.NOT_FOUND
+        );
+    }
+
     public static <T> ResponseEntity<T> ResponseEntityOk(T response) {
         return new ResponseEntity<T>(
                 response,

@@ -11,5 +11,5 @@ public interface Dao<T> {
     Optional<T> getById(UUID uuid);
     void save(T t);
     void update(T t);
-    void delete(UUID uuid) throws ResourceNotFoundException ;
+    void delete(UUID uuid) throws ResourceNotFoundException;
 }
