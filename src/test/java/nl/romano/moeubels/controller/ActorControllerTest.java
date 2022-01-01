@@ -24,15 +24,11 @@ import static org.mockito.BDDMockito.given;
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(ActorController.class)
 class ActorControllerTest {
-
     @Autowired
     private WebApplicationContext webApplicationContext;
-
     @MockBean
     private ActorDao actorDao;
-
     private MockMvc mvc;
-
     private Actor actor;
 
     @BeforeEach

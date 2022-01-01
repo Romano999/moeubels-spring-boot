@@ -26,15 +26,11 @@ import static org.mockito.BDDMockito.given;
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(CategoryController.class)
 class CategoryControllerTest {
-
     @Autowired
     private WebApplicationContext webApplicationContext;
-
     @MockBean
     private CategoryDao categoryDao;
-
     private MockMvc mvc;
-
     private Category category;
 
     @BeforeEach()
