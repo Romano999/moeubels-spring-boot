@@ -1,5 +1,6 @@
 package nl.romano.moeubels.dao;
 
+import nl.romano.moeubels.exceptions.ActorNotFoundException;
 import nl.romano.moeubels.exceptions.ResourceNotFoundException;
 import nl.romano.moeubels.model.Actor;
 import nl.romano.moeubels.repository.ActorRepository;
@@ -32,7 +33,7 @@ public class ActorDao implements Dao<Actor> {
     @Override
     public void delete(UUID uuid) throws ResourceNotFoundException {
         Actor actor = this.actorRepository.findById(uuid)
-                .orElseThrow(() -> new ResourceNotFoundException("Actor with uuid: " + uuid + " not found"));
+                .orElseThrow(() -> new ActorNotFoundException("Actor with uuid: " + uuid + " not found"));
         actorRepository.delete(actor);
     }
 }

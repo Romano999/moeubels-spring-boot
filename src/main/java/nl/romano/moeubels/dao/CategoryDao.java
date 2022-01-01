@@ -1,5 +1,6 @@
 package nl.romano.moeubels.dao;
 
+import nl.romano.moeubels.exceptions.CategoryNotFoundException;
 import nl.romano.moeubels.exceptions.ResourceNotFoundException;
 import nl.romano.moeubels.model.Category;
 import nl.romano.moeubels.repository.CategoryRepository;
@@ -36,7 +37,7 @@ public class CategoryDao implements Dao<Category> {
     @Override
     public void delete(UUID uuid) throws ResourceNotFoundException {
         Category category = categoryRepository.findById(uuid)
-                .orElseThrow(() -> new ResourceNotFoundException("Category with id: " + uuid + "not found"));
+                .orElseThrow(() -> new CategoryNotFoundException("Category with id: " + uuid + "not found"));
         categoryRepository.delete(category);
     }
 }
