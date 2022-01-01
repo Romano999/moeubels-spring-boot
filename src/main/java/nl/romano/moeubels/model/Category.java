@@ -14,7 +14,7 @@ import java.time.ZonedDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name= "actor")
+@Table(name="category")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor(force = true)

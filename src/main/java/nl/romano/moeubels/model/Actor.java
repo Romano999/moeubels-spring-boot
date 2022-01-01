@@ -13,7 +13,7 @@ import java.time.ZonedDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name= "actor")
+@Table(name="actor")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor(force = true)
