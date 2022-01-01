@@ -26,7 +26,7 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "category_id", nullable = false)
     @JsonProperty("categoryId")
-    @OneToOne(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "category_id", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private UUID categoryId;
     @Column(name = "category_name", nullable = false)
     @JsonProperty("category_name")

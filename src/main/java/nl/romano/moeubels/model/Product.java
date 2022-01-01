@@ -27,6 +27,7 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "product_id", nullable = false)
     @JsonProperty("productId")
+    @OneToOne(mappedBy = "product_id", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private UUID productId;
     @Column(name = "product_name", nullable = false, unique = true)
     @JsonProperty("productName")
