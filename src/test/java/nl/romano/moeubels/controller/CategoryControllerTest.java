@@ -2,8 +2,9 @@ package nl.romano.moeubels.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import nl.romano.moeubels.dao.ActorDao;
+import nl.romano.moeubels.dao.CategoryDao;
 import nl.romano.moeubels.model.Actor;
+import nl.romano.moeubels.model.Category;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,76 +20,81 @@ import org.springframework.web.context.WebApplicationContext;
 import java.time.ZonedDateTime;
 import java.util.Optional;
 import java.util.UUID;
+
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(ActorController.class)
-class ActorControllerTest {
+@WebMvcTest(CategoryController.class)
+class CategoryControllerTest {
 
     @Autowired
     private WebApplicationContext webApplicationContext;
 
     @MockBean
-    private ActorDao actorDao;
+    private CategoryDao categoryDao;
 
     private MockMvc mvc;
 
-    private Actor actor;
+    private Category category;
 
-    @BeforeEach
-    void setUp() {
+    @BeforeEach()
+    void setup() {
         this.mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-        this.actor = Actor.builder()
-                .actorId(UUID.randomUUID())
-                .username("JohnDoe")
-                .password("password")
-                .firstName("John")
-                .lastName("Doe")
+        this.category = Category.builder()
+                .categoryId(UUID.randomUUID())
+                .categoryName("Name")
+                .categoryDescription("Description")
                 .createdAt(ZonedDateTime.now())
                 .modifiedAt(ZonedDateTime.now())
                 .build();
     }
 
     @Test
-    void getById() throws Exception {
-        Actor testActor = this.actor;
-        UUID actorId = testActor.getActorId();
-        //String actorJsonString = new JSONObject(testActor).toString();
-        String requestPath = String.format("/actors/%s", actorId.toString());
+    void getAll() {
+        //Category testCategory = this.category;
 
-        given(actorDao.getById(actorId)).willReturn(Optional.of(testActor));
+    }
+
+    @Test
+    void getById() throws Exception {
+        Category testCategory = this.category;
+        UUID categoryId = testCategory.getCategoryId();
+        //String actorJsonString = new JSONObject(testActor).toString();
+        String requestPath = String.format("/categories/%s", categoryId.toString());
+
+        given(categoryDao.getById(categoryId)).willReturn(Optional.of(testCategory));
 
         this.mvc.perform(MockMvcRequestBuilders
                 .get(requestPath).secure(true))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().json(asJsonString(testActor)));
+                .andExpect(MockMvcResultMatchers.content().json(asJsonString(testCategory)));
     }
 
     @Test
-    void create() throws Exception{
-        Actor testActor = this.actor;
+    void create() throws Exception {
+        Category testCategory = this.category;
 
-        this.mvc.perform(MockMvcRequestBuilders.put("/actors")
-                .secure(true).content(asJsonString(testActor)).contentType("application/json"))
+        this.mvc.perform(MockMvcRequestBuilders.put("/categories")
+                .secure(true).content(asJsonString(testCategory)).contentType("application/json"))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test
     void update() throws Exception {
-        Actor testActor = this.actor;
+        Category testCategory = this.category;
 
-        this.mvc.perform(MockMvcRequestBuilders.post("/actors")
-                .secure(true).content(asJsonString(testActor)).contentType("application/json"))
+        this.mvc.perform(MockMvcRequestBuilders.post("/categories")
+                .secure(true).content(asJsonString(testCategory)).contentType("application/json"))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test
     void delete() throws Exception {
-        Actor testActor = this.actor;
-        UUID actorId = testActor.getActorId();
-        String requestPath = String.format("/actors/%s", actorId.toString());
+        Category testCategory = this.category;
+        UUID categoryId = testCategory.getCategoryId();
+        String requestPath = String.format("/categories/%s", categoryId.toString());
 
-        this.mvc.perform(MockMvcRequestBuilders.delete(requestPath, testActor).secure(true))
+        this.mvc.perform(MockMvcRequestBuilders.delete(requestPath, testCategory).secure(true))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
