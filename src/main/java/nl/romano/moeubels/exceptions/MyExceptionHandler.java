@@ -28,4 +28,9 @@ public class MyExceptionHandler extends ResponseEntityExceptionHandler{
     public ResponseEntity<String> handleProductNotFoundException() {
         return Responses.jsonNotFoundResponseEntityWithMessage("Product not found.");
     }
+
+    @ExceptionHandler(ReviewNotFoundException.class)
+    public ResponseEntity<String> handleReviewNotFoundException() {
+        return Responses.jsonNotFoundResponseEntityWithMessage("Review not found.");
+    }
 }

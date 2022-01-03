@@ -25,6 +25,7 @@ public class Actor {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "actor_id", nullable = false)
     @JsonProperty("actorId")
+    @OneToOne(mappedBy = "actor_id", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private UUID actorId;
     @Column(name = "username", nullable = false)
     @JsonProperty("username")
