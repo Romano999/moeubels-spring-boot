@@ -47,7 +47,6 @@ public class ProductControllerTest {
                 .productDescription("Description")
                 .imagePath("ImagePath")
                 .isOnSale(false)
-                .categoryId(UUID.randomUUID())
                 .createdAt(ZonedDateTime.now())
                 .modifiedAt(ZonedDateTime.now())
                 .build();
@@ -93,7 +92,7 @@ public class ProductControllerTest {
     @Test
     void delete() throws Exception {
         Product testProduct = this.product;
-        UUID productId = testProduct.getCategoryId();
+        UUID productId = testProduct.getProductId();
         String requestPath = String.format("/products/%s", productId.toString());
 
         this.mvc.perform(MockMvcRequestBuilders.delete(requestPath, testProduct).secure(true))
