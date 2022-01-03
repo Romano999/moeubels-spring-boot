@@ -23,6 +23,12 @@ import java.util.UUID;
 @Jacksonized
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Product {
+    @OneToOne()
+    @JoinColumn(name = "category_id")
+    @JsonProperty("category")
+    private Category category;
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "product_id", nullable = false)
@@ -44,10 +50,6 @@ public class Product {
     @Column(name = "is_on_sale")
     @JsonProperty("isOnSale")
     private Boolean isOnSale;
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id")
-    @JsonProperty("categoryId")
-    private UUID categoryId;
     @Column(name = "created_at", nullable = false)
     @JsonProperty("createdAt")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
