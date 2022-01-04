@@ -1,15 +1,18 @@
 package nl.romano.moeubels.controller;
 
-import org.json.JSONObject;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 public class Responses {
     private static String jsonStatus(String status) {
-        JSONObject json = new JSONObject();
-        json.put("status", status);
-        return json.toString();
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode node = mapper.createObjectNode();
+        node.put("status", status);
+
+        return node.toString();
     }
 
     public static ResponseEntity<String> jsonOkResponseEntity() {
@@ -30,7 +33,9 @@ public class Responses {
     }
 
     public static ResponseEntity<String> jsonNotFoundResponseEntityWithMessage(String message) {
-        JSONObject status = new JSONObject();
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode status = mapper.createObjectNode();
+
         status.put("status" , "404");
         status.put("message", message);
 
