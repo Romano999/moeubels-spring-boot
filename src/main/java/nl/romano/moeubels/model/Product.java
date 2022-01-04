@@ -12,6 +12,7 @@ import lombok.extern.jackson.Jacksonized;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -21,19 +22,17 @@ import java.util.UUID;
 @NoArgsConstructor(force = true)
 @Builder
 @Jacksonized
-@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+//@JsonIgnoreProperties(ignoreUnknown = true)
 public class Product {
     @OneToOne()
     @JoinColumn(name = "category_id")
     @JsonProperty("category")
     private Category category;
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "product_id", nullable = false)
     @JsonProperty("productId")
-    @OneToOne(mappedBy = "product_id", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private UUID productId;
     @Column(name = "product_name", nullable = false, unique = true)
     @JsonProperty("productName")

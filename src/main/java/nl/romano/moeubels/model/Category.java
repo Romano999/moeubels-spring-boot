@@ -22,7 +22,8 @@ import java.util.UUID;
 @NoArgsConstructor(force = true)
 @Builder
 @Jacksonized
-@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+//@JsonIgnoreProperties(ignoreUnknown = true)
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,10 +31,10 @@ public class Category {
     @JsonProperty("categoryId")
     private UUID categoryId;
     @Column(name = "category_name", nullable = false)
-    @JsonProperty("category_name")
+    @JsonProperty("categoryName")
     private String categoryName;
     @Column(name = "category_description", nullable = false)
-    @JsonProperty("category_description")
+    @JsonProperty("categoryDescription")
     private String categoryDescription;
     @Column(name = "created_at", nullable = false)
     @JsonProperty("createdAt")
