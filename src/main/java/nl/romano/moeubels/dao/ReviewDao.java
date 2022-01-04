@@ -32,7 +32,8 @@ public class ReviewDao implements Dao<Review> {
 
     @Override
     public void delete(UUID uuid) throws ResourceNotFoundException {
-        reviewRespository.findById(uuid)
+        Review review = reviewRespository.findById(uuid)
                 .orElseThrow(() -> new ReviewNotFoundException("Review with id: " + uuid + "not found"));
+        reviewRespository.delete(review);
     }
 }

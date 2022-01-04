@@ -37,8 +37,8 @@ public class ReviewController implements CrudOperations<Review> {
     }
 
     @Override
-    @DeleteMapping("/{}")
-    public ResponseEntity<?> delete(UUID uuid) throws ResourceNotFoundException {
+    @DeleteMapping("/{uuid}")
+    public ResponseEntity<?> delete(@PathVariable UUID uuid) throws ResourceNotFoundException {
         return Responses.jsonOkResponseEntity();
     }
 }

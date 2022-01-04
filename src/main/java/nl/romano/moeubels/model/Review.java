@@ -14,26 +14,33 @@ import java.time.ZonedDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name= "product")
+@Table(name= "review")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor(force = true)
 @Builder
 @Jacksonized
-@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+//@JsonIgnoreProperties(ignoreUnknown = true)
 public class Review {
-    @OneToOne(fetch = FetchType.LAZY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "review_id", nullable = false)
+    @JsonProperty("reviewId")
+    private UUID reviewId;
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "actor_id")
-    @Column(name = "actor_id", nullable = false)
-    @JsonProperty("actorId")
-    private UUID actorId;
-    @OneToOne(fetch = FetchType.LAZY)
+    @JsonProperty("actor")
+    private Actor actor;
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
-    @Column(name = "product_id", nullable = false)
-    @JsonProperty("productId")
-    private UUID productId;
-    @Column(name = "created_at", nullable = false)
-    @JsonProperty("createdAt")
+    @JsonProperty("product")
+    private Product product;
+    @Column(name = "added_at", nullable = false)
+    @JsonProperty("addedAt")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
-    private ZonedDateTime createdAt;
+    private ZonedDateTime addedAt;
+    @Column(name = "rating", nullable = false)
+    @JsonProperty("rating")
+    private int rating;
 }

@@ -6,9 +6,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import lombok.extern.jackson.Jacksonized;
-import org.json.JSONObject;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.UUID;
 
@@ -19,13 +19,14 @@ import java.util.UUID;
 @NoArgsConstructor(force = true)
 @Builder
 @Jacksonized
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class Actor {
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+//@JsonIgnoreProperties(ignoreUnknown = true)
+public class Actor implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "actor_id", nullable = false)
     @JsonProperty("actorId")
-    @OneToOne(mappedBy = "actor_id", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    //@OneToOne(mappedBy = "actor_id", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private UUID actorId;
     @Column(name = "username", nullable = false)
     @JsonProperty("username")

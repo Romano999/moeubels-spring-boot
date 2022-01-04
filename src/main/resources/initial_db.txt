@@ -52,6 +52,7 @@ CREATE TABLE IF NOT EXISTS favourite (
 
 
 CREATE TABLE IF NOT EXISTS review (
+	review_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
 	actor_id UUID NOT NULL,
 	product_id UUID NOT NULL,
 	added_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
@@ -95,3 +96,15 @@ INSERT INTO actor(actor_id, username, password, first_name, last_name, created_a
 INSERT INTO shopping_cart(actor_id, product_id, added_at) VALUES ((SELECT actor_id FROM actor WHERE username = 'JohnDoe'), (SELECT product_id FROM product WHERE product_name = 'Simple chair'), DEFAULT);
 
 INSERT INTO favourite(actor_id, product_id, added_at) VALUES ((SELECT actor_id FROM actor WHERE username = 'JohnDoe'), (SELECT product_id FROM product WHERE product_name = 'Fabric couch'), DEFAULT);
+
+
+-- Reviews
+INSERT INTO review(review_id, actor_id, product_id, added_at, rating) VALUES (DEFAULT, (SELECT actor_id FROM actor WHERE username = 'JohnDoe'), (SELECT product_id FROM product WHERE product_name = 'Simple chair'), DEFAULT, 5);
+
+INSERT INTO review(review_id, actor_id, product_id, added_at, rating) VALUES (DEFAULT, (SELECT actor_id FROM actor WHERE username = 'JohnDoe'), (SELECT product_id FROM product WHERE product_name = 'Wooden round table'), DEFAULT, 3);
+
+INSERT INTO review(review_id, actor_id, product_id, added_at, rating) VALUES (DEFAULT, (SELECT actor_id FROM actor WHERE username = 'JohnDoe'), (SELECT product_id FROM product WHERE product_name = 'Long couch'), DEFAULT, 4);
+
+INSERT INTO review(review_id, actor_id, product_id, added_at, rating) VALUES (DEFAULT, (SELECT actor_id FROM actor WHERE username = 'JohnDoe'), (SELECT product_id FROM product WHERE product_name = 'Fabric couch'), DEFAULT, 2);
+
+INSERT INTO review(review_id, actor_id, product_id, added_at, rating) VALUES (DEFAULT, (SELECT actor_id FROM actor WHERE username = 'JohnDoe'), (SELECT product_id FROM product WHERE product_name = 'Deluxe chair'), DEFAULT, 5);
