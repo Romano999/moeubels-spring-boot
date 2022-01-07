@@ -42,7 +42,7 @@ public class CategoryController implements CrudOperations<Category> {
     @Override
     @PutMapping()
     public ResponseEntity<String> update(@RequestBody Category category) {
-        categoryDao.save(category);
+        categoryDao.update(category);
         return Responses.jsonOkResponseEntity();
     }
 

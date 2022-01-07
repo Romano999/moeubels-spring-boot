@@ -40,6 +40,9 @@ public class Product {
     @Column(name = "product_description", nullable = false)
     @JsonProperty("productDescription")
     private String productDescription;
+    @Column(name = "amount_available", nullable = false)
+    @JsonProperty("amountAvailable")
+    private int amountAvailable;
     @Column(name = "price", nullable = false)
     @JsonProperty("price")
     private BigDecimal price;
