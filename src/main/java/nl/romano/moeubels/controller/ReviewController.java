@@ -27,12 +27,14 @@ public class ReviewController implements CrudOperations<Review> {
     @Override
     @PostMapping()
     public ResponseEntity<String> create(@RequestBody Review review) {
+        reviewDao.save(review);
         return Responses.jsonOkResponseEntity();
     }
 
     @Override
     @PutMapping()
     public ResponseEntity<String> update(@RequestBody Review review) {
+        reviewDao.update(review);
         return Responses.jsonOkResponseEntity();
     }
 

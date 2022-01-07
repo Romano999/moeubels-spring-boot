@@ -24,6 +24,7 @@ CREATE TABLE IF NOT EXISTS product (
 	price DECIMAL(6,2) NOT NULL,
 	product_name TEXT NOT NULL UNIQUE,
 	product_description TEXT NOT NULL,
+	amount_available INT NOT NULL,
 	image_path TEXT,
 	is_on_sale BOOLEAN NOT NULL,
 	category_id UUID NOT NULL,
@@ -36,6 +37,7 @@ CREATE TABLE IF NOT EXISTS product (
 CREATE TABLE IF NOT EXISTS shopping_cart (
 	actor_id UUID NOT NULL,
 	product_id UUID NOT NULL,
+	amount INT NOT NULL,
 	added_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	FOREIGN KEY (actor_id) REFERENCES actor(actor_id) ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY (product_id) REFERENCES product(product_id) ON DELETE CASCADE ON UPDATE CASCADE
@@ -71,29 +73,27 @@ INSERT INTO category(category_id, category_name, category_description, created_a
 
 
 -- Products
-INSERT INTO product(product_id, price, product_name, product_description, image_path, is_on_sale, category_id, created_at, modified_at) VALUES (DEFAULT, 20.00, 'Deluxe chair', 'Soft Chair', 'chairs/chair3.jpg', false, (SELECT category_id FROM category WHERE category_name = 'Chairs'), DEFAULT, DEFAULT);
+INSERT INTO product(product_id, price, product_name, product_description, amount_available, image_path, is_on_sale, category_id, created_at, modified_at) VALUES (DEFAULT, 20.00, 'Deluxe chair', 'Soft Chair', 5, 'chairs/chair3.jpg', false, (SELECT category_id FROM category WHERE category_name = 'Chairs'), DEFAULT, DEFAULT);
 
-INSERT INTO product(product_id, price, product_name, product_description, image_path, is_on_sale, category_id, created_at, modified_at) VALUES (DEFAULT, 10.00, 'Simple chair', 'Cheap Chair', 'chairs/chair2.jpg', false, (SELECT category_id FROM category WHERE category_name = 'Chairs'), DEFAULT, DEFAULT);
+INSERT INTO product(product_id, price, product_name, product_description, amount_available, image_path, is_on_sale, category_id, created_at, modified_at) VALUES (DEFAULT, 10.00, 'Simple chair', 'Cheap Chair', 5, 'chairs/chair2.jpg', false, (SELECT category_id FROM category WHERE category_name = 'Chairs'), DEFAULT, DEFAULT);
 
-INSERT INTO product(product_id, price, product_name, product_description, image_path, is_on_sale, category_id, created_at, modified_at) VALUES (DEFAULT, 30.00, 'Lavish chair', 'Extra lavish chair', 'chairs/chair3.jpg', false, (SELECT category_id FROM category WHERE category_name = 'Chairs'), DEFAULT, DEFAULT);
+INSERT INTO product(product_id, price, product_name, product_description, amount_available, image_path, is_on_sale, category_id, created_at, modified_at) VALUES (DEFAULT, 30.00, 'Lavish chair', 'Extra lavish chair', 5, 'chairs/chair3.jpg', false, (SELECT category_id FROM category WHERE category_name = 'Chairs'), DEFAULT, DEFAULT);
 
-INSERT INTO product(product_id, price, product_name, product_description, image_path, is_on_sale, category_id, created_at, modified_at) VALUES (DEFAULT, 35.00, 'Normal couch', 'Normal couch for 2', 'couches/couch1.jpg', false, (SELECT category_id FROM category WHERE category_name = 'Couches'), DEFAULT, DEFAULT);
+INSERT INTO product(product_id, price, product_name, product_description, amount_available, image_path, is_on_sale, category_id, created_at, modified_at) VALUES (DEFAULT, 35.00, 'Normal couch', 'Normal couch for 2', 5, 'couches/couch1.jpg', false, (SELECT category_id FROM category WHERE category_name = 'Couches'), DEFAULT, DEFAULT);
 
-INSERT INTO product(product_id, price, product_name, product_description, image_path, is_on_sale, category_id, created_at, modified_at) VALUES (DEFAULT, 50.00, 'Long couch', 'Extra long couch', 'couches/couch2.jpg', false, (SELECT category_id FROM category WHERE category_name = 'Couches'), DEFAULT, DEFAULT);
+INSERT INTO product(product_id, price, product_name, product_description, amount_available, image_path, is_on_sale, category_id, created_at, modified_at) VALUES (DEFAULT, 50.00, 'Long couch', 'Extra long couch', 5, 'couches/couch2.jpg', false, (SELECT category_id FROM category WHERE category_name = 'Couches'), DEFAULT, DEFAULT);
 
-INSERT INTO product(product_id, price, product_name, product_description, image_path, is_on_sale, category_id, created_at, modified_at) VALUES (DEFAULT, 60.00, 'Fabric couch', 'Couch made out of fabric', 'couches/couch3.jpg', false, (SELECT category_id FROM category WHERE category_name = 'Couches'), DEFAULT, DEFAULT);
+INSERT INTO product(product_id, price, product_name, product_description, amount_available, image_path, is_on_sale, category_id, created_at, modified_at) VALUES (DEFAULT, 60.00, 'Fabric couch', 'Couch made out of fabric', 5, 'couches/couch3.jpg', false, (SELECT category_id FROM category WHERE category_name = 'Couches'), DEFAULT, DEFAULT);
 
-INSERT INTO product(product_id, price, product_name, product_description, image_path, is_on_sale, category_id, created_at, modified_at) VALUES (DEFAULT, 15.00, 'Simple round table', 'Normal round table for 2', 'tables/table1.jpg', false, (SELECT category_id FROM category WHERE category_name = 'Tables'), DEFAULT, DEFAULT);
+INSERT INTO product(product_id, price, product_name, product_description, amount_available, image_path, is_on_sale, category_id, created_at, modified_at) VALUES (DEFAULT, 15.00, 'Simple round table', 'Normal round table for 2', 5, 'tables/table1.jpg', false, (SELECT category_id FROM category WHERE category_name = 'Tables'), DEFAULT, DEFAULT);
 
-INSERT INTO product(product_id, price, product_name, product_description, image_path, is_on_sale, category_id, created_at, modified_at) VALUES (DEFAULT, 25.00, 'Wooden round table', 'Wooden round table', 'tables/table2.jpg', false, (SELECT category_id FROM category WHERE category_name = 'Tables'), DEFAULT, DEFAULT);
+INSERT INTO product(product_id, price, product_name, product_description, amount_available, image_path, is_on_sale, category_id, created_at, modified_at) VALUES (DEFAULT, 25.00, 'Wooden round table', 'Wooden round table', 5, 'tables/table2.jpg', false, (SELECT category_id FROM category WHERE category_name = 'Tables'), DEFAULT, DEFAULT);
 
-INSERT INTO product(product_id, price, product_name, product_description, image_path, is_on_sale, category_id, created_at, modified_at) VALUES (DEFAULT, 40.00, 'Marble table', 'Table made out of marble', 'tables/table3.jpg', false, (SELECT category_id FROM category WHERE category_name = 'Tables'), DEFAULT, DEFAULT);
+INSERT INTO product(product_id, price, product_name, product_description, amount_available, image_path, is_on_sale, category_id, created_at, modified_at) VALUES (DEFAULT, 40.00, 'Marble table', 'Table made out of marble', 5, 'tables/table3.jpg', false, (SELECT category_id FROM category WHERE category_name = 'Tables'), DEFAULT, DEFAULT);
 
 
 -- User related
 INSERT INTO actor(actor_id, username, password, first_name, last_name, created_at, modified_at) VALUES (DEFAULT, 'JohnDoe', '$2a$12$CAVPMkPAF38riRUdSdilA.sLivTtutP8wMxwr6LyGhZgl1E3PGFvG', 'John', 'Doe', DEFAULT, DEFAULT);
-
-INSERT INTO shopping_cart(actor_id, product_id, added_at) VALUES ((SELECT actor_id FROM actor WHERE username = 'JohnDoe'), (SELECT product_id FROM product WHERE product_name = 'Simple chair'), DEFAULT);
 
 INSERT INTO favourite(actor_id, product_id, added_at) VALUES ((SELECT actor_id FROM actor WHERE username = 'JohnDoe'), (SELECT product_id FROM product WHERE product_name = 'Fabric couch'), DEFAULT);
 
@@ -108,3 +108,9 @@ INSERT INTO review(review_id, actor_id, product_id, added_at, rating) VALUES (DE
 INSERT INTO review(review_id, actor_id, product_id, added_at, rating) VALUES (DEFAULT, (SELECT actor_id FROM actor WHERE username = 'JohnDoe'), (SELECT product_id FROM product WHERE product_name = 'Fabric couch'), DEFAULT, 2);
 
 INSERT INTO review(review_id, actor_id, product_id, added_at, rating) VALUES (DEFAULT, (SELECT actor_id FROM actor WHERE username = 'JohnDoe'), (SELECT product_id FROM product WHERE product_name = 'Deluxe chair'), DEFAULT, 5);
+
+
+-- Shopping cart
+INSERT INTO shopping_cart(actor_id, product_id, amount, added_at) VALUES ((SELECT actor_id FROM actor WHERE username = 'JohnDoe'), (SELECT product_id FROM product WHERE product_name = 'Simple chair'), 2, DEFAULT);
+
+INSERT INTO shopping_cart(actor_id, product_id, amount, added_at) VALUES ((SELECT actor_id FROM actor WHERE username = 'JohnDoe'), (SELECT product_id FROM product WHERE product_name = 'Long couch'), 3, DEFAULT);

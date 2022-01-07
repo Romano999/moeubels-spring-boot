@@ -1,0 +1,17 @@
+package nl.romano.moeubels.model;
+
+import lombok.*;
+
+import javax.persistence.Entity;
+import java.io.Serializable;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class ShoppingCartCK implements Serializable {
+    private Actor actor;
+    private Product product;
+}

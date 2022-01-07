@@ -6,6 +6,7 @@ import java.util.UUID;
 
 /**
  * A class can implement this interface to receive REST methods.
+ * @param <T> generic
  */
 public interface Dao<T> {
     Optional<T> getById(UUID uuid);
