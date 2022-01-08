@@ -34,4 +34,14 @@ public class MyExceptionHandler extends ResponseEntityExceptionHandler{
     public ResponseEntity<String> handleReviewNotFoundException() {
         return Responses.jsonNotFoundResponseEntityWithMessage("Review not found.");
     }
+
+    @ExceptionHandler(ShoppingCartNotFoundException.class)
+    public ResponseEntity<String> handleShoppingCartNotFoundException() {
+        return Responses.jsonNotFoundResponseEntityWithMessage("Shopping cart not found.");
+    }
+
+    @ExceptionHandler(FavouriteNotFoundException.class)
+    public ResponseEntity<String> handleFavouriteNotFoundException() {
+        return Responses.jsonNotFoundResponseEntityWithMessage("Favourite not found.");
+    }
 }
