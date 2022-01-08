@@ -39,6 +39,9 @@ public class ShoppingCart {
     @JsonProperty("product")
     @JoinColumn(name = "product_id")
     private Product product;
+    @Column(name = "amount", nullable = false)
+    @JsonProperty("amount")
+    private int amount;
     @Column(name = "added_at", nullable = false)
     @JsonProperty("addedAt")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
