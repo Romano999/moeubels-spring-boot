@@ -23,10 +23,6 @@ public class ShoppingCartDao {
         return Optional.of(cart);
     }
 
-    public Optional<ShoppingCart> getById(ShoppingCartCK ck) {
-        return shoppingCartRepository.findById(ck);
-    }
-
     public void save(ShoppingCart shoppingCart) {
         shoppingCartRepository.save(shoppingCart);
     }

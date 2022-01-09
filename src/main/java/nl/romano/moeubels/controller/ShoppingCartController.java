@@ -26,13 +26,6 @@ public class ShoppingCartController {
         return Responses.ResponseEntityOk(shoppingCart);
     }
 
-    @GetMapping()
-    public ResponseEntity<?> getById(@RequestBody ShoppingCartCK ck) throws ResourceNotFoundException {
-        ShoppingCart shoppingCart = shoppingCartDao.getById(ck)
-                .orElseThrow(() -> new ShoppingCartNotFoundException("Shopping cart with ck: " + ck.toString() + "not found"));
-        return Responses.ResponseEntityOk(shoppingCart);
-    }
-
     @PostMapping()
     public ResponseEntity<String> create(@RequestBody ShoppingCart shoppingCart) {
         shoppingCartDao.save(shoppingCart);

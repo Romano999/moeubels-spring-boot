@@ -22,19 +22,13 @@ public class FavouriteController {
     @Autowired
     private FavouriteDao favouriteDao;
 
-    @GetMapping("/{actorUuid}")
-    public ResponseEntity<?> getByActorId(@PathVariable UUID actorUuid) throws ResourceNotFoundException {
-        List<Favourite> favourites = favouriteDao.getByActorId(actorUuid)
-                .orElseThrow(() -> new FavouriteNotFoundException("Favourite with id: " + actorUuid + "not found"));
+    @GetMapping("/{actorId}")
+    public ResponseEntity<?> getByActorId(@PathVariable UUID actorId) throws ResourceNotFoundException {
+        List<Favourite> favourites = favouriteDao.getByActorId(actorId)
+                .orElseThrow(() -> new FavouriteNotFoundException("Favourite with id: " + actorId + "not found"));
         return Responses.ResponseEntityOk(favourites);
     }
 
-    @GetMapping()
-    public ResponseEntity<?> getById(@RequestBody FavouriteCK ck) throws ResourceNotFoundException {
-        Favourite favourite = favouriteDao.getById(ck)
-                .orElseThrow(() -> new FavouriteNotFoundException("Favourite with ck: " + ck.toString() + "not found"));
-        return Responses.ResponseEntityOk(favourite);
-    }
 
     @PostMapping()
     public ResponseEntity<String> create(@RequestBody Favourite favourite) {

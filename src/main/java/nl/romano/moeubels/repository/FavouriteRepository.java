@@ -11,6 +11,14 @@ import java.util.UUID;
 
 public interface FavouriteRepository extends PagingAndSortingRepository<Favourite, FavouriteCK> {
     @Query(
+            value = "SELECT * FROM favourite AS s " +
+                    "WHERE CAST(s.actor_id AS TEXT) LIKE CAST(?1 AS TEXT) " +
+                    "AND CAST(s.product_id AS TEXT) LIKE CAST(?2 AS TEXT)",
+            nativeQuery = true
+    )
+    Favourite getById(UUID actorId, UUID productId);
+
+    @Query(
             value = "SELECT * FROM favourite AS s WHERE CAST(s.actor_id AS TEXT) LIKE CAST(?1 AS TEXT)",
             nativeQuery = true
     )
