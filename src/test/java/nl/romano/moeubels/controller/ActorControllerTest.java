@@ -84,8 +84,8 @@ class ActorControllerTest {
         UUID actorId = testActor.getActorId();
         String requestPath = String.format("/actors/%s", actorId.toString());
 
-        this.mvc.perform(MockMvcRequestBuilders.delete(requestPath, testActor).secure(true))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+        this.mvc.perform(MockMvcRequestBuilders.delete(requestPath, testActor)
+                .secure(true)).andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     private static String asJsonString(final Object obj) {

@@ -27,7 +27,7 @@ public class ActorDao implements Dao<Actor>, UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Actor actor = Optional.of(actorRepository.findByUsernameIgnoreCase(username.toUpperCase()))
+        Actor actor = Optional.of(actorRepository.findByUsername(username))
                 .orElseThrow(() -> new UsernameNotFoundException("Actor not found in database."));
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(actor.getRole().getRoleName()));

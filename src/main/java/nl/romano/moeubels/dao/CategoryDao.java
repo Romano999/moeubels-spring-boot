@@ -7,13 +7,16 @@ import nl.romano.moeubels.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public class CategoryDao implements Dao<Category> {
+public class CategoryDao implements Dao<Category>, UserDetailsService {
     @Autowired
     private CategoryRepository categoryRepository;
 
@@ -41,5 +44,10 @@ public class CategoryDao implements Dao<Category> {
         Category category = categoryRepository.findById(uuid)
                 .orElseThrow(() -> new CategoryNotFoundException("Category with id: " + uuid + "not found"));
         categoryRepository.delete(category);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return null;
     }
 }

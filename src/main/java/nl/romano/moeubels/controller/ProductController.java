@@ -26,10 +26,11 @@ public class ProductController implements CrudOperations<Product> {
         return Responses.ResponseEntityOk(products);
     }
 
-    @GetMapping("/{searchTerm}//{page}")
+    @GetMapping(value = "/{searchTerm}", params = { "page", "size" })
     public ResponseEntity<Page<Product>> getByName(@PathVariable String searchTerm,
-                                                   @PathVariable int page) {
-        Page<Product> products = productDao.getByName(searchTerm, Pageable.ofSize(5).withPage(page));
+                                                   @RequestParam int page,
+                                                   @RequestParam int size) {
+        Page<Product> products = productDao.getByName(searchTerm, Pageable.ofSize(size).withPage(page));
         return Responses.ResponseEntityOk(products);
     }
 

@@ -9,13 +9,17 @@ import nl.romano.moeubels.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public class ProductDao implements Dao<Product> {
+public class ProductDao implements Dao<Product>, UserDetailsService {
     @Autowired
     private ProductRepository productRepository;
 
@@ -24,7 +28,7 @@ public class ProductDao implements Dao<Product> {
     }
 
     public Page<Product> getByName(String searchTerm, Pageable pageable) {
-        return productRepository.getByName(searchTerm, pageable);
+        return productRepository.findAllByProductNameIgnoreCaseContaining(searchTerm, pageable);
     }
 
     @Override
@@ -47,5 +51,10 @@ public class ProductDao implements Dao<Product> {
         Product product = productRepository.findById(uuid)
                 .orElseThrow(() -> new ProductNotFoundException("Product with id: " + uuid + "not found"));
         productRepository.delete(product);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return null;
     }
 }
