@@ -33,7 +33,7 @@ class CategoryControllerTest {
     private MockMvc mvc;
     private Category category;
 
-    @BeforeEach()
+    @BeforeEach
     void setup() {
         this.mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
         this.category = Category.builder()

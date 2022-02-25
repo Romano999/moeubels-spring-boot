@@ -11,7 +11,6 @@ public class Responses {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode node = mapper.createObjectNode();
         node.put("status", status);
-
         return node.toString();
     }
 

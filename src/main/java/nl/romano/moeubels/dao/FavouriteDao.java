@@ -6,6 +6,9 @@ import nl.romano.moeubels.exceptions.ShoppingCartNotFoundException;
 import nl.romano.moeubels.model.*;
 import nl.romano.moeubels.repository.FavouriteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -14,7 +17,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public class FavouriteDao {
+public class FavouriteDao implements UserDetailsService {
     @Autowired
     private FavouriteRepository favouriteRepository;
 
@@ -38,4 +41,8 @@ public class FavouriteDao {
     }
 
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return null;
+    }
 }

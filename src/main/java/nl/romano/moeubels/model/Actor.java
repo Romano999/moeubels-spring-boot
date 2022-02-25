@@ -10,6 +10,7 @@ import lombok.extern.jackson.Jacksonized;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.Collection;
 import java.util.UUID;
 
 @Entity
@@ -44,6 +45,10 @@ public class Actor implements Serializable {
     @JsonProperty("createdAt")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
     private ZonedDateTime createdAt;
+    @JoinColumn(name = "role_id", nullable = false)
+    @JsonProperty("roles")
+    @OneToOne
+    private Role role;
     @Column(name = "modified_at", nullable = false)
     @JsonProperty("modifiedAt")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
