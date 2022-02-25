@@ -17,7 +17,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public class FavouriteDao implements UserDetailsService {
+public class FavouriteDao {
     @Autowired
     private FavouriteRepository favouriteRepository;
 
@@ -38,11 +38,5 @@ public class FavouriteDao implements UserDetailsService {
         Favourite favourite = favouriteRepository.findById(ck)
                 .orElseThrow(() -> new FavouriteNotFoundException("Favourite with ck: " + ck.toString() + "not found"));
         favouriteRepository.delete(favourite);
-    }
-
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
     }
 }

@@ -11,7 +11,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public class RoleDao implements Dao<Role>, UserDetailsService {
+public class RoleDao implements Dao<Role> {
     @Override
     public Optional<Role> getById(UUID uuid) {
         return Optional.empty();
@@ -30,10 +30,5 @@ public class RoleDao implements Dao<Role>, UserDetailsService {
     @Override
     public void delete(UUID uuid) throws ResourceNotFoundException {
 
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
     }
 }

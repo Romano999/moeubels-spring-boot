@@ -11,6 +11,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -31,6 +32,8 @@ import static org.mockito.BDDMockito.given;
 class ShoppingCartControllerTest {
     @Autowired
     private WebApplicationContext webApplicationContext;
+    @MockBean
+    private UserDetailsService userDetailsService;
     @MockBean
     private ShoppingCartDao shoppingCartDao;
     private MockMvc mvc;

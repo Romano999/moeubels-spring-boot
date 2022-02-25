@@ -14,7 +14,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public class ReviewDao implements Dao<Review>, UserDetailsService {
+public class ReviewDao implements Dao<Review> {
     @Autowired
     private ReviewRespository reviewRespository;
 
@@ -38,10 +38,5 @@ public class ReviewDao implements Dao<Review>, UserDetailsService {
         Review review = reviewRespository.findById(uuid)
                 .orElseThrow(() -> new ReviewNotFoundException("Review with id: " + uuid + "not found"));
         reviewRespository.delete(review);
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
     }
 }

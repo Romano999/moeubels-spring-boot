@@ -16,7 +16,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public class CategoryDao implements Dao<Category>, UserDetailsService {
+public class CategoryDao implements Dao<Category> {
     @Autowired
     private CategoryRepository categoryRepository;
 
@@ -44,10 +44,5 @@ public class CategoryDao implements Dao<Category>, UserDetailsService {
         Category category = categoryRepository.findById(uuid)
                 .orElseThrow(() -> new CategoryNotFoundException("Category with id: " + uuid + "not found"));
         categoryRepository.delete(category);
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
     }
 }

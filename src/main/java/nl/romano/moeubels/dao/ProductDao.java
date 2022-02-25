@@ -19,7 +19,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public class ProductDao implements Dao<Product>, UserDetailsService {
+public class ProductDao implements Dao<Product> {
     @Autowired
     private ProductRepository productRepository;
 
@@ -51,10 +51,5 @@ public class ProductDao implements Dao<Product>, UserDetailsService {
         Product product = productRepository.findById(uuid)
                 .orElseThrow(() -> new ProductNotFoundException("Product with id: " + uuid + "not found"));
         productRepository.delete(product);
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
     }
 }

@@ -17,7 +17,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public class ShoppingCartDao implements UserDetailsService {
+public class ShoppingCartDao {
     @Autowired
     private ShoppingCartRepository shoppingCartRepository;
 
@@ -38,10 +38,5 @@ public class ShoppingCartDao implements UserDetailsService {
         ShoppingCart shoppingCart = shoppingCartRepository.findById(ck)
                 .orElseThrow(() -> new ShoppingCartNotFoundException("Shopping cart with ck: " + ck.toString() + "not found"));
         shoppingCartRepository.delete(shoppingCart);
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
     }
 }
