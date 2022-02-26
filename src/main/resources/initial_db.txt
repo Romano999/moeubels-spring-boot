@@ -1,11 +1,19 @@
+-- Extensions
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
+
+-- Tables
 CREATE TABLE IF NOT EXISTS category (
 	category_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
 	category_name TEXT NOT NULL UNIQUE,
 	category_description TEXT NOT NULL,
 	created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	modified_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS role (
+	role_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+	role_name TEXT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS actor (
@@ -15,7 +23,9 @@ CREATE TABLE IF NOT EXISTS actor (
 	first_name TEXT NOT NULL,
 	last_name TEXT NOT NULL,
 	created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-	modified_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+	modified_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+	role_id UUID NOT NULL,
+	FOREIGN KEY(role_id) REFERENCES role(role_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 
@@ -92,10 +102,16 @@ INSERT INTO product(product_id, price, product_name, product_description, amount
 INSERT INTO product(product_id, price, product_name, product_description, amount_available, image_path, is_on_sale, category_id, created_at, modified_at) VALUES (DEFAULT, 40.00, 'Marble table', 'Table made out of marble', 5, 'tables/table3.jpg', false, (SELECT category_id FROM category WHERE category_name = 'Tables'), DEFAULT, DEFAULT);
 
 
--- User related
-INSERT INTO actor(actor_id, username, password, first_name, last_name, created_at, modified_at) VALUES (DEFAULT, 'JohnDoe', '$2a$12$CAVPMkPAF38riRUdSdilA.sLivTtutP8wMxwr6LyGhZgl1E3PGFvG', 'John', 'Doe', DEFAULT, DEFAULT);
+-- Roles
+INSERT INTO role(role_id, role_name) VALUES (DEFAULT, 'Administrator');
 
-INSERT INTO favourite(actor_id, product_id, added_at) VALUES ((SELECT actor_id FROM actor WHERE username = 'JohnDoe'), (SELECT product_id FROM product WHERE product_name = 'Fabric couch'), DEFAULT);
+INSERT INTO role(role_id, role_name) VALUES (DEFAULT, 'Actor');
+
+
+-- Users
+INSERT INTO actor(actor_id, username, password, first_name, last_name, created_at, modified_at, role_id) VALUES (DEFAULT, 'JohnDoe', '$2a$12$CAVPMkPAF38riRUdSdilA.sLivTtutP8wMxwr6LyGhZgl1E3PGFvG', 'John', 'Doe', DEFAULT, DEFAULT, (SELECT role_id FROM role WHERE role_name = 'Administrator'));
+
+INSERT INTO actor(actor_id, username, password, first_name, last_name, created_at, modified_at, role_id) VALUES (DEFAULT, 'JaneDoe', '$2a$12$CAVPMkPAF38riRUdSdilA.sLivTtutP8wMxwr6LyGhZgl1E3PGFvG', 'Jane', 'Doe', DEFAULT, DEFAULT, (SELECT role_id FROM role WHERE role_name = 'Actor'));
 
 
 -- Reviews
@@ -114,3 +130,11 @@ INSERT INTO review(review_id, actor_id, product_id, added_at, rating) VALUES (DE
 INSERT INTO shopping_cart(actor_id, product_id, amount, added_at) VALUES ((SELECT actor_id FROM actor WHERE username = 'JohnDoe'), (SELECT product_id FROM product WHERE product_name = 'Simple chair'), 2, DEFAULT);
 
 INSERT INTO shopping_cart(actor_id, product_id, amount, added_at) VALUES ((SELECT actor_id FROM actor WHERE username = 'JohnDoe'), (SELECT product_id FROM product WHERE product_name = 'Long couch'), 3, DEFAULT);
+
+
+-- Favourites
+INSERT INTO favourite(actor_id, product_id, added_at) VALUES ((SELECT actor_id FROM actor WHERE username = 'JohnDoe'), (SELECT product_id FROM product WHERE product_name = 'Lavish chair'), DEFAULT);
+
+INSERT INTO favourite(actor_id, product_id, added_at) VALUES ((SELECT actor_id FROM actor WHERE username = 'JohnDoe'), (SELECT product_id FROM product WHERE product_name = 'Fabric couch'), DEFAULT);
+
+INSERT INTO favourite(actor_id, product_id, added_at) VALUES ((SELECT actor_id FROM actor WHERE username = 'JohnDoe'), (SELECT product_id FROM product WHERE product_name = 'Marble table'), DEFAULT);
