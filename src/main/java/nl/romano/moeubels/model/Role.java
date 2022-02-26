@@ -2,10 +2,7 @@ package nl.romano.moeubels.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.extern.jackson.Jacksonized;
 
 import javax.persistence.*;
@@ -13,7 +10,8 @@ import java.util.UUID;
 
 @Entity
 @Table(name="role")
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor(force = true)
 @Builder

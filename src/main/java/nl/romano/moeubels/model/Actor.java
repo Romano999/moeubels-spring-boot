@@ -15,7 +15,8 @@ import java.util.UUID;
 
 @Entity
 @Table(name="actor")
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor(force = true)
 @Builder
