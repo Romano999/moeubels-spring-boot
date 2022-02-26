@@ -40,6 +40,10 @@ public class ActorDao implements Dao<Actor>, UserDetailsService {
         return actorRepository.findById(uuid);
     }
 
+    public Actor getByUsername(String username) {
+        return actorRepository.findByUsername(username);
+    }
+
     @Override
     public void save(Actor actor) {
         //actor.setPassword(passwordEncoder.encode(actor.getPassword()));
