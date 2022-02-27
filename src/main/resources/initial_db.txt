@@ -89,7 +89,7 @@ INSERT INTO product(product_id, price, product_name, product_description, amount
 
 INSERT INTO product(product_id, price, product_name, product_description, amount_available, image_path, is_on_sale, category_id, created_at, modified_at) VALUES (DEFAULT, 30.00, 'Lavish chair', 'Extra lavish chair', 5, 'https://i.postimg.cc/cJSqnkq9/chair3.jpg', false, (SELECT category_id FROM category WHERE category_name = 'Chairs'), DEFAULT, DEFAULT);
 
-INSERT INTO product(product_id, price, product_name, product_description, amount_available, image_path, is_on_sale, category_id, created_at, modified_at) VALUES (DEFAULT, 35.00, 'Normal couch', 'Normal couch for 2', 5, 'https://i.postimg.cc/MZrhDp2j/couch1.jpg, false, (SELECT category_id FROM category WHERE category_name = 'Couches'), DEFAULT, DEFAULT);
+INSERT INTO product(product_id, price, product_name, product_description, amount_available, image_path, is_on_sale, category_id, created_at, modified_at) VALUES (DEFAULT, 35.00, 'Normal couch', 'Normal couch for 2', 5, 'https://i.postimg.cc/MZrhDp2j/couch1.jpg', false, (SELECT category_id FROM category WHERE category_name = 'Couches'), DEFAULT, DEFAULT);
 
 INSERT INTO product(product_id, price, product_name, product_description, amount_available, image_path, is_on_sale, category_id, created_at, modified_at) VALUES (DEFAULT, 50.00, 'Long couch', 'Extra long couch', 5, 'https://i.postimg.cc/c4gP5G0k/couch2.jpg', false, (SELECT category_id FROM category WHERE category_name = 'Couches'), DEFAULT, DEFAULT);
 
