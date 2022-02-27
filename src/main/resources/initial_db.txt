@@ -83,23 +83,23 @@ INSERT INTO category(category_id, category_name, category_description, created_a
 
 
 -- Products
-INSERT INTO product(product_id, price, product_name, product_description, amount_available, image_path, is_on_sale, category_id, created_at, modified_at) VALUES (DEFAULT, 20.00, 'Deluxe chair', 'Soft Chair', 5, 'chairs/chair3.jpg', false, (SELECT category_id FROM category WHERE category_name = 'Chairs'), DEFAULT, DEFAULT);
+INSERT INTO product(product_id, price, product_name, product_description, amount_available, image_path, is_on_sale, category_id, created_at, modified_at) VALUES (DEFAULT, 20.00, 'Deluxe chair', 'Soft Chair', 5, 'https://i.postimg.cc/L8jw2kqz/chair1.jpg', false, (SELECT category_id FROM category WHERE category_name = 'Chairs'), DEFAULT, DEFAULT);
 
-INSERT INTO product(product_id, price, product_name, product_description, amount_available, image_path, is_on_sale, category_id, created_at, modified_at) VALUES (DEFAULT, 10.00, 'Simple chair', 'Cheap Chair', 5, 'chairs/chair2.jpg', false, (SELECT category_id FROM category WHERE category_name = 'Chairs'), DEFAULT, DEFAULT);
+INSERT INTO product(product_id, price, product_name, product_description, amount_available, image_path, is_on_sale, category_id, created_at, modified_at) VALUES (DEFAULT, 10.00, 'Simple chair', 'Cheap Chair', 5, 'https://i.postimg.cc/76tQmmcy/chair2.jpg', false, (SELECT category_id FROM category WHERE category_name = 'Chairs'), DEFAULT, DEFAULT);
 
-INSERT INTO product(product_id, price, product_name, product_description, amount_available, image_path, is_on_sale, category_id, created_at, modified_at) VALUES (DEFAULT, 30.00, 'Lavish chair', 'Extra lavish chair', 5, 'chairs/chair3.jpg', false, (SELECT category_id FROM category WHERE category_name = 'Chairs'), DEFAULT, DEFAULT);
+INSERT INTO product(product_id, price, product_name, product_description, amount_available, image_path, is_on_sale, category_id, created_at, modified_at) VALUES (DEFAULT, 30.00, 'Lavish chair', 'Extra lavish chair', 5, 'https://i.postimg.cc/cJSqnkq9/chair3.jpg', false, (SELECT category_id FROM category WHERE category_name = 'Chairs'), DEFAULT, DEFAULT);
 
-INSERT INTO product(product_id, price, product_name, product_description, amount_available, image_path, is_on_sale, category_id, created_at, modified_at) VALUES (DEFAULT, 35.00, 'Normal couch', 'Normal couch for 2', 5, 'couches/couch1.jpg', false, (SELECT category_id FROM category WHERE category_name = 'Couches'), DEFAULT, DEFAULT);
+INSERT INTO product(product_id, price, product_name, product_description, amount_available, image_path, is_on_sale, category_id, created_at, modified_at) VALUES (DEFAULT, 35.00, 'Normal couch', 'Normal couch for 2', 5, 'https://i.postimg.cc/MZrhDp2j/couch1.jpg, false, (SELECT category_id FROM category WHERE category_name = 'Couches'), DEFAULT, DEFAULT);
 
-INSERT INTO product(product_id, price, product_name, product_description, amount_available, image_path, is_on_sale, category_id, created_at, modified_at) VALUES (DEFAULT, 50.00, 'Long couch', 'Extra long couch', 5, 'couches/couch2.jpg', false, (SELECT category_id FROM category WHERE category_name = 'Couches'), DEFAULT, DEFAULT);
+INSERT INTO product(product_id, price, product_name, product_description, amount_available, image_path, is_on_sale, category_id, created_at, modified_at) VALUES (DEFAULT, 50.00, 'Long couch', 'Extra long couch', 5, 'https://i.postimg.cc/c4gP5G0k/couch2.jpg', false, (SELECT category_id FROM category WHERE category_name = 'Couches'), DEFAULT, DEFAULT);
 
-INSERT INTO product(product_id, price, product_name, product_description, amount_available, image_path, is_on_sale, category_id, created_at, modified_at) VALUES (DEFAULT, 60.00, 'Fabric couch', 'Couch made out of fabric', 5, 'couches/couch3.jpg', false, (SELECT category_id FROM category WHERE category_name = 'Couches'), DEFAULT, DEFAULT);
+INSERT INTO product(product_id, price, product_name, product_description, amount_available, image_path, is_on_sale, category_id, created_at, modified_at) VALUES (DEFAULT, 60.00, 'Fabric couch', 'Couch made out of fabric', 5, 'https://i.postimg.cc/3NWzTPpR/couch3.jpg', false, (SELECT category_id FROM category WHERE category_name = 'Couches'), DEFAULT, DEFAULT);
 
-INSERT INTO product(product_id, price, product_name, product_description, amount_available, image_path, is_on_sale, category_id, created_at, modified_at) VALUES (DEFAULT, 15.00, 'Simple round table', 'Normal round table for 2', 5, 'tables/table1.jpg', false, (SELECT category_id FROM category WHERE category_name = 'Tables'), DEFAULT, DEFAULT);
+INSERT INTO product(product_id, price, product_name, product_description, amount_available, image_path, is_on_sale, category_id, created_at, modified_at) VALUES (DEFAULT, 15.00, 'Simple round table', 'Normal round table for 2', 5, 'https://i.postimg.cc/zXs6s2fz/table1.jpg', false, (SELECT category_id FROM category WHERE category_name = 'Tables'), DEFAULT, DEFAULT);
 
-INSERT INTO product(product_id, price, product_name, product_description, amount_available, image_path, is_on_sale, category_id, created_at, modified_at) VALUES (DEFAULT, 25.00, 'Wooden round table', 'Wooden round table', 5, 'tables/table2.jpg', false, (SELECT category_id FROM category WHERE category_name = 'Tables'), DEFAULT, DEFAULT);
+INSERT INTO product(product_id, price, product_name, product_description, amount_available, image_path, is_on_sale, category_id, created_at, modified_at) VALUES (DEFAULT, 25.00, 'Wooden round table', 'Wooden round table', 5, 'https://i.postimg.cc/wBHPvtJn/table2.jpg', false, (SELECT category_id FROM category WHERE category_name = 'Tables'), DEFAULT, DEFAULT);
 
-INSERT INTO product(product_id, price, product_name, product_description, amount_available, image_path, is_on_sale, category_id, created_at, modified_at) VALUES (DEFAULT, 40.00, 'Marble table', 'Table made out of marble', 5, 'tables/table3.jpg', false, (SELECT category_id FROM category WHERE category_name = 'Tables'), DEFAULT, DEFAULT);
+INSERT INTO product(product_id, price, product_name, product_description, amount_available, image_path, is_on_sale, category_id, created_at, modified_at) VALUES (DEFAULT, 40.00, 'Marble table', 'Table made out of marble', 5, 'https://i.postimg.cc/vmzK6QtT/table3.jpg', false, (SELECT category_id FROM category WHERE category_name = 'Tables'), DEFAULT, DEFAULT);
 
 
 -- Roles
