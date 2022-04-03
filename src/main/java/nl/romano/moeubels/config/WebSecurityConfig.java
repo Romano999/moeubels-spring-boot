@@ -24,6 +24,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.springframework.http.HttpMethod.*;
+
 
 @Configuration
 @EnableWebSecurity
@@ -41,14 +43,40 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-       http.requiresChannel().antMatchers("**").requiresSecure();
-       http.csrf().disable();
-       http.cors();
-       http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-       http.authorizeRequests().antMatchers("/login/**", "/token/refresh/**").permitAll();
-       http.authorizeRequests().anyRequest().permitAll();
-       http.addFilter(new CustomAuthenticationFilter(authenticationManagerBean()));
-       http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.requiresChannel().antMatchers("**").requiresSecure();
+        http.csrf().disable();
+        http.cors().configurationSource(corsConfigurationSource());
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        // Login related
+        http.authorizeRequests().antMatchers("/login/**", "/token/refresh/**").permitAll();
+
+        // Actor related
+        http.authorizeRequests().antMatchers("/actors/**").hasAnyAuthority("Administrator");
+        // Category related
+        http.authorizeRequests().antMatchers(POST, "categories/**").hasAnyAuthority("Administrator");
+        http.authorizeRequests().antMatchers(PUT, "categories/**").hasAnyAuthority("Administrator");
+        http.authorizeRequests().antMatchers(DELETE, "categories/**").hasAnyAuthority("Administrator");
+        http.authorizeRequests().antMatchers(PATCH, "categories/**").hasAnyAuthority("Administrator");
+        http.authorizeRequests().antMatchers(TRACE, "categories/**").hasAnyAuthority("Administrator"); //
+        // Product related
+        http.authorizeRequests().antMatchers(POST, "products/**").hasAnyAuthority("Administrator");
+        http.authorizeRequests().antMatchers(PUT, "products/**").hasAnyAuthority("Administrator");
+        http.authorizeRequests().antMatchers(DELETE, "products/**").hasAnyAuthority("Administrator");
+        http.authorizeRequests().antMatchers(PATCH, "products/**").hasAnyAuthority("Administrator");
+        http.authorizeRequests().antMatchers(TRACE, "products/**").hasAnyAuthority("Administrator"); // Trace to prevent Cross Site Tracing
+        // Favourites related
+        http.authorizeRequests().antMatchers(POST, "products/**").hasAnyAuthority("Administrator");
+        http.authorizeRequests().antMatchers(PUT, "products/**").hasAnyAuthority("Administrator");
+        http.authorizeRequests().antMatchers(DELETE, "products/**").hasAnyAuthority("Administrator");
+        http.authorizeRequests().antMatchers(PATCH, "products/**").hasAnyAuthority("Administrator");
+        http.authorizeRequests().antMatchers(TRACE, "products/**").hasAnyAuthority("Administrator");
+        // Review
+        http.authorizeRequests().antMatchers(TRACE, "products/**").hasAnyAuthority("Administrator");
+        // Shopping Cart
+
+        // Role
+        http.addFilter(new CustomAuthenticationFilter(authenticationManagerBean()));
+        http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
     @Bean
@@ -67,8 +95,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.addAllowedOriginPattern("*");
         configuration.setAllowedMethods(List.of("HEAD",
-                "GET", "POST", "PUT", "DELETE", "PATCH"));
-        configuration.setAllowedHeaders(List.of("Authorization", "Cache-Control", "Content-Type"));
+                "GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
+        configuration.setAllowedHeaders(List.of("Authorization", "Cache-Control", "Content-Type", "Accept"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;

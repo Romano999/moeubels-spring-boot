@@ -14,6 +14,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 public class ShoppingCartCK implements Serializable {
-    private Actor actor;
-    private Product product;
+    private UUID actor;
+    private UUID product;
 }

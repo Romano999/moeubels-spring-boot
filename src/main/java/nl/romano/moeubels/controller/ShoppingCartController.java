@@ -6,8 +6,11 @@ import nl.romano.moeubels.exceptions.ShoppingCartNotFoundException;
 import nl.romano.moeubels.model.Category;
 import nl.romano.moeubels.model.ShoppingCart;
 import nl.romano.moeubels.model.ShoppingCartCK;
+import nl.romano.moeubels.model.ShoppingCartRequest;
+import nl.romano.moeubels.projection.ShoppingCartProjection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,16 +22,16 @@ public class ShoppingCartController {
     @Autowired
     private ShoppingCartDao shoppingCartDao;
 
-    @GetMapping("/{actorUuid}")
-    public ResponseEntity<?> getByActorId(@PathVariable UUID actorUuid) throws ResourceNotFoundException {
-        List<ShoppingCart> shoppingCart = shoppingCartDao.getByActorId(actorUuid)
-                .orElseThrow(() -> new ShoppingCartNotFoundException("Actor with id: " + actorUuid + "not found"));
-        return Responses.ResponseEntityOk(shoppingCart);
+    @GetMapping("/{actorId}")
+    public ResponseEntity<List<ShoppingCartProjection>> getByActorId(@PathVariable UUID actorId) throws ResourceNotFoundException {
+        List<ShoppingCart> shoppingCart = shoppingCartDao.getByActorId(actorId)
+                .orElseThrow(() -> new ShoppingCartNotFoundException("Actor with id: " + actorId + "not found"));
+        return Responses.ResponseEntityOk(ShoppingCartProjection.toShoppingCartProjectionList(shoppingCart));
     }
 
     @PostMapping()
-    public ResponseEntity<String> create(@RequestBody ShoppingCart shoppingCart) {
-        shoppingCartDao.save(shoppingCart);
+    public ResponseEntity<String> create(@RequestBody ShoppingCartRequest shoppingCartRequest) {
+        shoppingCartDao.save(shoppingCartRequest);
         return Responses.jsonOkResponseEntity();
     }
 

@@ -31,6 +31,7 @@ public class ActorDao implements Dao<Actor>, UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("Actor not found in database."));
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(actor.getRole().getRoleName()));
+        authorities.add(new SimpleGrantedAuthority(actor.getActorId().toString()));
 
         return new User(actor.getUsername(), actor.getPassword(), authorities);
     }

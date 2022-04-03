@@ -70,8 +70,8 @@ class ShoppingCartControllerTest {
     void create() throws Exception {
         ShoppingCart testShoppingCart = this.shoppingCart;
         ShoppingCartCK ck = ShoppingCartCK.builder()
-                .actor(testShoppingCart.getActor())
-                .product(testShoppingCart.getProduct())
+                //.actor(testShoppingCart.getActor())
+                .product(testShoppingCart.getProduct().getProductId())
                 .build();
 
         this.mvc.perform(MockMvcRequestBuilders.put("/shoppingcart")
@@ -92,8 +92,8 @@ class ShoppingCartControllerTest {
     void delete() throws Exception {
         ShoppingCart testShoppingCart = this.shoppingCart;
         ShoppingCartCK ck = ShoppingCartCK.builder()
-                .actor(testShoppingCart.getActor())
-                .product(testShoppingCart.getProduct())
+                //.actor(testShoppingCart.getActor())
+                .product(testShoppingCart.getProduct().getProductId())
                 .build();
 
         this.mvc.perform(MockMvcRequestBuilders.delete("/shoppingcart")
