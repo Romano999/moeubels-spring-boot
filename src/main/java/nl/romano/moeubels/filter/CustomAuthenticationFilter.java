@@ -86,7 +86,6 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     // Can be used to prevent brute force attacks
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
-
         super.unsuccessfulAuthentication(request, response, failed);
     }
 }
