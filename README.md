@@ -1,5 +1,5 @@
-# iprwc-spring-backend
-REST Backend made with Spring Boot for IPRWC.
+# moeubels-spring-boot
+REST Backend made with Spring Boot.
 
 Frontend project related to this backend can be found here:
-https://github.com/Romano999/iprwc-angular-frontend
+(Currently private)
