@@ -51,13 +51,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/login/**", "/token/refresh/**").permitAll();
 
         // Actor related
-        http.authorizeRequests().antMatchers("/actors/**").hasAnyAuthority("Administrator");
+        http.authorizeRequests().antMatchers(GET, "/actors/**").hasAnyAuthority("Actor", "Administrator");
+        http.authorizeRequests().antMatchers(POST, "/actors/**").hasAnyAuthority("Administrator");
+        http.authorizeRequests().antMatchers(PUT, "/actors/**").hasAnyAuthority("Administrator");
+        http.authorizeRequests().antMatchers(DELETE, "/actors/**").hasAnyAuthority("Administrator");
+        http.authorizeRequests().antMatchers(PATCH, "/actors/**").hasAnyAuthority("Administrator");
+        http.authorizeRequests().antMatchers(TRACE, "/actors/**").hasAnyAuthority("Administrator");
+
         // Category related
-        http.authorizeRequests().antMatchers(POST, "/categories/**").hasAnyAuthority();
+        http.authorizeRequests().antMatchers(POST, "/categories/**").hasAnyAuthority("Administrator");
         http.authorizeRequests().antMatchers(PUT, "/categories/**").hasAnyAuthority("Administrator");
         http.authorizeRequests().antMatchers(DELETE, "/categories/**").hasAnyAuthority("Administrator");
         http.authorizeRequests().antMatchers(PATCH, "/categories/**").hasAnyAuthority("Administrator");
-        http.authorizeRequests().antMatchers(TRACE, "/categories/**").hasAnyAuthority("Administrator"); //
+        http.authorizeRequests().antMatchers(TRACE, "/categories/**").hasAnyAuthority("Administrator");
         // Product related
         http.authorizeRequests().antMatchers(POST, "/products/**").hasAnyAuthority("Administrator");
         http.authorizeRequests().antMatchers(PUT, "/products/**").hasAnyAuthority("Administrator");
