@@ -6,6 +6,7 @@ import com.jayway.jsonpath.JsonPath;
 import nl.romano.moeubels.dao.CategoryDao;
 import nl.romano.moeubels.dao.FavouriteDao;
 import nl.romano.moeubels.model.*;
+import nl.romano.moeubels.utils.ObjectMother;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -44,11 +45,7 @@ class FavouriteControllerTest {
     @BeforeEach
     void setUp() {
         this.mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-        this.favourite = Favourite.builder()
-                .actor(Actor.builder().actorId(UUID.randomUUID()).build())
-                .product(Product.builder().productId(UUID.randomUUID()).build())
-                .addedAt(ZonedDateTime.now())
-                .build();
+        this.favourite = ObjectMother.genericFavourite();
     }
 
     @Test

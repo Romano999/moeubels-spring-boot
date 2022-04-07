@@ -5,6 +5,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import nl.romano.moeubels.dao.CategoryDao;
 import nl.romano.moeubels.model.Actor;
 import nl.romano.moeubels.model.Category;
+import nl.romano.moeubels.utils.ObjectMother;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -39,13 +40,7 @@ class CategoryControllerTest {
     @BeforeEach
     void setup() {
         this.mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-        this.category = Category.builder()
-                .categoryId(UUID.randomUUID())
-                .categoryName("Name")
-                .categoryDescription("Description")
-                .createdAt(ZonedDateTime.now())
-                .modifiedAt(ZonedDateTime.now())
-                .build();
+        this.category = ObjectMother.genericCategory();
     }
 
     @Test

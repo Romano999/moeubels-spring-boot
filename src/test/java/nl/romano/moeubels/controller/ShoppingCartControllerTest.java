@@ -5,6 +5,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import nl.romano.moeubels.dao.FavouriteDao;
 import nl.romano.moeubels.dao.ShoppingCartDao;
 import nl.romano.moeubels.model.*;
+import nl.romano.moeubels.utils.ObjectMother;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -42,12 +43,7 @@ class ShoppingCartControllerTest {
     @BeforeEach
     void setUp() {
         this.mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-        this.shoppingCart = ShoppingCart.builder()
-                .actor(Actor.builder().actorId(UUID.randomUUID()).build())
-                .product(Product.builder().productId(UUID.randomUUID()).build())
-                .amount(3)
-                .addedAt(ZonedDateTime.now())
-                .build();
+        this.shoppingCart = ObjectMother.genericShoppingCart();
     }
 
     @Test
@@ -63,19 +59,19 @@ class ShoppingCartControllerTest {
         this.mvc.perform(MockMvcRequestBuilders
                         .get(requestPath).secure(true).contentType("application/json"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().json(asJsonString(List.of(testShoppingCart))));
+                .andExpect(MockMvcResultMatchers.content().json(asJsonString(Optional.of(List.of(testShoppingCart)))));
     }
 
     @Test
     void create() throws Exception {
         ShoppingCart testShoppingCart = this.shoppingCart;
-        ShoppingCartCK ck = ShoppingCartCK.builder()
-                //.actor(testShoppingCart.getActor())
-                .product(testShoppingCart.getProduct().getProductId())
+        ShoppingCartRequest scr = ShoppingCartRequest.builder()
+                .actorId(testShoppingCart.getActor().getActorId())
+                .productId(testShoppingCart.getProduct().getProductId())
                 .build();
 
         this.mvc.perform(MockMvcRequestBuilders.put("/shoppingcart")
-                        .secure(true).content(asJsonString(ck)).contentType("application/json"))
+                        .secure(true).content(asJsonString(scr)).contentType("application/json"))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
 

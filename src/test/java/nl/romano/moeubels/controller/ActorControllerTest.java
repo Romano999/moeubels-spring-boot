@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import nl.romano.moeubels.dao.ActorDao;
 import nl.romano.moeubels.model.Actor;
+import nl.romano.moeubels.utils.ObjectMother;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -34,15 +35,7 @@ class ActorControllerTest {
     @BeforeEach
     void setUp() {
         this.mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-        this.actor = Actor.builder()
-                .actorId(UUID.randomUUID())
-                .username("JohnDoe")
-                .password("password")
-                .firstName("John")
-                .lastName("Doe")
-                .createdAt(ZonedDateTime.now())
-                .modifiedAt(ZonedDateTime.now())
-                .build();
+        this.actor = ObjectMother.genericActor();
     }
 
     @Test
