@@ -26,10 +26,10 @@ public class FavouriteController {
 
     @GetMapping("/{actorId}")
     public ResponseEntity<?> getByActorId(@PathVariable UUID actorId) throws ResourceNotFoundException {
-        logger.info("Getting all Favourite(s) of Actor with id " + actorId);
+        logger.info("Getting all favourite(s) of an actor with actor id " + actorId);
         List<Favourite> favourites = favouriteDao.getByActorId(actorId)
                 .orElseThrow(() -> {
-                    ResourceNotFoundException exc = new ActorNotFoundException("Actor with id: " + actorId + " not found");
+                    ResourceNotFoundException exc = new ActorNotFoundException("Actor with actor id " + actorId + " not found");
                     logger.error(exc.getMessage());
                     return exc;
                 });
@@ -39,14 +39,14 @@ public class FavouriteController {
 
     @PostMapping()
     public ResponseEntity<String> create(@RequestBody Favourite favourite) {
-        logger.info("Creating a Favourite");
+        logger.info("Creating a favourite");
         favouriteDao.save(favourite);
         return Responses.jsonOkResponseEntity();
     }
 
     @PutMapping()
     public ResponseEntity<String> update(@RequestBody Favourite favourite) {
-        logger.info("Updating a Favourite");
+        logger.info("Updating a favourite");
         favouriteDao.update(favourite);
         return Responses.jsonOkResponseEntity();
     }
@@ -54,7 +54,7 @@ public class FavouriteController {
     @DeleteMapping()
     public ResponseEntity<?> delete(@RequestBody FavouriteCK ck) throws ResourceNotFoundException {
         logger.info(
-                "Deleting a Favourite with actor id " + ck.getActor().getActorId() +
+                "Deleting a favourite with actor id " + ck.getActor().getActorId() +
                 " and product id " + ck.getProduct().getProductId()
         );
         favouriteDao.delete(ck);

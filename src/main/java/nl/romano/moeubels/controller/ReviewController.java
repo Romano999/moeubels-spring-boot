@@ -25,10 +25,10 @@ public class ReviewController implements CrudOperations<Review> {
     @Override
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable UUID id) throws ResourceNotFoundException {
-        logger.info("Getting a Review with id " + id);
+        logger.info("Getting a review by review id " + id);
         Review review = reviewDao.getById(id)
                 .orElseThrow(() -> {
-                    ResourceNotFoundException exc = new ReviewNotFoundException("Review with id: " + id + " not found");
+                    ResourceNotFoundException exc = new ReviewNotFoundException("Review with review id " + id + " not found");
                     logger.error(exc.getMessage());
                     return exc;
                 });
@@ -38,7 +38,7 @@ public class ReviewController implements CrudOperations<Review> {
     @Override
     @PostMapping()
     public ResponseEntity<String> create(@RequestBody Review review) {
-        logger.info("Creating a Review");
+        logger.info("Creating a review");
         reviewDao.save(review);
         return Responses.jsonOkResponseEntity();
     }
@@ -46,7 +46,7 @@ public class ReviewController implements CrudOperations<Review> {
     @Override
     @PutMapping()
     public ResponseEntity<String> update(@RequestBody Review review) {
-        logger.info("Updating a Review");
+        logger.info("Updating a review");
         reviewDao.update(review);
         return Responses.jsonOkResponseEntity();
     }
@@ -54,7 +54,7 @@ public class ReviewController implements CrudOperations<Review> {
     @Override
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable UUID id) throws ResourceNotFoundException {
-        logger.info("Deleting a Review with id " + id);
+        logger.info("Deleting a review with review id " + id);
         return Responses.jsonOkResponseEntity();
     }
 }

@@ -24,10 +24,10 @@ public class ActorController implements CrudOperations<Actor> {
     @Override
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable(value = "id") UUID id) throws ResourceNotFoundException {
-        logger.info("Getting an Actor by id: " + id);
+        logger.info("Getting an actor by actor id " + id);
         Actor actor = actorDao.getById(id)
                 .orElseThrow(() -> {
-                    ResourceNotFoundException exc = new ActorNotFoundException("Actor with id: " + id + " not found");
+                    ResourceNotFoundException exc = new ActorNotFoundException("Actor with actor id " + id + " not found");
                     logger.error(exc.getMessage());
                     return exc;
                 });
@@ -37,7 +37,7 @@ public class ActorController implements CrudOperations<Actor> {
     @Override
     @PostMapping()
     public ResponseEntity<String> create(@RequestBody Actor actor) {
-        logger.info("Creating an Actor");
+        logger.info("Creating an actor");
         actorDao.save(actor);
         return Responses.jsonOkResponseEntity();
     }
@@ -45,7 +45,7 @@ public class ActorController implements CrudOperations<Actor> {
     @Override
     @PutMapping()
     public ResponseEntity<String> update(@RequestBody Actor actor) {
-        logger.info("Updating an Actor");
+        logger.info("Updating an actor");
         actorDao.update(actor);
         return Responses.jsonOkResponseEntity();
     }
@@ -53,7 +53,7 @@ public class ActorController implements CrudOperations<Actor> {
     @Override
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable UUID id) throws ResourceNotFoundException {
-        logger.info("Deleting an Actor with id " + id);
+        logger.info("Deleting an actor with actor id " + id);
         actorDao.delete(id);
         return Responses.jsonOkResponseEntity();
     }

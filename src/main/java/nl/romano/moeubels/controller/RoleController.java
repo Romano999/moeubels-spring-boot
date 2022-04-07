@@ -42,10 +42,10 @@ public class RoleController implements CrudOperations<Role> {
 
     @Override
     public ResponseEntity<?> getById(UUID id) throws ResourceNotFoundException {
-        logger.info("Getting a Role with id " + id);
+        logger.info("Getting a role with role id " + id);
         Role role = roleDao.getById(id)
                 .orElseThrow(() -> {
-                    ResourceNotFoundException exc = new RoleNotFoundException("Role with id: " + id + " not found");
+                    ResourceNotFoundException exc = new RoleNotFoundException("Role with role id " + id + " not found");
                     logger.error(exc.getMessage());
                     return exc;
                 });
@@ -54,21 +54,21 @@ public class RoleController implements CrudOperations<Role> {
 
     @Override
     public ResponseEntity<String> create(Role role) {
-        logger.info("Creating a Role");
+        logger.info("Creating a role");
         roleDao.save(role);
         return Responses.jsonOkResponseEntity();
     }
 
     @Override
     public ResponseEntity<String> update(Role role) {
-        logger.info("Updating a Role");
+        logger.info("Updating a role");
         roleDao.update(role);
         return Responses.jsonOkResponseEntity();
     }
 
     @Override
     public ResponseEntity<?> delete(UUID id) throws ResourceNotFoundException {
-        logger.info("Deleting a Role with id " + id);
+        logger.info("Deleting a role with id " + id);
         roleDao.delete(id);
         return Responses.jsonOkResponseEntity();
     }

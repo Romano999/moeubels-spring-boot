@@ -28,10 +28,10 @@ public class ShoppingCartController {
 
     @GetMapping("/{actorId}")
     public ResponseEntity<List<ShoppingCartProjection>> getByActorId(@PathVariable UUID actorId) throws ResourceNotFoundException {
-        logger.info("Getting a ShoppingCart of Actor with id " + actorId);
+        logger.info("Getting a shoppingCart of an actor with actor id " + actorId);
         List<ShoppingCart> shoppingCart = shoppingCartDao.getByActorId(actorId)
                 .orElseThrow(() -> {
-                    ResourceNotFoundException exc = new ShoppingCartNotFoundException("Actor with id: " + actorId + " not found");
+                    ResourceNotFoundException exc = new ShoppingCartNotFoundException("Actor with actor id: " + actorId + " not found");
                     logger.error(exc.getMessage());
                     return exc;
                 });
@@ -40,14 +40,14 @@ public class ShoppingCartController {
 
     @PostMapping()
     public ResponseEntity<String> create(@RequestBody ShoppingCartRequest shoppingCartRequest) {
-        logger.info("Creating a ShoppingCart");
+        logger.info("Creating a shoppingCart");
         shoppingCartDao.save(shoppingCartRequest);
         return Responses.jsonOkResponseEntity();
     }
 
     @PutMapping()
     public ResponseEntity<String> update(@RequestBody ShoppingCart shoppingCart) {
-        logger.info("Updating a ShoppingCart");
+        logger.info("Updating a shoppingCart");
         shoppingCartDao.update(shoppingCart);
         return Responses.jsonOkResponseEntity();
     }
@@ -55,7 +55,7 @@ public class ShoppingCartController {
     @DeleteMapping()
     public ResponseEntity<?> delete(@RequestBody ShoppingCartCK ck) throws ResourceNotFoundException {
         logger.info(
-                "Deleting a ShoppingCart with actor id " + ck.getActor() + " and product id " + ck.getProduct()
+                "Deleting a shoppingCart with actor id " + ck.getActor() + " and product id " + ck.getProduct()
         );
         shoppingCartDao.delete(ck);
         return Responses.jsonOkResponseEntity();

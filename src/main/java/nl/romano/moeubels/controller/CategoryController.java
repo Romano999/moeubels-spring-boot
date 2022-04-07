@@ -25,7 +25,7 @@ public class CategoryController implements CrudOperations<Category> {
 
     @GetMapping("/all")
     public ResponseEntity<?> getAll(@RequestBody int page, @RequestBody int size) {
-        logger.info("Getting all Categories on page " + page + " with size " + size);
+        logger.info("Getting all categories on page " + page + " with size " + size);
         Page<Category> categories = categoryDao.getAll(Pageable.ofSize(size).withPage(page));
         return Responses.ResponseEntityOk(categories);
     }
@@ -33,10 +33,10 @@ public class CategoryController implements CrudOperations<Category> {
     @Override
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable UUID id) throws ResourceNotFoundException {
-        logger.info("Getting a Category by id: " + id);
+        logger.info("Getting a category by category id " + id);
         Category category = categoryDao.getById(id)
                 .orElseThrow(() -> {
-                    ResourceNotFoundException exc = new CategoryNotFoundException("Category with id: " + id + " not found");
+                    ResourceNotFoundException exc = new CategoryNotFoundException("Category with category id: " + id + " not found");
                     logger.error(exc.getMessage());
                     return exc;
                 });
@@ -46,7 +46,7 @@ public class CategoryController implements CrudOperations<Category> {
     @Override
     @PostMapping()
     public ResponseEntity<String> create(@RequestBody Category category) {
-        logger.info("Creating a Category");
+        logger.info("Creating a category");
         categoryDao.save(category);
         return Responses.jsonOkResponseEntity();
     }
@@ -54,7 +54,7 @@ public class CategoryController implements CrudOperations<Category> {
     @Override
     @PutMapping()
     public ResponseEntity<String> update(@RequestBody Category category) {
-        logger.info("Updating a Category");
+        logger.info("Updating a category");
         categoryDao.update(category);
         return Responses.jsonOkResponseEntity();
     }
@@ -62,7 +62,7 @@ public class CategoryController implements CrudOperations<Category> {
     @Override
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable UUID id) throws ResourceNotFoundException {
-        logger.info("Deleting a Category with id " + id);
+        logger.info("Deleting a category with category id " + id);
         categoryDao.delete(id);
         return Responses.jsonOkResponseEntity();
     }

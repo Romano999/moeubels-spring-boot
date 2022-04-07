@@ -26,14 +26,14 @@ public class ProductController implements CrudOperations<Product> {
 
     @GetMapping(value = "/all", params = { "page", "size" })
     public ResponseEntity<Page<Product>> getAll(@RequestParam int page, @RequestParam int size) {
-        logger.info("Getting all Products on page " + page + " with size " + size);
+        logger.info("Getting all products on page " + page + " with size " + size);
         Page<Product> products = productDao.getAll(Pageable.ofSize(size).withPage(page));
         return Responses.ResponseEntityOk(products);
     }
 
     @GetMapping(value = "/{searchTerm}", params = { "page", "size" })
     public ResponseEntity<Page<Product>> getByName(@PathVariable String searchTerm, @RequestParam int page, @RequestParam int size) {
-        logger.info("Getting all Products with search term " + searchTerm + " on page " + page + " with size " + size);
+        logger.info("Getting all products with search term " + searchTerm + " on page " + page + " with size " + size);
         Page<Product> products = productDao.getByName(searchTerm, Pageable.ofSize(size).withPage(page));
         return Responses.ResponseEntityOk(products);
     }
@@ -41,10 +41,10 @@ public class ProductController implements CrudOperations<Product> {
     @Override
     @GetMapping("/{id}")
     public ResponseEntity<Product> getById(@PathVariable UUID id) throws ResourceNotFoundException {
-        logger.info("Getting a Product with id " + id);
+        logger.info("Getting a product with product id " + id);
         Product product = productDao.getById(id)
                 .orElseThrow(() -> {
-                    ResourceNotFoundException exc = new ProductNotFoundException("Product with id: " + id + " not found");
+                    ResourceNotFoundException exc = new ProductNotFoundException("Product with product id " + id + " not found");
                     logger.error(exc.getMessage());
                     return exc;
                 });
@@ -54,7 +54,7 @@ public class ProductController implements CrudOperations<Product> {
     @Override
     @PostMapping()
     public ResponseEntity<String> create(@RequestBody Product product) {
-        logger.info("Creating a Product");
+        logger.info("Creating a product");
         productDao.save(product);
         return Responses.jsonOkResponseEntity();
     }
@@ -62,7 +62,7 @@ public class ProductController implements CrudOperations<Product> {
     @Override
     @PutMapping()
     public ResponseEntity<String> update(@RequestBody Product product) {
-        logger.info("Updating a Product");
+        logger.info("Updating a product");
         productDao.update(product);
         return Responses.jsonOkResponseEntity();
     }
@@ -70,7 +70,7 @@ public class ProductController implements CrudOperations<Product> {
     @Override
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable UUID id) throws ResourceNotFoundException{
-        logger.info("Deleting a Product with id " + id);
+        logger.info("Deleting a product with product id " + id);
         productDao.delete(id);
         return Responses.jsonOkResponseEntity();
     }
