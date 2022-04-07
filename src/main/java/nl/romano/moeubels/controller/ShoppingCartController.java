@@ -1,16 +1,18 @@
 package nl.romano.moeubels.controller;
 
 import nl.romano.moeubels.dao.ShoppingCartDao;
+import nl.romano.moeubels.exceptions.ActorNotFoundException;
 import nl.romano.moeubels.exceptions.ResourceNotFoundException;
 import nl.romano.moeubels.exceptions.ShoppingCartNotFoundException;
-import nl.romano.moeubels.model.Category;
 import nl.romano.moeubels.model.ShoppingCart;
 import nl.romano.moeubels.model.ShoppingCartCK;
 import nl.romano.moeubels.model.ShoppingCartRequest;
 import nl.romano.moeubels.projection.ShoppingCartProjection;
+import nl.romano.moeubels.utils.Responses;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,27 +24,39 @@ public class ShoppingCartController {
     @Autowired
     private ShoppingCartDao shoppingCartDao;
 
+    Logger logger = LoggerFactory.getLogger(ShoppingCartController.class);
+
     @GetMapping("/{actorId}")
     public ResponseEntity<List<ShoppingCartProjection>> getByActorId(@PathVariable UUID actorId) throws ResourceNotFoundException {
+        logger.info("Getting a ShoppingCart of Actor with id " + actorId);
         List<ShoppingCart> shoppingCart = shoppingCartDao.getByActorId(actorId)
-                .orElseThrow(() -> new ShoppingCartNotFoundException("Actor with id: " + actorId + "not found"));
+                .orElseThrow(() -> {
+                    ResourceNotFoundException exc = new ShoppingCartNotFoundException("Actor with id: " + actorId + " not found");
+                    logger.error(exc.getMessage());
+                    return exc;
+                });
         return Responses.ResponseEntityOk(ShoppingCartProjection.toShoppingCartProjectionList(shoppingCart));
     }
 
     @PostMapping()
     public ResponseEntity<String> create(@RequestBody ShoppingCartRequest shoppingCartRequest) {
+        logger.info("Creating a ShoppingCart");
         shoppingCartDao.save(shoppingCartRequest);
         return Responses.jsonOkResponseEntity();
     }
 
     @PutMapping()
     public ResponseEntity<String> update(@RequestBody ShoppingCart shoppingCart) {
+        logger.info("Updating a ShoppingCart");
         shoppingCartDao.update(shoppingCart);
         return Responses.jsonOkResponseEntity();
     }
 
     @DeleteMapping()
     public ResponseEntity<?> delete(@RequestBody ShoppingCartCK ck) throws ResourceNotFoundException {
+        logger.info(
+                "Deleting a ShoppingCart with actor id " + ck.getActor() + " and product id " + ck.getProduct()
+        );
         shoppingCartDao.delete(ck);
         return Responses.jsonOkResponseEntity();
     }

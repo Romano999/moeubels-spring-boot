@@ -1,14 +1,14 @@
 package nl.romano.moeubels.controller;
 
 import nl.romano.moeubels.dao.FavouriteDao;
-import nl.romano.moeubels.dao.ShoppingCartDao;
+import nl.romano.moeubels.exceptions.ActorNotFoundException;
 import nl.romano.moeubels.exceptions.FavouriteNotFoundException;
 import nl.romano.moeubels.exceptions.ResourceNotFoundException;
-import nl.romano.moeubels.exceptions.ShoppingCartNotFoundException;
 import nl.romano.moeubels.model.Favourite;
 import nl.romano.moeubels.model.FavouriteCK;
-import nl.romano.moeubels.model.ShoppingCart;
-import nl.romano.moeubels.model.ShoppingCartCK;
+import nl.romano.moeubels.utils.Responses;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,28 +22,41 @@ public class FavouriteController {
     @Autowired
     private FavouriteDao favouriteDao;
 
+    Logger logger = LoggerFactory.getLogger(FavouriteController.class);
+
     @GetMapping("/{actorId}")
     public ResponseEntity<?> getByActorId(@PathVariable UUID actorId) throws ResourceNotFoundException {
+        logger.info("Getting all Favourite(s) of Actor with id " + actorId);
         List<Favourite> favourites = favouriteDao.getByActorId(actorId)
-                .orElseThrow(() -> new FavouriteNotFoundException("Favourite with id: " + actorId + "not found"));
+                .orElseThrow(() -> {
+                    ResourceNotFoundException exc = new ActorNotFoundException("Actor with id: " + actorId + " not found");
+                    logger.error(exc.getMessage());
+                    return exc;
+                });
         return Responses.ResponseEntityOk(favourites);
     }
 
 
     @PostMapping()
     public ResponseEntity<String> create(@RequestBody Favourite favourite) {
+        logger.info("Creating a Favourite");
         favouriteDao.save(favourite);
         return Responses.jsonOkResponseEntity();
     }
 
     @PutMapping()
     public ResponseEntity<String> update(@RequestBody Favourite favourite) {
+        logger.info("Updating a Favourite");
         favouriteDao.update(favourite);
         return Responses.jsonOkResponseEntity();
     }
 
     @DeleteMapping()
     public ResponseEntity<?> delete(@RequestBody FavouriteCK ck) throws ResourceNotFoundException {
+        logger.info(
+                "Deleting a Favourite with actor id " + ck.getActor().getActorId() +
+                " and product id " + ck.getProduct().getProductId()
+        );
         favouriteDao.delete(ck);
         return Responses.jsonOkResponseEntity();
     }
