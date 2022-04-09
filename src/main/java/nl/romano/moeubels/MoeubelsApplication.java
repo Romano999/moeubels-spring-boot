@@ -61,7 +61,7 @@ public class MoeubelsApplication {
         connector.setScheme("http");
         connector.setPort(8081);
         connector.setSecure(false);
-        connector.setRedirectPort(9865);
+        connector.setRedirectPort(9867);
         return connector;
     }
 }
