@@ -1,4 +1,4 @@
-package nl.romano.moeubels.controller;
+package nl.romano.moeubels.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
