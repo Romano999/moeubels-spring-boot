@@ -40,7 +40,6 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         this.authenticationManager = authenticationManager;
     }
 
-    // Body as json can also be the case
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         String username = request.getParameter("username");
@@ -57,7 +56,6 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         User actor = (User) authentication.getPrincipal();
         List<String> authorities = actor.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
 
-        // Not the best
         Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
         String accessToken = JWT.create()
                 .withSubject(actor.getUsername())
