@@ -40,7 +40,7 @@ public class RoleController implements CrudOperations<Role> {
 
     @Override
     @GetMapping("/{id}")
-    public ResponseEntity<?> getById(UUID id) throws ResourceNotFoundException {
+    public ResponseEntity<?> getById(@PathVariable UUID id) throws ResourceNotFoundException {
         logger.info("Getting a role with role id " + id);
         Role role = roleDao.getById(id)
                 .orElseThrow(() -> {
@@ -53,7 +53,7 @@ public class RoleController implements CrudOperations<Role> {
 
     @Override
     @PostMapping()
-    public ResponseEntity<String> create(Role role) {
+    public ResponseEntity<String> create(@RequestBody Role role) {
         logger.info("Creating a role");
         roleDao.save(role);
         return Responses.jsonOkResponseEntity();
@@ -61,7 +61,7 @@ public class RoleController implements CrudOperations<Role> {
 
     @Override
     @PutMapping()
-    public ResponseEntity<String> update(Role role) {
+    public ResponseEntity<String> update(@RequestBody Role role) {
         logger.info("Updating a role");
         roleDao.update(role);
         return Responses.jsonOkResponseEntity();
@@ -69,7 +69,7 @@ public class RoleController implements CrudOperations<Role> {
 
     @Override
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(UUID id) throws ResourceNotFoundException {
+    public ResponseEntity<?> delete(@PathVariable UUID id) throws ResourceNotFoundException {
         logger.info("Deleting a role with id " + id);
         roleDao.delete(id);
         return Responses.jsonOkResponseEntity();
