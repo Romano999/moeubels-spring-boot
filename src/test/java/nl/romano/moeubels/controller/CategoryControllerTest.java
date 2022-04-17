@@ -3,7 +3,6 @@ package nl.romano.moeubels.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import nl.romano.moeubels.dao.CategoryDao;
-import nl.romano.moeubels.model.Actor;
 import nl.romano.moeubels.model.Category;
 import nl.romano.moeubels.utils.ObjectMother;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,7 +18,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-import java.time.ZonedDateTime;
+
 import java.util.Optional;
 import java.util.UUID;
 
@@ -41,12 +40,6 @@ class CategoryControllerTest {
     void setup() {
         this.mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
         this.category = ObjectMother.genericCategory();
-    }
-
-    @Test
-    void getAll() {
-        //Category testCategory = this.category;
-
     }
 
     @Test

@@ -66,4 +66,11 @@ public class ObjectMother {
                 .addedAt(ZonedDateTime.now())
                 .build();
     }
+
+    public static Role genericRole() {
+        return Role.builder()
+                .roleId(UUID.randomUUID())
+                .roleName("Actor")
+                .build();
+    }
 }
