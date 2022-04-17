@@ -17,9 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -41,6 +39,7 @@ public class RoleController implements CrudOperations<Role> {
     Logger logger = LoggerFactory.getLogger(RoleController.class);
 
     @Override
+    @GetMapping("/{id}")
     public ResponseEntity<?> getById(UUID id) throws ResourceNotFoundException {
         logger.info("Getting a role with role id " + id);
         Role role = roleDao.getById(id)
@@ -53,6 +52,7 @@ public class RoleController implements CrudOperations<Role> {
     }
 
     @Override
+    @PostMapping()
     public ResponseEntity<String> create(Role role) {
         logger.info("Creating a role");
         roleDao.save(role);
@@ -60,6 +60,7 @@ public class RoleController implements CrudOperations<Role> {
     }
 
     @Override
+    @PutMapping()
     public ResponseEntity<String> update(Role role) {
         logger.info("Updating a role");
         roleDao.update(role);
@@ -67,6 +68,7 @@ public class RoleController implements CrudOperations<Role> {
     }
 
     @Override
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(UUID id) throws ResourceNotFoundException {
         logger.info("Deleting a role with id " + id);
         roleDao.delete(id);
