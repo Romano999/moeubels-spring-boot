@@ -58,8 +58,7 @@ class ShoppingCartControllerTest {
 
         this.mvc.perform(MockMvcRequestBuilders
                         .get(requestPath).secure(true).contentType("application/json"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().json(asJsonString(Optional.of(List.of(testShoppingCart)))));
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test
