@@ -8,25 +8,21 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import nl.romano.moeubels.dao.ActorDao;
 import nl.romano.moeubels.dao.RoleDao;
 import nl.romano.moeubels.exceptions.ResourceNotFoundException;
+import nl.romano.moeubels.exceptions.ReviewNotFoundException;
 import nl.romano.moeubels.exceptions.RoleNotFoundException;
 import nl.romano.moeubels.model.Actor;
 import nl.romano.moeubels.model.Role;
+import nl.romano.moeubels.utils.Responses;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
@@ -40,28 +36,42 @@ public class RoleController implements CrudOperations<Role> {
     @Autowired
     private ActorDao actorDao;
 
+    Logger logger = LoggerFactory.getLogger(RoleController.class);
+
     @Override
-    public ResponseEntity<?> getById(UUID uuid) throws ResourceNotFoundException {
-        Role role = roleDao.getById(uuid)
-                .orElseThrow(() -> new RoleNotFoundException(""));
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getById(@PathVariable UUID id) throws ResourceNotFoundException {
+        logger.info("Getting a role with role id " + id);
+        Role role = roleDao.getById(id)
+                .orElseThrow(() -> {
+                    ResourceNotFoundException exc = new RoleNotFoundException("Role with role id " + id + " not found");
+                    logger.error(exc.getMessage());
+                    return exc;
+                });
         return Responses.ResponseEntityOk(role);
     }
 
     @Override
-    public ResponseEntity<String> create(Role role) {
+    @PostMapping()
+    public ResponseEntity<String> create(@RequestBody Role role) {
+        logger.info("Creating a role");
         roleDao.save(role);
         return Responses.jsonOkResponseEntity();
     }
 
     @Override
-    public ResponseEntity<String> update(Role role) {
+    @PutMapping()
+    public ResponseEntity<String> update(@RequestBody Role role) {
+        logger.info("Updating a role");
         roleDao.update(role);
         return Responses.jsonOkResponseEntity();
     }
 
     @Override
-    public ResponseEntity<?> delete(UUID uuid) throws ResourceNotFoundException {
-        roleDao.delete(uuid);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable UUID id) throws ResourceNotFoundException {
+        logger.info("Deleting a role with id " + id);
+        roleDao.delete(id);
         return Responses.jsonOkResponseEntity();
     }
 

@@ -4,6 +4,9 @@ import nl.romano.moeubels.dao.CategoryDao;
 import nl.romano.moeubels.exceptions.CategoryNotFoundException;
 import nl.romano.moeubels.exceptions.ResourceNotFoundException;
 import nl.romano.moeubels.model.Category;
+import nl.romano.moeubels.utils.Responses;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,23 +21,32 @@ public class CategoryController implements CrudOperations<Category> {
     @Autowired
     private CategoryDao categoryDao;
 
-    @GetMapping("/all/{page}")
-    public ResponseEntity<?> getAll(@PathVariable int page) {
-        Page<Category> categories = categoryDao.getAll(Pageable.ofSize(5).withPage(page));
+    Logger logger = LoggerFactory.getLogger(CategoryController.class);
+
+    @GetMapping("/all")
+    public ResponseEntity<?> getAll(@RequestBody int page, @RequestBody int size) {
+        logger.info("Getting all categories on page " + page + " with size " + size);
+        Page<Category> categories = categoryDao.getAll(Pageable.ofSize(size).withPage(page));
         return Responses.ResponseEntityOk(categories);
     }
 
     @Override
-    @GetMapping("/{uuid}")
-    public ResponseEntity<?> getById(@PathVariable UUID uuid) throws ResourceNotFoundException {
-        Category category = categoryDao.getById(uuid)
-                .orElseThrow(() -> new CategoryNotFoundException("Category with id: " + uuid + "not found"));
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getById(@PathVariable UUID id) throws ResourceNotFoundException {
+        logger.info("Getting a category by category id " + id);
+        Category category = categoryDao.getById(id)
+                .orElseThrow(() -> {
+                    ResourceNotFoundException exc = new CategoryNotFoundException("Category with category id: " + id + " not found");
+                    logger.error(exc.getMessage());
+                    return exc;
+                });
         return Responses.ResponseEntityOk(category);
     }
 
     @Override
     @PostMapping()
     public ResponseEntity<String> create(@RequestBody Category category) {
+        logger.info("Creating a category");
         categoryDao.save(category);
         return Responses.jsonOkResponseEntity();
     }
@@ -42,14 +54,16 @@ public class CategoryController implements CrudOperations<Category> {
     @Override
     @PutMapping()
     public ResponseEntity<String> update(@RequestBody Category category) {
+        logger.info("Updating a category");
         categoryDao.update(category);
         return Responses.jsonOkResponseEntity();
     }
 
     @Override
-    @DeleteMapping("/{uuid}")
-    public ResponseEntity<?> delete(@PathVariable UUID uuid) throws ResourceNotFoundException {
-        categoryDao.delete(uuid);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable UUID id) throws ResourceNotFoundException {
+        logger.info("Deleting a category with category id " + id);
+        categoryDao.delete(id);
         return Responses.jsonOkResponseEntity();
     }
 }

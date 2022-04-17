@@ -2,10 +2,9 @@ package nl.romano.moeubels.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.jayway.jsonpath.JsonPath;
-import nl.romano.moeubels.dao.CategoryDao;
-import nl.romano.moeubels.dao.FavouriteDao;
-import nl.romano.moeubels.model.*;
+import nl.romano.moeubels.dao.ActorDao;
+import nl.romano.moeubels.dao.RoleDao;
+import nl.romano.moeubels.model.Role;
 import nl.romano.moeubels.utils.ObjectMother;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,86 +15,73 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.time.ZonedDateTime;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(FavouriteController.class)
-class FavouriteControllerTest {
+@WebMvcTest(RoleController.class)
+class RoleControllerTest {
     @Autowired
     private WebApplicationContext webApplicationContext;
     @MockBean
-    private UserDetailsService userDetailsService;
+    private RoleDao roleDao;
     @MockBean
-    private FavouriteDao favouriteDao;
+    private ActorDao actorDao;
     private MockMvc mvc;
-    private Favourite favourite;
+    private Role role;
 
     @BeforeEach
-    void setUp() {
+    void setup() {
         this.mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-        this.favourite = ObjectMother.genericFavourite();
+        this.role = ObjectMother.genericRole();
     }
 
     @Test
-    void getByActorId() throws Exception {
-        Favourite testFavourite = this.favourite;
+    void getById() throws Exception {
+        Role testRole = this.role;
+        UUID roleId = testRole.getRoleId();
+        String requestPath = String.format("/roles/%s", roleId.toString());
 
-        UUID actorId = testFavourite.getActor().getActorId();
-
-        String requestPath = String.format("/favourites/%s", actorId.toString());
-
-        given(favouriteDao.getByActorId(actorId)).willReturn(Optional.of(List.of(testFavourite)));
+        given(roleDao.getById(roleId)).willReturn(Optional.of(testRole));
 
         this.mvc.perform(MockMvcRequestBuilders
-                        .get(requestPath).secure(true).contentType("application/json"))
+                .get(requestPath).secure(true))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().json(asJsonString(List.of(testFavourite))));
+                .andExpect(MockMvcResultMatchers.content().json(asJsonString(testRole)));
     }
 
     @Test
     void create() throws Exception {
-        Favourite testFavourite = this.favourite;
-        FavouriteCK ck = FavouriteCK.builder()
-                .actor(testFavourite.getActor())
-                .product(testFavourite.getProduct())
-                .build();
+        Role testRole = this.role;
 
-        this.mvc.perform(MockMvcRequestBuilders.put("/favourites")
-                        .secure(true).content(asJsonString(ck)).contentType("application/json"))
+        this.mvc.perform(MockMvcRequestBuilders.put("/roles")
+                .secure(true).content(asJsonString(testRole)).contentType("application/json"))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test
     void update() throws Exception {
-        Favourite testFavourite = this.favourite;
+        Role testRole = this.role;
 
-        this.mvc.perform(MockMvcRequestBuilders.post("/favourites")
-                        .secure(true).content(asJsonString(testFavourite)).contentType("application/json"))
+        this.mvc.perform(MockMvcRequestBuilders.post("/roles")
+                .secure(true).content(asJsonString(testRole)).contentType("application/json"))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test
     void delete() throws Exception {
-        Favourite testFavourite = this.favourite;
-        FavouriteCK ck = FavouriteCK.builder()
-                .actor(testFavourite.getActor())
-                .product(testFavourite.getProduct())
-                .build();
+        Role testRole = this.role;
+        UUID roleId = testRole.getRoleId();
+        String requestPath = String.format("/roles/%s", roleId.toString());
 
-        this.mvc.perform(MockMvcRequestBuilders.delete("/favourites")
-                        .secure(true).content(asJsonString(ck)).contentType("application/json"))
+        this.mvc.perform(MockMvcRequestBuilders.delete(requestPath, testRole).secure(true))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
 

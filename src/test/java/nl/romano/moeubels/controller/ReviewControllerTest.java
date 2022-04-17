@@ -8,6 +8,7 @@ import nl.romano.moeubels.dao.ReviewDao;
 import nl.romano.moeubels.model.Actor;
 import nl.romano.moeubels.model.Product;
 import nl.romano.moeubels.model.Review;
+import nl.romano.moeubels.utils.ObjectMother;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -45,11 +46,7 @@ class ReviewControllerTest {
     @BeforeEach
     void setUp() {
         this.mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-        this.review = Review.builder()
-                .reviewId(UUID.randomUUID())
-                .addedAt(ZonedDateTime.now())
-                .rating(5)
-                .build();
+        this.review = ObjectMother.genericReview();
     }
 
     @Test

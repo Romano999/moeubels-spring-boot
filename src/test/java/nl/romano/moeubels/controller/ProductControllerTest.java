@@ -7,6 +7,7 @@ import nl.romano.moeubels.dao.ProductDao;
 import nl.romano.moeubels.model.Actor;
 import nl.romano.moeubels.model.Category;
 import nl.romano.moeubels.model.Product;
+import nl.romano.moeubels.utils.ObjectMother;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -43,16 +44,7 @@ public class ProductControllerTest {
     @BeforeEach
     void setUp() {
         this.mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-        this.product = Product.builder()
-                .productId(UUID.randomUUID())
-                .price(BigDecimal.TEN)
-                .productName("Name")
-                .productDescription("Description")
-                .imagePath("ImagePath")
-                .isOnSale(false)
-                .createdAt(ZonedDateTime.now())
-                .modifiedAt(ZonedDateTime.now())
-                .build();
+        this.product = ObjectMother.genericProduct();
     }
 
     @Test

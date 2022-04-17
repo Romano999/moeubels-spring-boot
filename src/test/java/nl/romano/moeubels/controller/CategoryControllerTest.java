@@ -3,8 +3,8 @@ package nl.romano.moeubels.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import nl.romano.moeubels.dao.CategoryDao;
-import nl.romano.moeubels.model.Actor;
 import nl.romano.moeubels.model.Category;
+import nl.romano.moeubels.utils.ObjectMother;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,7 +18,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-import java.time.ZonedDateTime;
+
 import java.util.Optional;
 import java.util.UUID;
 
@@ -39,19 +39,7 @@ class CategoryControllerTest {
     @BeforeEach
     void setup() {
         this.mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-        this.category = Category.builder()
-                .categoryId(UUID.randomUUID())
-                .categoryName("Name")
-                .categoryDescription("Description")
-                .createdAt(ZonedDateTime.now())
-                .modifiedAt(ZonedDateTime.now())
-                .build();
-    }
-
-    @Test
-    void getAll() {
-        //Category testCategory = this.category;
-
+        this.category = ObjectMother.genericCategory();
     }
 
     @Test

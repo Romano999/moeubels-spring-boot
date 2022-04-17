@@ -19,8 +19,8 @@ public class ReviewDao implements Dao<Review> {
     private ReviewRespository reviewRespository;
 
     @Override
-    public Optional<Review> getById(UUID uuid) {
-        return reviewRespository.findById(uuid);
+    public Optional<Review> getById(UUID id) {
+        return reviewRespository.findById(id);
     }
 
     @Override
@@ -34,9 +34,9 @@ public class ReviewDao implements Dao<Review> {
     }
 
     @Override
-    public void delete(UUID uuid) throws ResourceNotFoundException {
-        Review review = reviewRespository.findById(uuid)
-                .orElseThrow(() -> new ReviewNotFoundException("Review with id: " + uuid + "not found"));
+    public void delete(UUID id) throws ResourceNotFoundException {
+        Review review = reviewRespository.findById(id)
+                .orElseThrow(() -> new ReviewNotFoundException("Review with id: " + id + "not found"));
         reviewRespository.delete(review);
     }
 }

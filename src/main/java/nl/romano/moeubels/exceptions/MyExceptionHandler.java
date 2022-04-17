@@ -1,10 +1,8 @@
 package nl.romano.moeubels.exceptions;
 
-import nl.romano.moeubels.controller.Responses;
+import nl.romano.moeubels.utils.Responses;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
