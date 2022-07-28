@@ -29,9 +29,14 @@ public class ShoppingCartDao {
     @Autowired
     private ProductDao productDao;
 
-    public Optional<List<ShoppingCart>> getByActorId(UUID uuid) {
-        List<ShoppingCart> cart = shoppingCartRepository.getByActorId(uuid);
+    public Optional<List<ShoppingCart>> getByActorId(UUID id) {
+        List<ShoppingCart> cart = shoppingCartRepository.getByActorId(id);
         return Optional.of(cart);
+    }
+
+    public void paymentByActorId(UUID id) {
+        List<ShoppingCart> cart = shoppingCartRepository.getByActorId(id);
+        shoppingCartRepository.deleteAll(cart);
     }
 
     public void save(ShoppingCartRequest shoppingCartRequest) {

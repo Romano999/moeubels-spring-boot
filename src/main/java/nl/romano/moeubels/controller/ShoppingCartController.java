@@ -60,4 +60,11 @@ public class ShoppingCartController {
         shoppingCartDao.delete(ck);
         return Responses.jsonOkResponseEntity();
     }
+
+    @DeleteMapping("/payment/{actorId}")
+    public ResponseEntity<String> paymentByActorId(@PathVariable UUID actorId) {
+        logger.info("Paying a shoppingCart of an actor with actor id " + actorId);
+        shoppingCartDao.paymentByActorId(actorId);
+        return Responses.jsonOkResponseEntity();
+    }
 }
