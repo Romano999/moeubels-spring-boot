@@ -81,6 +81,11 @@ INSERT INTO category(category_id, category_name, category_description, created_a
 
 INSERT INTO category(category_id, category_name, category_description, created_at, modified_at) VALUES(DEFAULT, 'Tables', 'A table is an item of furniture with a flat top and one or more legs, used as a surface for working at, eating from or on which to place things.', DEFAULT, DEFAULT);
 
+INSERT INTO category(category_id, category_name, category_description, created_at, modified_at) VALUES(DEFAULT, 'Bed', 'A bed is an item of furniture that is used as a place to sleep, rest, and relax.', DEFAULT, DEFAULT);
+
+INSERT INTO category(category_id, category_name, category_description, created_at, modified_at) VALUES(DEFAULT, 'Cabinetry', 'A cabinet is a case or cupboard with shelves and/or drawers for storing or displaying items.', DEFAULT, DEFAULT);
+
+INSERT INTO category(category_id, category_name, category_description, created_at, modified_at) VALUES(DEFAULT, 'Coat rack', 'A coat rack is a device used to store hats and often coats on, and umbrellas within.', DEFAULT, DEFAULT);
 
 -- Products
 INSERT INTO product(product_id, price, product_name, product_description, amount_available, image_path, is_on_sale, category_id, created_at, modified_at) VALUES (DEFAULT, 20.00, 'Deluxe chair', 'Soft Chair', 5, 'https://i.postimg.cc/L8jw2kqz/chair1.jpg', false, (SELECT category_id FROM category WHERE category_name = 'Chairs'), DEFAULT, DEFAULT);
@@ -91,15 +96,31 @@ INSERT INTO product(product_id, price, product_name, product_description, amount
 
 INSERT INTO product(product_id, price, product_name, product_description, amount_available, image_path, is_on_sale, category_id, created_at, modified_at) VALUES (DEFAULT, 35.00, 'Normal couch', 'Normal couch for 2', 5, 'https://i.postimg.cc/MZrhDp2j/couch1.jpg', false, (SELECT category_id FROM category WHERE category_name = 'Couches'), DEFAULT, DEFAULT);
 
-INSERT INTO product(product_id, price, product_name, product_description, amount_available, image_path, is_on_sale, category_id, created_at, modified_at) VALUES (DEFAULT, 50.00, 'Long couch', 'Extra long couch', 5, 'https://i.postimg.cc/c4gP5G0k/couch2.jpg', false, (SELECT category_id FROM category WHERE category_name = 'Couches'), DEFAULT, DEFAULT);
+INSERT INTO product(product_id, price, product_name, product_description, amount_available, image_path, is_on_sale, category_id, created_at, modified_at) VALUES (DEFAULT, 49.99, 'Long couch', 'Extra long couch', 5, 'https://i.postimg.cc/c4gP5G0k/couch2.jpg', false, (SELECT category_id FROM category WHERE category_name = 'Couches'), DEFAULT, DEFAULT);
 
-INSERT INTO product(product_id, price, product_name, product_description, amount_available, image_path, is_on_sale, category_id, created_at, modified_at) VALUES (DEFAULT, 60.00, 'Fabric couch', 'Couch made out of fabric', 5, 'https://i.postimg.cc/3NWzTPpR/couch3.jpg', false, (SELECT category_id FROM category WHERE category_name = 'Couches'), DEFAULT, DEFAULT);
+INSERT INTO product(product_id, price, product_name, product_description, amount_available, image_path, is_on_sale, category_id, created_at, modified_at) VALUES (DEFAULT, 59.99, 'Fabric couch', 'Couch made out of fabric', 5, 'https://i.postimg.cc/3NWzTPpR/couch3.jpg', false, (SELECT category_id FROM category WHERE category_name = 'Couches'), DEFAULT, DEFAULT);
 
 INSERT INTO product(product_id, price, product_name, product_description, amount_available, image_path, is_on_sale, category_id, created_at, modified_at) VALUES (DEFAULT, 15.00, 'Simple round table', 'Normal round table for 2', 5, 'https://i.postimg.cc/zXs6s2fz/table1.jpg', false, (SELECT category_id FROM category WHERE category_name = 'Tables'), DEFAULT, DEFAULT);
 
 INSERT INTO product(product_id, price, product_name, product_description, amount_available, image_path, is_on_sale, category_id, created_at, modified_at) VALUES (DEFAULT, 25.00, 'Wooden round table', 'Wooden round table', 5, 'https://i.postimg.cc/wBHPvtJn/table2.jpg', false, (SELECT category_id FROM category WHERE category_name = 'Tables'), DEFAULT, DEFAULT);
 
-INSERT INTO product(product_id, price, product_name, product_description, amount_available, image_path, is_on_sale, category_id, created_at, modified_at) VALUES (DEFAULT, 40.00, 'Marble table', 'Table made out of marble', 5, 'https://i.postimg.cc/vmzK6QtT/table3.jpg', false, (SELECT category_id FROM category WHERE category_name = 'Tables'), DEFAULT, DEFAULT);
+INSERT INTO product(product_id, price, product_name, product_description, amount_available, image_path, is_on_sale, category_id, created_at, modified_at) VALUES (DEFAULT, 39.99, 'Marble table', 'Table made out of marble', 5, 'https://i.postimg.cc/vmzK6QtT/table3.jpg', false, (SELECT category_id FROM category WHERE category_name = 'Tables'), DEFAULT, DEFAULT);
+
+INSERT INTO product(product_id, price, product_name, product_description, amount_available, image_path, is_on_sale, category_id, created_at, modified_at) VALUES (DEFAULT, 99.99, 'Luxurious bed', 'A luxurious bed made for two.', 5, 'https://i.postimg.cc/QMwZLRDj/bed1.jpg', false, (SELECT category_id FROM category WHERE category_name = 'Bed'), DEFAULT, DEFAULT);
+
+INSERT INTO product(product_id, price, product_name, product_description, amount_available, image_path, is_on_sale, category_id, created_at, modified_at) VALUES (DEFAULT, 69.99, 'White bed', 'A simple white bed.', 5, 'https://i.postimg.cc/QCWFX9Td/bed2.jpg', false, (SELECT category_id FROM category WHERE category_name = 'Bed'), DEFAULT, DEFAULT);
+
+INSERT INTO product(product_id, price, product_name, product_description, amount_available, image_path, is_on_sale, category_id, created_at, modified_at) VALUES (DEFAULT, 129.99, 'King bed', 'A lavish bed for a sweet rest.', 5, 'https://i.postimg.cc/8znBPWFh/bed3.jpg', false, (SELECT category_id FROM category WHERE category_name = 'Bed'), DEFAULT, DEFAULT);
+
+INSERT INTO product(product_id, price, product_name, product_description, amount_available, image_path, is_on_sale, category_id, created_at, modified_at) VALUES (DEFAULT, 15.00, 'Simple cabinet', 'A simple cabinet to store stuff.', 5, 'https://i.postimg.cc/7hFhWHbJ/cabinet1.jpg', false, (SELECT category_id FROM category WHERE category_name = 'Cabinetry'), DEFAULT, DEFAULT);
+
+INSERT INTO product(product_id, price, product_name, product_description, amount_available, image_path, is_on_sale, category_id, created_at, modified_at) VALUES (DEFAULT, 25.00, 'Bath cabinet', 'A cabinet with two sinks.', 5, 'https://i.postimg.cc/wvHKx3bQ/cabinet2.jpg', false, (SELECT category_id FROM category WHERE category_name = 'Cabinetry'), DEFAULT, DEFAULT);
+
+INSERT INTO product(product_id, price, product_name, product_description, amount_available, image_path, is_on_sale, category_id, created_at, modified_at) VALUES (DEFAULT, 39.99, 'Black cabinet', 'A black cabinet with a lot of space.', 5, 'https://i.postimg.cc/SKPrVPc2/cabinet3.jpg', false, (SELECT category_id FROM category WHERE category_name = 'Cabinetry'), DEFAULT, DEFAULT);
+
+INSERT INTO product(product_id, price, product_name, product_description, amount_available, image_path, is_on_sale, category_id, created_at, modified_at) VALUES (DEFAULT, 12.99, 'Iron coat rack', 'A simple iron coat rack.', 5, 'https://i.postimg.cc/Gh1HGjTc/rack1.webp', false, (SELECT category_id FROM category WHERE category_name = 'Coat rack'), DEFAULT, DEFAULT);
+
+INSERT INTO product(product_id, price, product_name, product_description, amount_available, image_path, is_on_sale, category_id, created_at, modified_at) VALUES (DEFAULT, 4.99, 'Wooden coat rack', 'A simple wooden coat rack.', 5, 'https://i.postimg.cc/MKNx16F1/rack3.jpg', false, (SELECT category_id FROM category WHERE category_name = 'Coat rack'), DEFAULT, DEFAULT);
 
 
 -- Roles
