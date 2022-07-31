@@ -52,7 +52,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         // Actor related
         http.authorizeRequests().antMatchers(GET, "/actors/**").hasAnyAuthority("Actor", "Administrator");
-        http.authorizeRequests().antMatchers(POST, "/actors/**").hasAnyAuthority("Administrator");
+        // http.authorizeRequests().antMatchers(POST, "/actors/**").hasAnyAuthority("Administrator");
         http.authorizeRequests().antMatchers(PUT, "/actors/**").hasAnyAuthority("Administrator");
         http.authorizeRequests().antMatchers(DELETE, "/actors/**").hasAnyAuthority("Administrator");
         http.authorizeRequests().antMatchers(PATCH, "/actors/**").hasAnyAuthority("Administrator");

@@ -21,6 +21,11 @@ public class RoleDao implements Dao<Role> {
 
     Logger logger = LoggerFactory.getLogger(RoleDao.class);
 
+    public Optional<Role> getByName(String name) {
+        return Optional.of(roleRespository.findByRoleName(name));
+    }
+
+
     @Override
     public Optional<Role> getById(UUID id) {
         return roleRespository.findById(id);

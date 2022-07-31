@@ -23,7 +23,9 @@ import java.util.UUID;
 public class ActorDao implements Dao<Actor>, UserDetailsService {
     @Autowired
     private ActorRepository actorRepository;
-    //private final PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -47,13 +49,13 @@ public class ActorDao implements Dao<Actor>, UserDetailsService {
 
     @Override
     public void save(Actor actor) {
-        //actor.setPassword(passwordEncoder.encode(actor.getPassword()));
+        actor.setPassword(passwordEncoder.encode(actor.getPassword()));
         actorRepository.save(actor);
     }
 
     @Override
     public void update(Actor actor) {
-        //actor.setPassword(passwordEncoder.encode(actor.getPassword()));
+        actor.setPassword(passwordEncoder.encode(actor.getPassword()));
         actorRepository.save(actor);
     }
 
