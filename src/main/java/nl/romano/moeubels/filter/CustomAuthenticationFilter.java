@@ -10,6 +10,7 @@ import nl.romano.moeubels.controller.ShoppingCartController;
 import nl.romano.moeubels.dao.ActorDao;
 import nl.romano.moeubels.model.Actor;
 import nl.romano.moeubels.repository.ActorRepository;
+import nl.romano.moeubels.utils.ExpiryDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -59,14 +60,14 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
         String accessToken = JWT.create()
                 .withSubject(actor.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
+                .withExpiresAt(ExpiryDate.getAccessTokenDate())
                 .withIssuer(request.getRequestURL().toString())
                 .withClaim("role", actor.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                 .sign(algorithm);
 
         String refreshToken = JWT.create()
                 .withSubject(actor.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
+                .withExpiresAt(ExpiryDate.getRefreshTokenDate())
                 .withIssuer(request.getRequestURL().toString())
                 .withClaim("role", actor.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                 .sign(algorithm);
