@@ -1,9 +1,11 @@
 package nl.romano.moeubels.controller;
 
 import nl.romano.moeubels.dao.ActorDao;
+import nl.romano.moeubels.dao.RoleDao;
 import nl.romano.moeubels.exceptions.ActorNotFoundException;
 import nl.romano.moeubels.exceptions.ResourceNotFoundException;
 import nl.romano.moeubels.model.Actor;
+import nl.romano.moeubels.model.Role;
 import nl.romano.moeubels.utils.Responses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.ZonedDateTime;
 import java.util.UUID;
 
 @RestController
@@ -18,6 +21,8 @@ import java.util.UUID;
 public class ActorController implements CrudOperations<Actor> {
     @Autowired
     private ActorDao actorDao;
+    @Autowired
+    private RoleDao roleDao;
 
     Logger logger = LoggerFactory.getLogger(ActorController.class);
 
@@ -38,6 +43,11 @@ public class ActorController implements CrudOperations<Actor> {
     @PostMapping()
     public ResponseEntity<String> create(@RequestBody Actor actor) {
         logger.info("Creating an actor");
+        Role actorRole = this.roleDao.getByName("Actor").orElseThrow();
+
+        actor.setCreatedAt(ZonedDateTime.now());
+        actor.setModifiedAt(ZonedDateTime.now());
+        actor.setRole(actorRole);
         actorDao.save(actor);
         return Responses.jsonOkResponseEntity();
     }
