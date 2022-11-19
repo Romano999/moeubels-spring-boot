@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS role (
 
 CREATE TABLE IF NOT EXISTS actor (
 	actor_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-	username TEXT NOT NULL UNIQUE,
+	username TEXT NOT NULL,
 	password TEXT NOT NULL,
 	first_name TEXT NOT NULL,
 	last_name TEXT NOT NULL,
@@ -152,6 +152,8 @@ INSERT INTO shopping_cart(actor_id, product_id, amount, added_at) VALUES ((SELEC
 
 INSERT INTO shopping_cart(actor_id, product_id, amount, added_at) VALUES ((SELECT actor_id FROM actor WHERE username = 'JohnDoe'), (SELECT product_id FROM product WHERE product_name = 'Long couch'), 3, DEFAULT);
 
+INSERT INTO shopping_cart(actor_id, product_id, amount, added_at) VALUES ((SELECT actor_id FROM actor WHERE username = 'JaneDoe'), (SELECT product_id FROM product WHERE product_name = 'Simple chair'), 1, DEFAULT);
+
 
 -- Favourites
 INSERT INTO favourite(actor_id, product_id, added_at) VALUES ((SELECT actor_id FROM actor WHERE username = 'JohnDoe'), (SELECT product_id FROM product WHERE product_name = 'Lavish chair'), DEFAULT);
@@ -159,3 +161,7 @@ INSERT INTO favourite(actor_id, product_id, added_at) VALUES ((SELECT actor_id F
 INSERT INTO favourite(actor_id, product_id, added_at) VALUES ((SELECT actor_id FROM actor WHERE username = 'JohnDoe'), (SELECT product_id FROM product WHERE product_name = 'Fabric couch'), DEFAULT);
 
 INSERT INTO favourite(actor_id, product_id, added_at) VALUES ((SELECT actor_id FROM actor WHERE username = 'JohnDoe'), (SELECT product_id FROM product WHERE product_name = 'Marble table'), DEFAULT);
+
+
+-- Orders
+
