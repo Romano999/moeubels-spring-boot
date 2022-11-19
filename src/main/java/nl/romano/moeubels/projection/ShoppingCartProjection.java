@@ -1,13 +1,10 @@
 package nl.romano.moeubels.projection;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import nl.romano.moeubels.model.Actor;
-import nl.romano.moeubels.model.Product;
 import nl.romano.moeubels.model.ShoppingCart;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class ShoppingCartProjection implements Serializable {

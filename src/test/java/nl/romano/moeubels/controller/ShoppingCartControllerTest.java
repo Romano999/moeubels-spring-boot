@@ -2,7 +2,6 @@ package nl.romano.moeubels.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import nl.romano.moeubels.dao.FavouriteDao;
 import nl.romano.moeubels.dao.ShoppingCartDao;
 import nl.romano.moeubels.model.*;
 import nl.romano.moeubels.utils.ObjectMother;
@@ -20,12 +19,10 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(SpringExtension.class)

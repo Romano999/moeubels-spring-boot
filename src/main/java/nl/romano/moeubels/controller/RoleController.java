@@ -8,7 +8,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import nl.romano.moeubels.dao.ActorDao;
 import nl.romano.moeubels.dao.RoleDao;
 import nl.romano.moeubels.exceptions.ResourceNotFoundException;
-import nl.romano.moeubels.exceptions.ReviewNotFoundException;
 import nl.romano.moeubels.exceptions.RoleNotFoundException;
 import nl.romano.moeubels.model.Actor;
 import nl.romano.moeubels.model.Role;
@@ -18,13 +17,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -104,7 +104,6 @@ public class RoleController implements CrudOperations<Role> {
                 response.setContentType(APPLICATION_JSON_VALUE);
                 new ObjectMapper().writeValue(response.getOutputStream(), tokens);
             } catch (Exception e) {
-                // TODO: Error in logger
                 logger.info("Error occured: " + e.getMessage());
                 response.setHeader("Error", e.getMessage());
                 response.setStatus(FORBIDDEN.value());

@@ -1,7 +1,6 @@
 package nl.romano.moeubels.controller;
 
 import nl.romano.moeubels.dao.ShoppingCartDao;
-import nl.romano.moeubels.exceptions.ActorNotFoundException;
 import nl.romano.moeubels.exceptions.ResourceNotFoundException;
 import nl.romano.moeubels.exceptions.ShoppingCartNotFoundException;
 import nl.romano.moeubels.model.ShoppingCart;

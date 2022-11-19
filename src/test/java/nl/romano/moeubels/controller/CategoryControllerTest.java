@@ -11,6 +11,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
@@ -35,11 +37,30 @@ class CategoryControllerTest {
     private CategoryDao categoryDao;
     private MockMvc mvc;
     private Category category;
+    private Page<Category> categoryPage;
 
     @BeforeEach
     void setup() {
         this.mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
         this.category = ObjectMother.genericCategory();
+        this.categoryPage = ObjectMother.genericCategoryPage();
+    }
+
+    @Test
+    void getAll() throws Exception {
+        Page<Category> testCategoryPage = this.categoryPage;
+        //String actorJsonString = new JSONObject(testActor).toString();
+        String requestPath = "/categories/all";
+        Pageable pageable = Pageable.ofSize(5).withPage(0);
+        String requestBody = String.format("{\"size\": %o, \"page: %o\"}", pageable.getPageSize(), pageable.getOffset());
+
+        given(categoryDao.getAll(pageable)).willReturn(ObjectMother.genericCategoryPage());
+
+        this.mvc.perform(MockMvcRequestBuilders
+                        .get(requestPath).secure(true)
+                        .content(requestBody))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().json(asJsonString(testCategoryPage)));
     }
 
     @Test
