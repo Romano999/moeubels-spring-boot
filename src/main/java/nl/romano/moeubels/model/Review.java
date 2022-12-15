@@ -41,4 +41,7 @@ public class Review {
     @Column(name = "rating", nullable = false)
     @JsonProperty("rating")
     private int rating;
+    @Column(name = "comment", nullable = false)
+    @JsonProperty("comment")
+    private String comment;
 }

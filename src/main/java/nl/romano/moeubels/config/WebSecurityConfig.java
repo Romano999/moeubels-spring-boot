@@ -16,12 +16,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static org.springframework.http.HttpMethod.*;
@@ -51,7 +47,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/login/**", "/token/refresh/**").permitAll();
 
         // Actor related
-        http.authorizeRequests().antMatchers(GET, "/actors/**").hasAnyAuthority("Actor", "Administrator");
+//        http.authorizeRequests().antMatchers(GET, "/actors/**").hasAnyAuthority("Actor", "Administrator");
         // http.authorizeRequests().antMatchers(POST, "/actors/**").hasAnyAuthority("Administrator");
         http.authorizeRequests().antMatchers(PUT, "/actors/**").hasAnyAuthority("Administrator");
         http.authorizeRequests().antMatchers(DELETE, "/actors/**").hasAnyAuthority("Administrator");

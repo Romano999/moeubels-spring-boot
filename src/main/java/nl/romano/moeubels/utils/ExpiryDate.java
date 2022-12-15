@@ -8,6 +8,6 @@ public class ExpiryDate {
     }
 
     public static Date getRefreshTokenDate() {
-        return new Date(System.currentTimeMillis() + 60 * 60 * 1000);
+        return new Date(System.currentTimeMillis() + 3600 * 60 * 1000);
     }
 }

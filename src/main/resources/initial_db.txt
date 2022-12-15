@@ -70,7 +70,8 @@ CREATE TABLE IF NOT EXISTS review (
 	added_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	FOREIGN KEY (actor_id) REFERENCES actor(actor_id) ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY (product_id) REFERENCES product(product_id) ON DELETE CASCADE ON UPDATE CASCADE,
-	rating INT NOT NULL
+	rating INT NOT NULL,
+	comment TEXT NOT NULL
 );
 
 
@@ -136,15 +137,15 @@ INSERT INTO actor(actor_id, username, password, first_name, last_name, created_a
 
 
 -- Reviews
-INSERT INTO review(review_id, actor_id, product_id, added_at, rating) VALUES (DEFAULT, (SELECT actor_id FROM actor WHERE username = 'JohnDoe'), (SELECT product_id FROM product WHERE product_name = 'Simple chair'), DEFAULT, 5);
+INSERT INTO review(review_id, actor_id, product_id, added_at, rating, comment) VALUES (DEFAULT, (SELECT actor_id FROM actor WHERE username = 'JohnDoe'), (SELECT product_id FROM product WHERE product_name = 'Simple chair'), DEFAULT, 5, 'Great product!');
 
-INSERT INTO review(review_id, actor_id, product_id, added_at, rating) VALUES (DEFAULT, (SELECT actor_id FROM actor WHERE username = 'JohnDoe'), (SELECT product_id FROM product WHERE product_name = 'Wooden round table'), DEFAULT, 3);
+INSERT INTO review(review_id, actor_id, product_id, added_at, rating, comment) VALUES (DEFAULT, (SELECT actor_id FROM actor WHERE username = 'JohnDoe'), (SELECT product_id FROM product WHERE product_name = 'Wooden round table'), DEFAULT, 3, 'A simple round table, decently priced.');
 
-INSERT INTO review(review_id, actor_id, product_id, added_at, rating) VALUES (DEFAULT, (SELECT actor_id FROM actor WHERE username = 'JohnDoe'), (SELECT product_id FROM product WHERE product_name = 'Long couch'), DEFAULT, 4);
+INSERT INTO review(review_id, actor_id, product_id, added_at, rating, comment) VALUES (DEFAULT, (SELECT actor_id FROM actor WHERE username = 'JohnDoe'), (SELECT product_id FROM product WHERE product_name = 'Long couch'), DEFAULT, 4, 'Fits all of us.');
 
-INSERT INTO review(review_id, actor_id, product_id, added_at, rating) VALUES (DEFAULT, (SELECT actor_id FROM actor WHERE username = 'JohnDoe'), (SELECT product_id FROM product WHERE product_name = 'Fabric couch'), DEFAULT, 2);
+INSERT INTO review(review_id, actor_id, product_id, added_at, rating, comment) VALUES (DEFAULT, (SELECT actor_id FROM actor WHERE username = 'JohnDoe'), (SELECT product_id FROM product WHERE product_name = 'Fabric couch'), DEFAULT, 2, 'Broke in 3 days after delivery.');
 
-INSERT INTO review(review_id, actor_id, product_id, added_at, rating) VALUES (DEFAULT, (SELECT actor_id FROM actor WHERE username = 'JohnDoe'), (SELECT product_id FROM product WHERE product_name = 'Deluxe chair'), DEFAULT, 5);
+INSERT INTO review(review_id, actor_id, product_id, added_at, rating, comment) VALUES (DEFAULT, (SELECT actor_id FROM actor WHERE username = 'JohnDoe'), (SELECT product_id FROM product WHERE product_name = 'Deluxe chair'), DEFAULT, 5, 'Great addition to my collection.');
 
 
 -- Shopping cart

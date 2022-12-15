@@ -32,6 +32,10 @@ public class ShoppingCartDao {
         shoppingCartRepository.deleteAll(cart);
     }
 
+    public void save(ShoppingCart shoppingCart) {
+        shoppingCartRepository.save(shoppingCart);
+    }
+
     public void save(ShoppingCartRequest shoppingCartRequest) {
         try {
             UUID actorId = shoppingCartRequest.getActorId();

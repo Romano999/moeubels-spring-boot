@@ -1,7 +1,5 @@
 package nl.romano.moeubels.dao;
 
-import nl.romano.moeubels.controller.RoleController;
-import nl.romano.moeubels.exceptions.ActorNotFoundException;
 import nl.romano.moeubels.exceptions.ResourceNotFoundException;
 import nl.romano.moeubels.exceptions.RoleNotFoundException;
 import nl.romano.moeubels.model.Role;

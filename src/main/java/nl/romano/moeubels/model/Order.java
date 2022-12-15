@@ -8,18 +8,25 @@ import lombok.extern.jackson.Jacksonized;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
+import java.util.UUID;
 
 @Entity
-@Table(name="shopping_cart")
+//@Table(name="shopping_cart")
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(force = true)
 @Builder
 @Jacksonized
-@IdClass(ShoppingCartCK.class)
+//@IdClass(ShoppingCartCK.class)
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@IdClass(OrderCK.class)
 public class Order {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "order_id", nullable = false)
+    @JsonProperty("orderId")
+    private UUID orderId;
     @Id
     @MapsId("actor_id")
     @OneToOne()
