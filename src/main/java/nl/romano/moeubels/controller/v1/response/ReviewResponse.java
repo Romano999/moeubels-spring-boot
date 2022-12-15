@@ -1,4 +1,4 @@
-package nl.romano.moeubels.contract.v1.response;
+package nl.romano.moeubels.controller.v1.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -14,7 +14,11 @@ import java.util.UUID;
 @Builder
 @Jacksonized
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class ShoppingCartResponse {
+public class ReviewResponse {
+    @NonNull
+    @JsonProperty("reviewId")
+    private UUID reviewId;
+
     @NonNull
     @JsonProperty("actorId")
     private UUID actorId;
@@ -24,6 +28,10 @@ public class ShoppingCartResponse {
     private UUID productId;
 
     @NonNull
-    @JsonProperty("amount")
-    private Integer amount;
+    @JsonProperty("rating")
+    private Integer rating;
+
+    @NonNull
+    @JsonProperty("comment")
+    private String comment;
 }

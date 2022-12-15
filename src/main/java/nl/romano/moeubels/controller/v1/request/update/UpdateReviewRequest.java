@@ -1,4 +1,4 @@
-package nl.romano.moeubels.contract.v1.request.create;
+package nl.romano.moeubels.controller.v1.request.update;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -7,14 +7,15 @@ import lombok.extern.jackson.Jacksonized;
 
 import java.util.UUID;
 
-@Getter
 @Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor(force = true)
 @Builder
 @Jacksonized
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class CreateOrderRequest {
+//@JsonIgnoreProperties(ignoreUnknown = true)
+public class UpdateReviewRequest {
     @NonNull
     @JsonProperty("actorId")
     private UUID actorId;
@@ -24,6 +25,10 @@ public class CreateOrderRequest {
     private UUID productId;
 
     @NonNull
-    @JsonProperty("amount")
-    private Integer amount;
+    @JsonProperty("rating")
+    private Integer rating;
+
+    @NonNull
+    @JsonProperty("comment")
+    private String comment;
 }

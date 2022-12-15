@@ -1,9 +1,9 @@
 package nl.romano.moeubels.controller.v1;
 
 import nl.romano.moeubels.contract.v1.ApiRoutes;
-import nl.romano.moeubels.contract.v1.request.create.CreateCategoryRequest;
-import nl.romano.moeubels.contract.v1.request.update.UpdateCategoryRequest;
-import nl.romano.moeubels.contract.v1.response.CategoryResponse;
+import nl.romano.moeubels.controller.v1.request.create.CreateCategoryRequest;
+import nl.romano.moeubels.controller.v1.request.update.UpdateCategoryRequest;
+import nl.romano.moeubels.controller.v1.response.CategoryResponse;
 import nl.romano.moeubels.dao.CategoryDao;
 import nl.romano.moeubels.exceptions.CategoryNotFoundException;
 import nl.romano.moeubels.exceptions.ResourceNotFoundException;

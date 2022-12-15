@@ -1,8 +1,8 @@
 package nl.romano.moeubels.v1.unit;
 
-import nl.romano.moeubels.contract.v1.request.create.CreateCategoryRequest;
-import nl.romano.moeubels.contract.v1.request.update.UpdateCategoryRequest;
-import nl.romano.moeubels.contract.v1.response.CategoryResponse;
+import nl.romano.moeubels.controller.v1.request.create.CreateCategoryRequest;
+import nl.romano.moeubels.controller.v1.request.update.UpdateCategoryRequest;
+import nl.romano.moeubels.controller.v1.response.CategoryResponse;
 import nl.romano.moeubels.model.Category;
 import nl.romano.moeubels.v1.utils.CategoryObjectMother;
 import org.junit.jupiter.api.Assertions;

@@ -1,4 +1,4 @@
-package nl.romano.moeubels.contract.v1.request.update;
+package nl.romano.moeubels.controller.v1.request.update;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -12,13 +12,8 @@ import lombok.extern.jackson.Jacksonized;
 @Builder
 @Jacksonized
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-//@JsonIgnoreProperties(ignoreUnknown = true)
-public class UpdateCategoryRequest {
+public class UpdateRoleRequest {
     @NonNull
-    @JsonProperty("categoryName")
-    private String categoryName;
-
-    @NonNull
-    @JsonProperty("categoryDescription")
-    private String categoryDescription;
+    @JsonProperty("roleName")
+    private String roleName;
 }

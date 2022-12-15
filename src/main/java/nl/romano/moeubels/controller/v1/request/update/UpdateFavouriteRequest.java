@@ -1,4 +1,4 @@
-package nl.romano.moeubels.contract.v1.response;
+package nl.romano.moeubels.controller.v1.request.update;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -14,12 +14,13 @@ import java.util.UUID;
 @Builder
 @Jacksonized
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class RoleResponse {
+//@JsonIgnoreProperties(ignoreUnknown = true)
+public class UpdateFavouriteRequest {
     @NonNull
-    @JsonProperty("roleId")
-    private UUID roleId;
+    @JsonProperty("actorId")
+    private UUID actorId;
 
     @NonNull
-    @JsonProperty("roleName")
-    private String roleName;
+    @JsonProperty("productId")
+    private UUID productId;
 }

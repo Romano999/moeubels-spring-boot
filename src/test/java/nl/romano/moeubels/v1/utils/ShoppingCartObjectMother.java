@@ -1,7 +1,7 @@
 package nl.romano.moeubels.v1.utils;
 
-import nl.romano.moeubels.contract.v1.request.create.CreateShoppingCartRequest;
-import nl.romano.moeubels.contract.v1.request.update.UpdateShoppingCartRequest;
+import nl.romano.moeubels.controller.v1.request.create.CreateShoppingCartRequest;
+import nl.romano.moeubels.controller.v1.request.update.UpdateShoppingCartRequest;
 import nl.romano.moeubels.model.Actor;
 import nl.romano.moeubels.model.Product;
 import nl.romano.moeubels.model.ShoppingCart;

@@ -1,7 +1,7 @@
 package nl.romano.moeubels.v1.utils;
 
-import nl.romano.moeubels.contract.v1.request.create.CreateFavouriteRequest;
-import nl.romano.moeubels.contract.v1.request.update.UpdateFavouriteRequest;
+import nl.romano.moeubels.controller.v1.request.create.CreateFavouriteRequest;
+import nl.romano.moeubels.controller.v1.request.update.UpdateFavouriteRequest;
 import nl.romano.moeubels.model.Actor;
 import nl.romano.moeubels.model.Favourite;
 import nl.romano.moeubels.model.Product;

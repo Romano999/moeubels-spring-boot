@@ -1,9 +1,11 @@
-package nl.romano.moeubels.contract.v1.request.create;
+package nl.romano.moeubels.controller.v1.request.create;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import lombok.extern.jackson.Jacksonized;
+
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -12,8 +14,12 @@ import lombok.extern.jackson.Jacksonized;
 @Builder
 @Jacksonized
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class CreateRoleRequest {
+public class CreateFavouriteRequest {
     @NonNull
-    @JsonProperty("roleName")
-    private String roleName;
+    @JsonProperty("actorId")
+    private UUID actorId;
+
+    @NonNull
+    @JsonProperty("productId")
+    private UUID productId;
 }

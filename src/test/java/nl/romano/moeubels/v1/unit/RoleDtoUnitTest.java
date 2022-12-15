@@ -1,8 +1,8 @@
 package nl.romano.moeubels.v1.unit;
 
-import nl.romano.moeubels.contract.v1.request.create.CreateRoleRequest;
-import nl.romano.moeubels.contract.v1.request.update.UpdateRoleRequest;
-import nl.romano.moeubels.contract.v1.response.RoleResponse;
+import nl.romano.moeubels.controller.v1.request.create.CreateRoleRequest;
+import nl.romano.moeubels.controller.v1.request.update.UpdateRoleRequest;
+import nl.romano.moeubels.controller.v1.response.RoleResponse;
 import nl.romano.moeubels.model.Role;
 import nl.romano.moeubels.v1.utils.RoleObjectMother;
 import org.junit.jupiter.api.Assertions;

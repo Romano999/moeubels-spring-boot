@@ -1,6 +1,6 @@
 package nl.romano.moeubels.dao;
 
-import nl.romano.moeubels.contract.v1.request.create.CreateReviewRequest;
+import nl.romano.moeubels.controller.v1.request.create.CreateReviewRequest;
 import nl.romano.moeubels.exceptions.ResourceNotFoundException;
 import nl.romano.moeubels.exceptions.ReviewNotFoundException;
 import nl.romano.moeubels.model.Actor;

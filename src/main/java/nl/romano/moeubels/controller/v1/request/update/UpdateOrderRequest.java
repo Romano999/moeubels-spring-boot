@@ -1,9 +1,11 @@
-package nl.romano.moeubels.contract.v1.request.create;
+package nl.romano.moeubels.controller.v1.request.update;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import lombok.extern.jackson.Jacksonized;
+
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -12,14 +14,16 @@ import lombok.extern.jackson.Jacksonized;
 @Builder
 @Jacksonized
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-//@JsonIgnoreProperties(ignoreUnknown = true)
-public class CreateCategoryRequest {
+public class UpdateOrderRequest {
     @NonNull
-    @JsonProperty("categoryName")
-    private String categoryName;
+    @JsonProperty("actorId")
+    private UUID actorId;
 
     @NonNull
-    @JsonProperty("categoryDescription")
-    private String categoryDescription;
+    @JsonProperty("productId")
+    private UUID productId;
+
+    @NonNull
+    @JsonProperty("amount")
+    private Integer amount;
 }
-

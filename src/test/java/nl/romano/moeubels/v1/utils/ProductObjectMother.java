@@ -1,7 +1,7 @@
 package nl.romano.moeubels.v1.utils;
 
-import nl.romano.moeubels.contract.v1.request.create.CreateProductRequest;
-import nl.romano.moeubels.contract.v1.request.update.UpdateProductRequest;
+import nl.romano.moeubels.controller.v1.request.create.CreateProductRequest;
+import nl.romano.moeubels.controller.v1.request.update.UpdateProductRequest;
 import nl.romano.moeubels.model.Category;
 import nl.romano.moeubels.model.Product;
 

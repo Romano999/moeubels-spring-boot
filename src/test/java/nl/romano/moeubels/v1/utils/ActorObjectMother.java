@@ -1,8 +1,8 @@
 package nl.romano.moeubels.v1.utils;
 
-import nl.romano.moeubels.contract.v1.request.create.CreateActorRequest;
-import nl.romano.moeubels.contract.v1.request.update.UpdateActorRequest;
-import nl.romano.moeubels.contract.v1.response.ActorResponse;
+import nl.romano.moeubels.controller.v1.request.create.CreateActorRequest;
+import nl.romano.moeubels.controller.v1.request.update.UpdateActorRequest;
+import nl.romano.moeubels.controller.v1.response.ActorResponse;
 import nl.romano.moeubels.model.Actor;
 import nl.romano.moeubels.model.Role;
 import org.apache.commons.lang3.RandomStringUtils;

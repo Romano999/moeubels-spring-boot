@@ -1,4 +1,4 @@
-package nl.romano.moeubels.contract.v1.response;
+package nl.romano.moeubels.controller.v1.request.create;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -14,24 +14,24 @@ import java.util.UUID;
 @Builder
 @Jacksonized
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class ReviewResponse {
+public class CreateActorRequest {
     @NonNull
-    @JsonProperty("reviewId")
-    private UUID reviewId;
+    @JsonProperty("username")
+    private String username;
 
     @NonNull
-    @JsonProperty("actorId")
-    private UUID actorId;
+    @JsonProperty("password")
+    private String password;
 
     @NonNull
-    @JsonProperty("productId")
-    private UUID productId;
+    @JsonProperty("firstName")
+    private String firstName;
 
     @NonNull
-    @JsonProperty("rating")
-    private Integer rating;
+    @JsonProperty("lastName")
+    private String lastName;
 
     @NonNull
-    @JsonProperty("comment")
-    private String comment;
+    @JsonProperty("roleId")
+    private UUID roleId;
 }

@@ -1,9 +1,9 @@
 package nl.romano.moeubels.controller.v1;
 
 import nl.romano.moeubels.contract.v1.ApiRoutes;
-import nl.romano.moeubels.contract.v1.request.create.CreateReviewRequest;
-import nl.romano.moeubels.contract.v1.request.update.UpdateReviewRequest;
-import nl.romano.moeubels.contract.v1.response.ReviewResponse;
+import nl.romano.moeubels.controller.v1.request.create.CreateReviewRequest;
+import nl.romano.moeubels.controller.v1.request.update.UpdateReviewRequest;
+import nl.romano.moeubels.controller.v1.response.ReviewResponse;
 import nl.romano.moeubels.dao.ReviewDao;
 import nl.romano.moeubels.exceptions.ResourceNotFoundException;
 import nl.romano.moeubels.exceptions.ReviewNotFoundException;

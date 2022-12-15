@@ -1,4 +1,4 @@
-package nl.romano.moeubels.contract.v1.request.update;
+package nl.romano.moeubels.controller.v1.request.create;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -16,7 +16,7 @@ import java.util.UUID;
 @Jacksonized
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 //@JsonIgnoreProperties(ignoreUnknown = true)
-public class UpdateProductRequest {
+public class CreateProductRequest {
     @NonNull
     @JsonProperty("categoryId")
     private UUID categoryId;

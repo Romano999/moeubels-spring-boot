@@ -1,9 +1,9 @@
 package nl.romano.moeubels.controller.v1;
 
 import nl.romano.moeubels.contract.v1.ApiRoutes;
-import nl.romano.moeubels.contract.v1.request.create.CreateShoppingCartRequest;
-import nl.romano.moeubels.contract.v1.request.update.UpdateShoppingCartRequest;
-import nl.romano.moeubels.contract.v1.response.ShoppingCartResponse;
+import nl.romano.moeubels.controller.v1.request.create.CreateShoppingCartRequest;
+import nl.romano.moeubels.controller.v1.request.update.UpdateShoppingCartRequest;
+import nl.romano.moeubels.controller.v1.response.ShoppingCartResponse;
 import nl.romano.moeubels.dao.ShoppingCartDao;
 import nl.romano.moeubels.exceptions.ResourceNotFoundException;
 import nl.romano.moeubels.model.ShoppingCart;

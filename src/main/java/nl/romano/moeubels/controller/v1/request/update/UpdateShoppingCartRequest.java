@@ -1,4 +1,4 @@
-package nl.romano.moeubels.contract.v1.response;
+package nl.romano.moeubels.controller.v1.request.update;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -14,16 +14,16 @@ import java.util.UUID;
 @Builder
 @Jacksonized
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class CategoryResponse {
+public class UpdateShoppingCartRequest {
     @NonNull
-    @JsonProperty("categoryId")
-    private UUID categoryId;
+    @JsonProperty("actorId")
+    private UUID actorId;
 
     @NonNull
-    @JsonProperty("categoryName")
-    private String categoryName;
+    @JsonProperty("productId")
+    private UUID productId;
 
     @NonNull
-    @JsonProperty("categoryDescription")
-    private String categoryDescription;
+    @JsonProperty("amount")
+    private Integer amount;
 }

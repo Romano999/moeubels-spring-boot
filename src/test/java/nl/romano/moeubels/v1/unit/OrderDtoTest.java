@@ -1,8 +1,8 @@
 package nl.romano.moeubels.v1.unit;
 
-import nl.romano.moeubels.contract.v1.request.create.CreateOrderRequest;
-import nl.romano.moeubels.contract.v1.request.update.UpdateOrderRequest;
-import nl.romano.moeubels.contract.v1.response.OrderResponse;
+import nl.romano.moeubels.controller.v1.request.create.CreateOrderRequest;
+import nl.romano.moeubels.controller.v1.request.update.UpdateOrderRequest;
+import nl.romano.moeubels.controller.v1.response.OrderResponse;
 import nl.romano.moeubels.model.Order;
 import nl.romano.moeubels.v1.utils.OrderObjectMother;
 import org.junit.jupiter.api.Assertions;

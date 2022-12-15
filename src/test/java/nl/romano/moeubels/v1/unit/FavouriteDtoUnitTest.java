@@ -1,8 +1,8 @@
 package nl.romano.moeubels.v1.unit;
 
-import nl.romano.moeubels.contract.v1.request.create.CreateFavouriteRequest;
-import nl.romano.moeubels.contract.v1.request.update.UpdateFavouriteRequest;
-import nl.romano.moeubels.contract.v1.response.FavouriteResponse;
+import nl.romano.moeubels.controller.v1.request.create.CreateFavouriteRequest;
+import nl.romano.moeubels.controller.v1.request.update.UpdateFavouriteRequest;
+import nl.romano.moeubels.controller.v1.response.FavouriteResponse;
 import nl.romano.moeubels.model.Favourite;
 import nl.romano.moeubels.v1.utils.FavouriteObjectMother;
 import org.junit.jupiter.api.Assertions;

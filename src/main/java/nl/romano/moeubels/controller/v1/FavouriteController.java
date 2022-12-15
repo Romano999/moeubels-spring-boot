@@ -1,9 +1,9 @@
 package nl.romano.moeubels.controller.v1;
 
 import nl.romano.moeubels.contract.v1.ApiRoutes;
-import nl.romano.moeubels.contract.v1.request.create.CreateFavouriteRequest;
-import nl.romano.moeubels.contract.v1.request.update.UpdateFavouriteRequest;
-import nl.romano.moeubels.contract.v1.response.FavouriteResponse;
+import nl.romano.moeubels.controller.v1.request.create.CreateFavouriteRequest;
+import nl.romano.moeubels.controller.v1.request.update.UpdateFavouriteRequest;
+import nl.romano.moeubels.controller.v1.response.FavouriteResponse;
 import nl.romano.moeubels.dao.FavouriteDao;
 import nl.romano.moeubels.exceptions.ActorNotFoundException;
 import nl.romano.moeubels.exceptions.ResourceNotFoundException;
