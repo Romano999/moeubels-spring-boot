@@ -16,6 +16,7 @@ import nl.romano.moeubels.exceptions.RoleNotFoundException;
 import nl.romano.moeubels.model.Actor;
 import nl.romano.moeubels.model.Role;
 import nl.romano.moeubels.utils.ExpiryDate;
+import nl.romano.moeubels.utils.JsonConverter;
 import nl.romano.moeubels.utils.Responses;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -43,14 +44,14 @@ public class RoleController {
     private RoleDao roleDao;
     @Autowired
     private ActorDao actorDao;
-    @Autowired
-    private ModelMapper modelMapper;
 
-    Logger logger = LoggerFactory.getLogger(RoleController.class);
+    private final ModelMapper modelMapper = new ModelMapper();
+    private final Logger logger = LoggerFactory.getLogger(RoleController.class);
 
     @GetMapping(ApiRoutes.Role.Get)
     public ResponseEntity<RoleResponse> getById(@PathVariable UUID id) throws ResourceNotFoundException {
-        logger.info("Getting a role with role id " + id);
+        logger.info("Received following role id '" + id + "'");
+        logger.info("Getting a role with role id '" + id + "'");
         Role role = roleDao.getById(id)
                 .orElseThrow(() -> {
                     ResourceNotFoundException exc = new RoleNotFoundException("Role with role id " + id + " not found");
@@ -58,12 +59,15 @@ public class RoleController {
                     return exc;
                 });
 
+        logger.info("Role with id '" + role.getRoleId() + "' found");
         RoleResponse roleResponse = convertEntityToDto(role);
+        logger.info("Returning following data: " + JsonConverter.asJsonString(roleResponse));
         return Responses.ResponseEntityOk(roleResponse);
     }
 
     @PostMapping(ApiRoutes.Role.Create)
     public ResponseEntity<String> create(@RequestBody CreateRoleRequest roleRequest) {
+        logger.info("Received following create role request '" + JsonConverter.asJsonString(roleRequest) + "'");
         Role role = convertDtoToEntity(roleRequest);
         logger.info("Creating a role");
         roleDao.save(role);
@@ -72,6 +76,7 @@ public class RoleController {
 
     @PutMapping(ApiRoutes.Role.Update)
     public ResponseEntity<String> update(@RequestBody UpdateRoleRequest roleRequest) {
+        logger.info("Received following update role request '" + JsonConverter.asJsonString(roleRequest) + "'");
         Role role = convertDtoToEntity(roleRequest);
         logger.info("Updating a role");
         roleDao.update(role);
@@ -80,7 +85,7 @@ public class RoleController {
 
     @DeleteMapping(ApiRoutes.Role.Delete)
     public ResponseEntity<?> delete(@PathVariable UUID id) throws ResourceNotFoundException {
-        logger.info("Deleting a role with id " + id);
+        logger.info("Deleting a role with id '" + id + "'");
         roleDao.delete(id);
         return Responses.jsonOkResponseEntity();
     }

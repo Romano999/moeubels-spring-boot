@@ -6,11 +6,17 @@ import nl.romano.moeubels.controller.v1.response.FavouriteResponse;
 import nl.romano.moeubels.model.Favourite;
 import nl.romano.moeubels.v1.utils.FavouriteObjectMother;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 
 public class FavouriteDtoUnitTest {
     private final ModelMapper modelMapper = new ModelMapper();
+
+    @BeforeEach
+    void setup() {
+        modelMapper.getConfiguration().setAmbiguityIgnored(true);
+    }
 
     @Test
     public void whenFavouriteModelToFavouriteResponseDto_thenCorrect() {
@@ -21,6 +27,7 @@ public class FavouriteDtoUnitTest {
         FavouriteResponse favouriteResponse = modelMapper.map(favourite, FavouriteResponse.class);
 
         // Assert
+        Assertions.assertEquals(favourite.getFavouriteId(), favouriteResponse.getFavouriteId());
         Assertions.assertEquals(favourite.getActor().getActorId(), favouriteResponse.getActorId());
         Assertions.assertEquals(favourite.getProduct().getProductId(), favouriteResponse.getProductId());
     }

@@ -2,13 +2,18 @@ package nl.romano.moeubels.v1.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import nl.romano.moeubels.contract.v1.ApiRoutes;
 import nl.romano.moeubels.controller.v1.CategoryController;
+import nl.romano.moeubels.controller.v1.request.create.CreateCategoryRequest;
+import nl.romano.moeubels.controller.v1.request.update.UpdateCategoryRequest;
+import nl.romano.moeubels.controller.v1.response.CategoryResponse;
 import nl.romano.moeubels.dao.CategoryDao;
 import nl.romano.moeubels.model.Category;
 import nl.romano.moeubels.v1.utils.CategoryObjectMother;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -17,9 +22,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.Optional;
@@ -36,75 +43,99 @@ class CategoryControllerTest {
     private UserDetailsService userDetailsService;
     @MockBean
     private CategoryDao categoryDao;
+    @Autowired
     private MockMvc mvc;
-    private Category category;
-    private Page<Category> categoryPage;
+
+    private final ModelMapper modelMapper = new ModelMapper();
 
     @BeforeEach
     void setup() {
         this.mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-        this.category = CategoryObjectMother.genericCategory();
-        this.categoryPage = CategoryObjectMother.genericCategoryPage();
-    }
-
-    @Test
-    void getAll() throws Exception {
-        Page<Category> testCategoryPage = this.categoryPage;
-        //String actorJsonString = new JSONObject(testActor).toString();
-        String requestPath = "/categories/all";
-        Pageable pageable = Pageable.ofSize(5).withPage(0);
-        String requestBody = String.format("{\"size\": %o, \"page: %o\"}", pageable.getPageSize(), pageable.getOffset());
-
-        given(categoryDao.getAll(pageable)).willReturn(CategoryObjectMother.genericCategoryPage());
-
-        this.mvc.perform(MockMvcRequestBuilders
-                        .get(requestPath).secure(true)
-                        .content(requestBody))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().json(asJsonString(testCategoryPage)));
     }
 
     @Test
     void getById() throws Exception {
-        Category testCategory = this.category;
-        UUID categoryId = testCategory.getCategoryId();
-        //String actorJsonString = new JSONObject(testActor).toString();
-        String requestPath = String.format("/categories/%s", categoryId.toString());
+        // Arrange
+        Category category = CategoryObjectMother.genericCategory();
+        CategoryResponse categoryResponse = modelMapper.map(category, CategoryResponse.class);
+        UUID categoryId = category.getCategoryId();
+        String requestPath = ApiRoutes.Category.Get.replace("{id}", categoryId.toString());
 
-        given(categoryDao.getById(categoryId)).willReturn(Optional.of(testCategory));
+        given(categoryDao.getById(categoryId)).willReturn(Optional.of(category));
 
-        this.mvc.perform(MockMvcRequestBuilders
-                .get(requestPath).secure(true))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().json(asJsonString(testCategory)));
+        // Act
+        ResultActions result = this.mvc.perform(MockMvcRequestBuilders.get(requestPath).secure(true));
+
+        // Assert
+        result.andExpect(MockMvcResultMatchers.status().isOk())
+            .andExpect(MockMvcResultMatchers.content().json(asJsonString(categoryResponse)));
+    }
+
+    @Test
+    void getAll() throws Exception {
+        // Arrange
+        Page<Category> categoryPage = CategoryObjectMother.genericCategoryPage();
+        Pageable pageable = Pageable.ofSize(5).withPage(0);
+        Page<CategoryResponse> categoryResponsePage =
+            CategoryObjectMother.genericCategoryResponsePageFromCategoryPage(categoryPage, pageable);
+        String requestPath = ApiRoutes.Category.GetAll;
+        LinkedMultiValueMap<String, String> requestParams = new LinkedMultiValueMap<>();
+        requestParams.add("page", String.valueOf(pageable.getPageNumber()));
+        requestParams.add("size", String.valueOf(pageable.getPageSize()));
+
+        given(categoryDao.getAll(pageable)).willReturn(categoryPage);
+
+        // Act
+        ResultActions result = this.mvc.perform(MockMvcRequestBuilders.get(requestPath).secure(true).params(requestParams));
+
+        // Assert
+        result.andExpect(MockMvcResultMatchers.status().isOk())
+            .andExpect(MockMvcResultMatchers.content().json(asJsonString(categoryResponsePage)));
     }
 
     @Test
     void create() throws Exception {
-        Category testCategory = this.category;
+        // Arrange
+        CreateCategoryRequest categoryRequest = CategoryObjectMother.genericCreateCategoryRequest();
+        String requestPath = ApiRoutes.Category.Create;
 
-        this.mvc.perform(MockMvcRequestBuilders.put("/categories")
-                .secure(true).content(asJsonString(testCategory)).contentType("application/json"))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+        // Act
+        ResultActions result = this.mvc.perform(MockMvcRequestBuilders.post(requestPath)
+            .secure(true)
+            .content(asJsonString(categoryRequest))
+            .contentType("application/json"));
+
+        // Assert
+        result.andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test
     void update() throws Exception {
-        Category testCategory = this.category;
+        // Arrange
+        UUID categoryId = UUID.randomUUID();
+        UpdateCategoryRequest categoryRequest = CategoryObjectMother.genericUpdateCategoryRequest();
+        String requestPath = ApiRoutes.Category.Update.replace("{id}", categoryId.toString());
 
-        this.mvc.perform(MockMvcRequestBuilders.post("/categories")
-                .secure(true).content(asJsonString(testCategory)).contentType("application/json"))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+        // Act
+        ResultActions result = this.mvc.perform(MockMvcRequestBuilders.put(requestPath)
+            .secure(true).content(asJsonString(categoryRequest)).contentType("application/json"));
+
+        // Assert
+        result.andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test
     void delete() throws Exception {
-        Category testCategory = this.category;
-        UUID categoryId = testCategory.getCategoryId();
-        String requestPath = String.format("/categories/%s", categoryId.toString());
+        // Arrange
+        Category category = CategoryObjectMother.genericCategory();
+        UUID categoryId = category.getCategoryId();
+        String requestPath = ApiRoutes.Category.Delete.replace("{id}", categoryId.toString());
 
-        this.mvc.perform(MockMvcRequestBuilders.delete(requestPath, testCategory).secure(true))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+        // Act
+        ResultActions result = this.mvc.perform(MockMvcRequestBuilders.delete(requestPath, category).secure(true));
+
+        // Assert
+        result.andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     private static String asJsonString(final Object obj) {

@@ -2,24 +2,31 @@ package nl.romano.moeubels.v1.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import nl.romano.moeubels.contract.v1.ApiRoutes;
 import nl.romano.moeubels.controller.v1.ReviewController;
+import nl.romano.moeubels.controller.v1.request.create.CreateReviewRequest;
+import nl.romano.moeubels.controller.v1.request.update.UpdateReviewRequest;
+import nl.romano.moeubels.controller.v1.response.ReviewResponse;
 import nl.romano.moeubels.dao.ReviewDao;
 import nl.romano.moeubels.model.Review;
 import nl.romano.moeubels.v1.utils.ReviewObjectMother;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -34,57 +41,101 @@ class ReviewControllerTest {
     private UserDetailsService userDetailsService;
     @MockBean
     private ReviewDao reviewDao;
+    @Autowired
     private MockMvc mvc;
-    private Review review;
 
+    private final ModelMapper modelMapper = new ModelMapper();
 
     @BeforeEach
     void setUp() {
         this.mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-        this.review = ReviewObjectMother.genericReview();
+        modelMapper.getConfiguration().setAmbiguityIgnored(true);
     }
 
     @Test
     void getById() throws Exception {
-        Review testReview = this.review;
-        UUID reviewId = testReview.getReviewId();
-        //String actorJsonString = new JSONObject(testActor).toString();
-        String requestPath = String.format("/reviews/%s", reviewId.toString());
+        // Arrange
+        Review review = ReviewObjectMother.genericReview();
+        ReviewResponse reviewResponse = modelMapper.map(review, ReviewResponse.class);
+        UUID reviewId = review.getReviewId();
+        String requestPath = ApiRoutes.Review.Get.replace("{id}", reviewId.toString());
 
-        given(reviewDao.getById(reviewId)).willReturn(Optional.of(testReview));
+        given(reviewDao.getById(reviewId)).willReturn(Optional.of(review));
 
-        this.mvc.perform(MockMvcRequestBuilders
-                        .get(requestPath).secure(true))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().json(asJsonString(testReview)));
+        // Act
+        ResultActions result = this.mvc.perform(MockMvcRequestBuilders.get(requestPath).secure(true));
+
+        // Assert
+        result.andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().json(asJsonString(reviewResponse)));
+    }
+
+    @Test
+    void getByProductId() throws Exception {
+        // Arrange
+        UUID productId = UUID.randomUUID();
+        List<Review> reviews = ReviewObjectMother.genericReviewListWithProductId(productId);
+        List<ReviewResponse> reviewResponses =
+            ReviewObjectMother.genericReviewResponseListFromReviewList(reviews);
+        String requestPath = ApiRoutes.Review.GetByProductId.replace("{productId}", productId.toString());
+
+        given(reviewDao.getByProductId(productId)).willReturn(Optional.of(reviews));
+
+        // Act
+        ResultActions result = this.mvc.perform(MockMvcRequestBuilders.get(requestPath)
+            .secure(true)
+            .contentType("application/json"));
+
+        // Assert
+        result.andExpect(MockMvcResultMatchers.status().isOk())
+            .andExpect(MockMvcResultMatchers.content().json(asJsonString(reviewResponses)));
     }
 
     @Test
     void create() throws Exception {
-        Review testReview = this.review;
+        // Arrange
+        CreateReviewRequest reviewRequest = ReviewObjectMother.genericCreateReviewRequest();
+        String requestPath = ApiRoutes.Review.Create;
 
-        this.mvc.perform(MockMvcRequestBuilders.put("/reviews")
-                        .secure(true).content(asJsonString(testReview)).contentType("application/json"))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+        // Act
+        ResultActions result = this.mvc.perform(MockMvcRequestBuilders.post(requestPath)
+            .secure(true)
+            .content(asJsonString(reviewRequest))
+            .contentType("application/json"));
+
+        // Assert
+        result.andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test
     void update() throws Exception {
-        Review testReview = this.review;
+        // Arrange
+        UUID reviewId = UUID.randomUUID();
+        UpdateReviewRequest reviewRequest = ReviewObjectMother.genericUpdateReviewRequest();
+        String requestPath = ApiRoutes.Review.Update.replace("{id}", reviewId.toString());
 
-        this.mvc.perform(MockMvcRequestBuilders.post("/reviews")
-                        .secure(true).content(asJsonString(testReview)).contentType("application/json"))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+        // Act
+        ResultActions result = this.mvc.perform(MockMvcRequestBuilders.put(requestPath)
+            .secure(true)
+            .content(asJsonString(reviewRequest))
+            .contentType("application/json"));
+
+        // Assert
+        result.andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test
     void delete() throws Exception {
-        Review testReview = this.review;
-        UUID reviewId = testReview.getReviewId();
-        String requestPath = String.format("/reviews/%s", reviewId.toString());
+        // Arrange
+        Review review = ReviewObjectMother.genericReview();
+        UUID reviewId = review.getReviewId();
+        String requestPath = ApiRoutes.Review.Delete.replace("{id}", reviewId.toString());
 
-        this.mvc.perform(MockMvcRequestBuilders.delete(requestPath, testReview).secure(true))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+        // Act
+        ResultActions result = this.mvc.perform(MockMvcRequestBuilders.delete(requestPath, review).secure(true));
+
+        // Assert
+        result.andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     private static String asJsonString(final Object obj) {

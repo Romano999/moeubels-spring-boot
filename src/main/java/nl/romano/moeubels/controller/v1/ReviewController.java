@@ -8,6 +8,7 @@ import nl.romano.moeubels.dao.ReviewDao;
 import nl.romano.moeubels.exceptions.ResourceNotFoundException;
 import nl.romano.moeubels.exceptions.ReviewNotFoundException;
 import nl.romano.moeubels.model.Review;
+import nl.romano.moeubels.utils.JsonConverter;
 import nl.romano.moeubels.utils.Responses;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,27 +25,30 @@ import java.util.UUID;
 public class ReviewController {
     @Autowired
     private ReviewDao reviewDao;
-    @Autowired
-    private ModelMapper modelMapper;
 
-    Logger logger = LoggerFactory.getLogger(ReviewController.class);
-
-//    TODO: Change endpoint url
-//    @Override
-//    @GetMapping("/{id}")
-//    public ResponseEntity<?> getById(@PathVariable UUID id) throws ResourceNotFoundException {
-//        logger.info("Getting a review by review id " + id);
-//        Review review = reviewDao.getById(id)
-//                .orElseThrow(() -> {
-//                    ResourceNotFoundException exc = new ReviewNotFoundException("Review with review id " + id + " not found");
-//                    logger.error(exc.getMessage());
-//                    return exc;
-//                });
-//        return Responses.ResponseEntityOk(review);
-//    }
+    private final ModelMapper modelMapper = new ModelMapper();
+    private final Logger logger = LoggerFactory.getLogger(ReviewController.class);
 
     @GetMapping(ApiRoutes.Review.Get)
-    public ResponseEntity<?> getByActorId(@PathVariable UUID productId) throws ResourceNotFoundException {
+    public ResponseEntity<ReviewResponse> getById(@PathVariable UUID id) throws ResourceNotFoundException {
+        logger.info("Received following favourite id '" + id + "'");
+        logger.info("Getting a review by review id '" + id + "'");
+        Review review = reviewDao.getById(id)
+                .orElseThrow(() -> {
+                    ResourceNotFoundException exc = new ReviewNotFoundException("Review with review id '" + id + "' not found");
+                    logger.error(exc.getMessage());
+                    return exc;
+                });
+
+        logger.info("Review with id '" + review.getReviewId() + "' found");
+        ReviewResponse reviewResponse = convertEntityToDto(review);
+        logger.info("Returning following data: " + JsonConverter.asJsonString(reviewResponse));
+        return Responses.ResponseEntityOk(reviewResponse);
+    }
+
+    @GetMapping(ApiRoutes.Review.GetByProductId)
+    public ResponseEntity<List<ReviewResponse>> getProductId(@PathVariable UUID productId) throws ResourceNotFoundException {
+        logger.info("Received following product id '" + productId + "'");
         logger.info("Getting a review by product id " + productId);
         List<Review> reviews = reviewDao.getByProductId(productId)
                 .orElseThrow(() -> {
@@ -53,11 +58,13 @@ public class ReviewController {
                 });
 
         logger.info("Returning " + reviews.size() + " reviews");
-        return Responses.ResponseEntityOk(reviews);
+        List<ReviewResponse> reviewResponses = convertEntityListToDtoList(reviews);
+        return Responses.ResponseEntityOk(reviewResponses);
     }
 
     @PostMapping(ApiRoutes.Review.Create)
     public ResponseEntity<String> create(@RequestBody CreateReviewRequest reviewRequest) {
+        logger.info("Received following create review request '" + JsonConverter.asJsonString(reviewRequest) + "'");
         Review review = convertDtoToEntity(reviewRequest);
         logger.info("Creating a review");
         reviewDao.save(review);
@@ -66,6 +73,7 @@ public class ReviewController {
 
     @PutMapping(ApiRoutes.Review.Update)
     public ResponseEntity<String> update(@RequestBody UpdateReviewRequest reviewRequest) {
+        logger.info("Received following update review request '" + JsonConverter.asJsonString(reviewRequest) + "'");
         Review review = convertDtoToEntity(reviewRequest);
         logger.info("Updating a review");
         reviewDao.update(review);
@@ -74,22 +82,35 @@ public class ReviewController {
 
     @DeleteMapping(ApiRoutes.Review.Delete)
     public ResponseEntity<?> delete(@PathVariable UUID id) throws ResourceNotFoundException {
-        logger.info("Deleting a review with review id " + id);
+        logger.info("Deleting a review with review id '" + id + "'");
+        reviewDao.delete(id);
         return Responses.jsonOkResponseEntity();
     }
 
     private Review convertDtoToEntity(UpdateReviewRequest updateReviewRequest) {
         logger.info("Mapping update review request to review model");
+        modelMapper.getConfiguration().setAmbiguityIgnored(true);
         return modelMapper.map(updateReviewRequest, Review.class);
     }
 
     private Review convertDtoToEntity(CreateReviewRequest createReviewRequest) {
         logger.info("Mapping create review request to review model");
+        modelMapper.getConfiguration().setAmbiguityIgnored(true);
         return modelMapper.map(createReviewRequest, Review.class);
     }
 
     private ReviewResponse convertEntityToDto(Review review) {
         logger.info("Mapping review model to review response");
+        modelMapper.getConfiguration().setAmbiguityIgnored(true);
         return modelMapper.map(review, ReviewResponse.class);
+    }
+
+    private List<ReviewResponse> convertEntityListToDtoList(List<Review> reviews) {
+        logger.info("Mapping a review list to a review response list");
+        ArrayList<ReviewResponse> reviewResponses = new ArrayList<>();
+        modelMapper.getConfiguration().setAmbiguityIgnored(true);
+        reviews.forEach(review -> reviewResponses.add(convertEntityToDto(review)));
+        logger.info("Done with mapping a review list to a review response list");
+        return reviewResponses;
     }
 }

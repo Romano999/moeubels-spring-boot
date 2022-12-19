@@ -3,7 +3,6 @@ package nl.romano.moeubels.dao;
 import nl.romano.moeubels.exceptions.FavouriteNotFoundException;
 import nl.romano.moeubels.exceptions.ResourceNotFoundException;
 import nl.romano.moeubels.model.Favourite;
-import nl.romano.moeubels.model.FavouriteCK;
 import nl.romano.moeubels.repository.FavouriteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -22,6 +21,10 @@ public class FavouriteDao {
         return Optional.of(favourite);
     }
 
+    public Optional<Favourite> getById(UUID id) {
+        return this.favouriteRepository.findById(id);
+    }
+
     public void save(Favourite shoppingCart) {
         favouriteRepository.save(shoppingCart);
     }
@@ -30,9 +33,9 @@ public class FavouriteDao {
         favouriteRepository.save(shoppingCart);
     }
 
-    public void delete(FavouriteCK ck) throws ResourceNotFoundException {
-        Favourite favourite = favouriteRepository.findById(ck)
-                .orElseThrow(() -> new FavouriteNotFoundException("Favourite with ck: " + ck + "not found"));
+    public void delete(UUID id) throws ResourceNotFoundException {
+        Favourite favourite = this.favouriteRepository.findById(id)
+            .orElseThrow(() -> new FavouriteNotFoundException("Favourite with id: " + id + " not found"));
         favouriteRepository.delete(favourite);
     }
 }

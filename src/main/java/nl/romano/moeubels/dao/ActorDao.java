@@ -1,11 +1,12 @@
 package nl.romano.moeubels.dao;
 
-import nl.romano.moeubels.config.WebSecurityConfig;
 import nl.romano.moeubels.exceptions.ActorNotFoundException;
 import nl.romano.moeubels.exceptions.ResourceNotFoundException;
 import nl.romano.moeubels.model.Actor;
 import nl.romano.moeubels.repository.ActorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -45,6 +46,10 @@ public class ActorDao implements Dao<Actor>, UserDetailsService {
 
     public Actor getByUsername(String username) {
         return actorRepository.findByUsername(username);
+    }
+
+    public Page<Actor> getAll(Pageable pageable) {
+        return actorRepository.findAll(pageable);
     }
 
     @Override

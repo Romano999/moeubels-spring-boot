@@ -8,6 +8,7 @@ import lombok.extern.jackson.Jacksonized;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name="favourite")
@@ -20,6 +21,11 @@ import java.time.ZonedDateTime;
 @IdClass(FavouriteCK.class)
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Favourite {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = " favourite_id", nullable = false)
+    @JsonProperty("favouriteId")
+    private UUID favouriteId;
     @Id
     @MapsId("actor_id")
     @OneToOne()

@@ -2,7 +2,11 @@ package nl.romano.moeubels.v1.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import nl.romano.moeubels.contract.v1.ApiRoutes;
 import nl.romano.moeubels.controller.v1.RoleController;
+import nl.romano.moeubels.controller.v1.request.create.CreateRoleRequest;
+import nl.romano.moeubels.controller.v1.request.update.UpdateRoleRequest;
+import nl.romano.moeubels.controller.v1.response.RoleResponse;
 import nl.romano.moeubels.dao.ActorDao;
 import nl.romano.moeubels.dao.RoleDao;
 import nl.romano.moeubels.model.Role;
@@ -10,11 +14,13 @@ import nl.romano.moeubels.v1.utils.RoleObjectMother;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -34,55 +40,77 @@ class RoleControllerTest {
     private RoleDao roleDao;
     @MockBean
     private ActorDao actorDao;
+    @Autowired
     private MockMvc mvc;
-    private Role role;
+
+    private final ModelMapper modelMapper = new ModelMapper();
 
     @BeforeEach
     void setup() {
         this.mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-        this.role = RoleObjectMother.genericRole();
     }
 
     @Test
     void getById() throws Exception {
-        Role testRole = this.role;
-        UUID roleId = testRole.getRoleId();
-        String requestPath = String.format("/roles/%s", roleId.toString());
+        // Arrange
+        Role role = RoleObjectMother.genericRole();
+        RoleResponse roleResponse = modelMapper.map(role, RoleResponse.class);
+        UUID roleId = role.getRoleId();
+        String requestPath = ApiRoutes.Role.Get.replace("{id}", roleId.toString());
 
-        given(roleDao.getById(roleId)).willReturn(Optional.of(testRole));
+        given(roleDao.getById(roleId)).willReturn(Optional.of(role));
 
-        this.mvc.perform(MockMvcRequestBuilders
-                .get(requestPath).secure(true))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().json(asJsonString(testRole)));
+        // Act
+        ResultActions result = this.mvc.perform(MockMvcRequestBuilders.get(requestPath).secure(true));
+
+        // Assert
+        result.andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().json(asJsonString(roleResponse)));
     }
 
     @Test
     void create() throws Exception {
-        Role testRole = this.role;
+        // Arrange
+        CreateRoleRequest roleRequest = RoleObjectMother.genericCreateRoleRequest();
+        String requestPath = ApiRoutes.Role.Create;
 
-        this.mvc.perform(MockMvcRequestBuilders.put("/roles")
-                .secure(true).content(asJsonString(testRole)).contentType("application/json"))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+        // Act
+        ResultActions result =  this.mvc.perform(MockMvcRequestBuilders.post(requestPath)
+            .secure(true).content(asJsonString(roleRequest)).contentType("application/json"));
+
+        // Assert
+        result.andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test
     void update() throws Exception {
-        Role testRole = this.role;
+        // Arrange
+        UUID roleId = UUID.randomUUID();
+        UpdateRoleRequest roleRequest = RoleObjectMother.genericUpdateRoleRequest();
+        String requestPath = ApiRoutes.Role.Update.replace("{id}", roleId.toString());
 
-        this.mvc.perform(MockMvcRequestBuilders.post("/roles")
-                .secure(true).content(asJsonString(testRole)).contentType("application/json"))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+        // Act
+        ResultActions result = this.mvc.perform(MockMvcRequestBuilders.put(requestPath)
+            .secure(true)
+            .content(asJsonString(roleRequest))
+            .contentType("application/json"));
+
+        // Assert
+        result.andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test
     void delete() throws Exception {
-        Role testRole = this.role;
-        UUID roleId = testRole.getRoleId();
-        String requestPath = String.format("/roles/%s", roleId.toString());
+        // Arrange
+        Role role = RoleObjectMother.genericRole();
+        UUID roleId = role.getRoleId();
+        String requestPath = ApiRoutes.Role.Delete.replace("{id}", roleId.toString());
 
-        this.mvc.perform(MockMvcRequestBuilders.delete(requestPath, testRole).secure(true))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+        // Act
+        ResultActions result= this.mvc.perform(MockMvcRequestBuilders.delete(requestPath, role).secure(true));
+
+        // Assert
+        result.andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     private static String asJsonString(final Object obj) {

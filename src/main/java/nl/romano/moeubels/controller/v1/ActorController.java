@@ -10,15 +10,20 @@ import nl.romano.moeubels.exceptions.ActorNotFoundException;
 import nl.romano.moeubels.exceptions.ResourceNotFoundException;
 import nl.romano.moeubels.model.Actor;
 import nl.romano.moeubels.model.Role;
+import nl.romano.moeubels.utils.JsonConverter;
 import nl.romano.moeubels.utils.Responses;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.UUID;
 
 @RestController
@@ -27,28 +32,43 @@ public class ActorController {
     private ActorDao actorDao;
     @Autowired
     private RoleDao roleDao;
-    @Autowired
-    private ModelMapper modelMapper;
 
+    private final ModelMapper modelMapper = new ModelMapper();
     private final Logger logger = LoggerFactory.getLogger(ActorController.class);
 
     @GetMapping(ApiRoutes.Actor.Get)
     public ResponseEntity<ActorResponse> getById(@PathVariable(value = "id") UUID id) throws ResourceNotFoundException {
-        logger.info("Getting an actor by actor id " + id);
+        logger.info("Received following actor id '" + id + "'");
+        logger.info("Getting an actor by actor id '" + id + "'");
         Actor actor = actorDao.getById(id)
                 .orElseThrow(() -> {
-                    ResourceNotFoundException exc = new ActorNotFoundException("Actor with actor id " + id + " not found");
+                    ResourceNotFoundException exc = new ActorNotFoundException("Actor with actor id '" + id + "' not found");
                     logger.error(exc.getMessage());
                     return exc;
                 });
 
+        logger.info("Actor with id '" + actor.getActorId() + "' found");
         ActorResponse actorResponse = convertEntityToDto(actor);
+        logger.info("Returning following data: " + JsonConverter.asJsonString(actorResponse));
         return Responses.ResponseEntityOk(actorResponse);
+    }
+
+    @GetMapping(value = ApiRoutes.Actor.GetAll, params = { "page", "size" })
+    public ResponseEntity<Page<ActorResponse>> getAll(@RequestParam int page, @RequestParam int size) {
+        logger.info("Getting all actors on page " + page + " with size " + size);
+        Pageable pageable = Pageable.ofSize(size).withPage(page);
+        Page<Actor> actors = actorDao.getAll(pageable);
+
+        Page<ActorResponse> actorResponses = convertEntityPageToDtoPage(actors, pageable);
+        return Responses.ResponseEntityOk(actorResponses);
     }
 
     @PostMapping(ApiRoutes.Actor.Create)
     public ResponseEntity<String> create(@RequestBody CreateActorRequest actorRequest) {
-        Role actorRole = this.roleDao.getByName("Actor").orElseThrow();
+        logger.info("Received following create actor request '" + JsonConverter.asJsonString(actorRequest) + "'");
+        logger.info("Searching for role with id:'" + actorRequest.getRoleId() + "'");
+        Role actorRole = this.roleDao.getById(actorRequest.getRoleId()).orElseThrow();
+        logger.info("Role with id '" + actorRole.getRoleId() + "' found");
         Actor actor = convertDtoToEntity(actorRequest);
         actor.setCreatedAt(ZonedDateTime.now());
         actor.setModifiedAt(ZonedDateTime.now());
@@ -60,6 +80,7 @@ public class ActorController {
 
     @PutMapping(ApiRoutes.Actor.Update)
     public ResponseEntity<String> update(@RequestBody UpdateActorRequest actorRequest) {
+        logger.info("Received following update actor request '" + JsonConverter.asJsonString(actorRequest) + "'");
         Actor actor = convertDtoToEntity(actorRequest);
         logger.info("Updating an actor");
         actorDao.update(actor);
@@ -68,7 +89,7 @@ public class ActorController {
 
     @DeleteMapping(ApiRoutes.Actor.Delete)
     public ResponseEntity<?> delete(@PathVariable UUID id) throws ResourceNotFoundException {
-        logger.info("Deleting an actor with actor id " + id);
+        logger.info("Deleting an actor with actor id '" + id + "'");
         actorDao.delete(id);
         return Responses.jsonOkResponseEntity();
     }
@@ -86,5 +107,13 @@ public class ActorController {
     private ActorResponse convertEntityToDto(Actor actor) {
         logger.info("Mapping actor model to actor response");
         return modelMapper.map(actor, ActorResponse.class);
+    }
+
+    private Page<ActorResponse> convertEntityPageToDtoPage(Page<Actor> actors, Pageable pageable) {
+        logger.info("Mapping a actor page to a actor response page");
+        ArrayList<ActorResponse> actorResponses = new ArrayList<>();
+        actors.forEach(actor -> actorResponses.add(convertEntityToDto(actor)));
+        logger.info("Done with mapping a actor page to a actor response page");
+        return new PageImpl<ActorResponse>(actorResponses, pageable, actorResponses.size());
     }
 }

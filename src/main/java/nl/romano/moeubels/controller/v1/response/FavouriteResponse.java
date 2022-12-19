@@ -16,6 +16,10 @@ import java.util.UUID;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class FavouriteResponse {
     @NonNull
+    @JsonProperty("favouriteId")
+    private UUID favouriteId;
+
+    @NonNull
     @JsonProperty("actorId")
     private UUID actorId;
 
