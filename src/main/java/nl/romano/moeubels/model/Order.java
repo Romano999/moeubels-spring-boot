@@ -20,24 +20,17 @@ import java.util.UUID;
 @Jacksonized
 //@IdClass(ShoppingCartCK.class)
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@IdClass(OrderCK.class)
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "order_id", nullable = false)
     @JsonProperty("orderId")
     private UUID orderId;
-    @Id
-    @MapsId("actor_id")
     @OneToOne()
-    //@PrimaryKeyJoinColumn(name = "actor_id")
     @JoinColumn(name = "actor_id")
     @JsonProperty("actor")
     private Actor actor;
-    @Id
-    @MapsId("products_id")
     @OneToOne()
-    //@PrimaryKeyJoinColumn(name = "product_id")
     @JsonProperty("product")
     @JoinColumn(name = "product_id")
     private Product product;

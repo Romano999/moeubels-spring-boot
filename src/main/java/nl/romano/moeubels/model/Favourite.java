@@ -18,7 +18,6 @@ import java.util.UUID;
 @NoArgsConstructor(force = true)
 @Builder
 @Jacksonized
-@IdClass(FavouriteCK.class)
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Favourite {
     @Id
@@ -26,17 +25,11 @@ public class Favourite {
     @Column(name = " favourite_id", nullable = false)
     @JsonProperty("favouriteId")
     private UUID favouriteId;
-    @Id
-    @MapsId("actor_id")
     @OneToOne()
-    //@PrimaryKeyJoinColumn(name = "actor_id")
     @JoinColumn(name = "actor_id")
     @JsonProperty("actor")
     private Actor actor;
-    @Id
-    @MapsId("products_id")
     @OneToOne()
-    //@PrimaryKeyJoinColumn(name = "product_id")
     @JsonProperty("product")
     @JoinColumn(name = "product_id")
     private Product product;
