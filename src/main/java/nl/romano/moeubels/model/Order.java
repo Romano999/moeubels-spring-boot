@@ -11,7 +11,7 @@ import java.time.ZonedDateTime;
 import java.util.UUID;
 
 @Entity
-//@Table(name="shopping_cart")
+@Table(name="orders")
 @Setter
 @Getter
 @AllArgsConstructor
@@ -44,8 +44,12 @@ public class Order {
     @Column(name = "amount", nullable = false)
     @JsonProperty("amount")
     private int amount;
-    @Column(name = "added_at", nullable = false)
-    @JsonProperty("addedAt")
+    @Column(name = "modified_at", nullable = false)
+    @JsonProperty("modifiedAt")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
-    private ZonedDateTime addedAt;
+    private ZonedDateTime modifiedAt;
+    @Column(name = "created_at", nullable = false)
+    @JsonProperty("createdAt")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+    private ZonedDateTime createdAt;
 }

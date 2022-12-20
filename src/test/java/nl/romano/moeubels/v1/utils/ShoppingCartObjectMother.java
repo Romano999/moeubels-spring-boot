@@ -24,7 +24,8 @@ public class ShoppingCartObjectMother {
             .actor(actor)
             .product(product)
             .amount(3)
-            .addedAt(ZonedDateTime.now())
+            .createdAt(ZonedDateTime.now())
+            .modifiedAt(ZonedDateTime.now())
             .build();
     }
 
@@ -70,7 +71,8 @@ public class ShoppingCartObjectMother {
             .actor(actor)
             .product(product)
             .amount(3)
-            .addedAt(ZonedDateTime.now())
+            .createdAt(ZonedDateTime.now())
+            .modifiedAt(ZonedDateTime.now())
             .build();
     }
 

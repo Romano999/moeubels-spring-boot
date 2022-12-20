@@ -4,6 +4,7 @@ import nl.romano.moeubels.controller.v1.request.create.CreateRoleRequest;
 import nl.romano.moeubels.controller.v1.request.update.UpdateRoleRequest;
 import nl.romano.moeubels.model.Role;
 
+import java.time.ZonedDateTime;
 import java.util.UUID;
 
 public class RoleObjectMother {
@@ -11,6 +12,8 @@ public class RoleObjectMother {
         return Role.builder()
             .roleId(UUID.randomUUID())
             .roleName("Actor")
+            .createdAt(ZonedDateTime.now())
+            .modifiedAt(ZonedDateTime.now())
             .build();
     }
 

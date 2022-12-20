@@ -24,7 +24,8 @@ public class FavouriteObjectMother {
             .favouriteId(UUID.randomUUID())
             .actor(actor)
             .product(product)
-            .addedAt(ZonedDateTime.now())
+            .modifiedAt(ZonedDateTime.now())
+            .createdAt(ZonedDateTime.now())
             .build();
     }
 
@@ -56,7 +57,8 @@ public class FavouriteObjectMother {
             .favouriteId(UUID.randomUUID())
             .actor(actor)
             .product(product)
-            .addedAt(ZonedDateTime.now())
+            .createdAt(ZonedDateTime.now())
+            .modifiedAt(ZonedDateTime.now())
             .build();
     }
 

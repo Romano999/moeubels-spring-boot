@@ -8,9 +8,6 @@ import lombok.extern.jackson.Jacksonized;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
 
 @Entity
 @Table(name="shopping_cart")
@@ -40,8 +37,12 @@ public class ShoppingCart {
     @Column(name = "amount", nullable = false)
     @JsonProperty("amount")
     private int amount;
-    @Column(name = "added_at", nullable = false)
-    @JsonProperty("addedAt")
+    @Column(name = "modified_at", nullable = false)
+    @JsonProperty("modifiedAt")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
-    private ZonedDateTime addedAt;
+    private ZonedDateTime modifiedAt;
+    @Column(name = "created_at", nullable = false)
+    @JsonProperty("createdAt")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+    private ZonedDateTime createdAt;
 }

@@ -24,7 +24,8 @@ public class ReviewObjectMother {
             .reviewId(UUID.randomUUID())
             .actor(actor)
             .product(product)
-            .addedAt(ZonedDateTime.now())
+            .createdAt(ZonedDateTime.now())
+            .modifiedAt(ZonedDateTime.now())
             .comment("This is a comment!")
             .rating(5)
             .build();
@@ -38,7 +39,8 @@ public class ReviewObjectMother {
             .reviewId(UUID.randomUUID())
             .actor(actor)
             .product(product)
-            .addedAt(ZonedDateTime.now())
+            .createdAt(ZonedDateTime.now())
+            .modifiedAt(ZonedDateTime.now())
             .comment("This is a comment!")
             .rating(5)
             .build();

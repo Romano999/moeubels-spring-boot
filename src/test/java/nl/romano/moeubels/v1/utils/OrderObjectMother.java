@@ -6,6 +6,8 @@ import nl.romano.moeubels.model.Actor;
 import nl.romano.moeubels.model.Order;
 import nl.romano.moeubels.model.Product;
 
+import java.time.ZonedDateTime;
+
 public class OrderObjectMother {
     public static Order genericOrder() {
         Actor actor = ActorObjectMother.genericActor();
@@ -14,6 +16,8 @@ public class OrderObjectMother {
         return Order.builder()
             .actor(actor)
             .product(product)
+            .createdAt(ZonedDateTime.now())
+            .modifiedAt(ZonedDateTime.now())
             .amount(5)
             .build();
     }
