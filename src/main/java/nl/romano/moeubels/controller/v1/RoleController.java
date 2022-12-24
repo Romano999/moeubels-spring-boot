@@ -90,7 +90,7 @@ public class RoleController {
         return Responses.jsonOkResponseEntity();
     }
 
-    @PostMapping(ApiRoutes.Role.Refresh)
+    @PostMapping("token/refresh")
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String authorizationHeader = request.getHeader(AUTHORIZATION);
         logger.info("Auth header" + request.getHeader(AUTHORIZATION));

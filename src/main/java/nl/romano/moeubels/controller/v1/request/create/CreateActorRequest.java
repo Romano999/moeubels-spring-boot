@@ -5,8 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import lombok.extern.jackson.Jacksonized;
 
-import java.util.UUID;
-
 @Getter
 @Setter
 @AllArgsConstructor
@@ -30,8 +28,4 @@ public class CreateActorRequest {
     @NonNull
     @JsonProperty("lastName")
     private String lastName;
-
-    @NonNull
-    @JsonProperty("roleId")
-    private UUID roleId;
 }

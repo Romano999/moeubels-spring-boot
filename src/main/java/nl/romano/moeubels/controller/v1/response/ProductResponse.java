@@ -17,8 +17,8 @@ import java.util.UUID;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class ProductResponse {
     @NonNull
-    @JsonProperty("categoryId")
-    private UUID categoryId;
+    @JsonProperty("category")
+    private CategoryResponse category;
 
     @NonNull
     @JsonProperty("productId")

@@ -29,7 +29,6 @@ public class ProductObjectMother {
             .productName("Name")
             .productDescription("Description")
             .imagePath("ImagePath")
-            .isOnSale(false)
             .category(category)
             .createdAt(ZonedDateTime.now())
             .modifiedAt(ZonedDateTime.now())
@@ -46,7 +45,6 @@ public class ProductObjectMother {
             .productName("Name")
             .productDescription("Description")
             .imagePath("ImagePath")
-            .isOnSale(false)
             .category(category)
             .createdAt(ZonedDateTime.now())
             .modifiedAt(ZonedDateTime.now())
@@ -63,7 +61,6 @@ public class ProductObjectMother {
             .productName(name)
             .productDescription("Description")
             .imagePath("ImagePath")
-            .isOnSale(false)
             .category(category)
             .createdAt(ZonedDateTime.now())
             .modifiedAt(ZonedDateTime.now())
@@ -79,7 +76,7 @@ public class ProductObjectMother {
             .productName("Name")
             .productDescription("Description")
             .imagePath("Imagepath")
-            .isOnSale(false)
+//            .isOnSale(false)
             .categoryId(category.getCategoryId())
             .build();
     }

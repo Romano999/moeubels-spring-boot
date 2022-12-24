@@ -72,14 +72,12 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         tokens.put("accessToken", accessToken);
         tokens.put("refreshToken", refreshToken);
 
-        // Administrator has reversed authorities
-        if (actorId.equals(Roles.ACTOR.label) || role.equals(Roles.ACTOR.label)) {
-            tokens.put("role", authorities.get(1).replace("[", "").replace("]", ""));
-            tokens.put("actorId", authorities.get(0));
-        }
-        else {
+        if (actorId.equals(Roles.ACTOR.label) || actorId.equals(Roles.ADMINISTRATOR.label)) {
             tokens.put("role", authorities.get(0));
             tokens.put("actorId", authorities.get(1).replace("[", "").replace("]", ""));
+        } else {
+            tokens.put("role", authorities.get(1).replace("[", "").replace("]", ""));
+            tokens.put("actorId", authorities.get(0));
         }
 
         response.setContentType(APPLICATION_JSON_VALUE);

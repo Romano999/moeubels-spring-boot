@@ -41,7 +41,7 @@ public class UpdateProductRequest {
     @JsonProperty("imagePath")
     private String imagePath;
 
-    @NonNull
-    @JsonProperty("isOnSale")
-    private Boolean isOnSale;
+//    @NonNull
+//    @JsonProperty("isOnSale")
+//    private Boolean isOnSale;
 }

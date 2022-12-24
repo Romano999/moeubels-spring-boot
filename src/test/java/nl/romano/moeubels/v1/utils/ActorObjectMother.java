@@ -68,7 +68,7 @@ public class ActorObjectMother {
             .firstName("John")
             .lastName("Doe")
             .password(RandomStringUtils.random(8))
-            .roleId(role.getRoleId())
+//            .roleId(role.getRoleId())
             .build();
     }
 

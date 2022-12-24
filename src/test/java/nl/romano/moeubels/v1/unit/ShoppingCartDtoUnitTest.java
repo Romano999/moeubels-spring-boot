@@ -22,7 +22,7 @@ public class ShoppingCartDtoUnitTest {
 
         // Assert
         Assertions.assertEquals(shoppingCart.getActor().getActorId(), shoppingCartResponse.getActorId());
-        Assertions.assertEquals(shoppingCart.getProduct().getProductId(), shoppingCartResponse.getProductId());
+        Assertions.assertEquals(shoppingCart.getProduct().getProductId(), shoppingCartResponse.getProduct());
         Assertions.assertEquals(shoppingCart.getAmount(), shoppingCartResponse.getAmount());
     }
 

@@ -25,9 +25,8 @@ public class ProductDtoUnitTest {
         Assertions.assertEquals(product.getProductName(), productResponse.getProductName());
         Assertions.assertEquals(product.getAmountAvailable(), productResponse.getAmountAvailable());
         Assertions.assertEquals(product.getProductDescription(), productResponse.getProductDescription());
-        Assertions.assertEquals(product.getCategory().getCategoryId(), productResponse.getCategoryId());
+        Assertions.assertEquals(product.getCategory().getCategoryId(), productResponse.getCategory());
         Assertions.assertEquals(product.getImagePath(), productResponse.getImagePath());
-        Assertions.assertEquals(product.getIsOnSale(), productResponse.getIsOnSale());
         Assertions.assertEquals(product.getPrice(), productResponse.getPrice());
     }
 
@@ -45,7 +44,7 @@ public class ProductDtoUnitTest {
         Assertions.assertEquals(updateProductRequest.getProductDescription(), product.getProductDescription());
         Assertions.assertEquals(updateProductRequest.getCategoryId(), product.getCategory().getCategoryId());
         Assertions.assertEquals(updateProductRequest.getImagePath(), product.getImagePath());
-        Assertions.assertEquals(updateProductRequest.getIsOnSale(), product.getIsOnSale());
+//        Assertions.assertEquals(updateProductRequest.getIsOnSale(), product.getIsOnSale());
         Assertions.assertEquals(updateProductRequest.getPrice(), product.getPrice());
     }
 
@@ -63,7 +62,6 @@ public class ProductDtoUnitTest {
         Assertions.assertEquals(createProductRequest.getProductDescription(), product.getProductDescription());
         Assertions.assertEquals(createProductRequest.getCategoryId(), product.getCategory().getCategoryId());
         Assertions.assertEquals(createProductRequest.getImagePath(), product.getImagePath());
-        Assertions.assertEquals(createProductRequest.getIsOnSale(), product.getIsOnSale());
         Assertions.assertEquals(createProductRequest.getPrice(), product.getPrice());
     }
 }

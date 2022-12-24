@@ -19,7 +19,6 @@ import java.util.UUID;
 @Builder
 @Jacksonized
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-//@JsonIgnoreProperties(ignoreUnknown = true)
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

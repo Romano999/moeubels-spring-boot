@@ -1,20 +1,15 @@
 package nl.romano.moeubels.dao;
 
-import nl.romano.moeubels.exceptions.CategoryNotFoundException;
 import nl.romano.moeubels.exceptions.ProductNotFoundException;
 import nl.romano.moeubels.exceptions.ResourceNotFoundException;
-import nl.romano.moeubels.model.Category;
 import nl.romano.moeubels.model.Product;
 import nl.romano.moeubels.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import java.time.ZonedDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -43,6 +38,9 @@ public class ProductDao implements Dao<Product> {
 
     @Override
     public void update(Product product) {
+        Product initialProduct = this.getById(product.getProductId()).orElseThrow();
+        product.setModifiedAt(ZonedDateTime.now());
+        product.setCreatedAt(initialProduct.getCreatedAt());
         productRepository.save(product);
     }
 

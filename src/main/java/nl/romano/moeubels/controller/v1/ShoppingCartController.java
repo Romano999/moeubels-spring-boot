@@ -4,6 +4,8 @@ import nl.romano.moeubels.contract.v1.ApiRoutes;
 import nl.romano.moeubels.controller.v1.request.create.CreateShoppingCartRequest;
 import nl.romano.moeubels.controller.v1.request.update.UpdateShoppingCartRequest;
 import nl.romano.moeubels.controller.v1.response.ShoppingCartResponse;
+import nl.romano.moeubels.dao.ActorDao;
+import nl.romano.moeubels.dao.ProductDao;
 import nl.romano.moeubels.dao.ShoppingCartDao;
 import nl.romano.moeubels.exceptions.ResourceNotFoundException;
 import nl.romano.moeubels.exceptions.ShoppingCartNotFoundException;
@@ -18,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -26,9 +29,13 @@ import java.util.UUID;
 public class ShoppingCartController {
     @Autowired
     private ShoppingCartDao shoppingCartDao;
+    @Autowired
+    private ActorDao actorDao;
+    @Autowired
+    private ProductDao productDao;
 
     private final ModelMapper modelMapper = new ModelMapper();
-    private final Logger logger = LoggerFactory.getLogger(FavouriteController.class);
+    private final Logger logger = LoggerFactory.getLogger(ShoppingCartController.class);
 
     @GetMapping(ApiRoutes.ShoppingCart.GetByActorId)
     public ResponseEntity<List<ShoppingCartResponse>> getByActorId(@PathVariable UUID actorId) throws ResourceNotFoundException {
@@ -87,11 +94,17 @@ public class ShoppingCartController {
 
     private ShoppingCart convertDtoToEntity(CreateShoppingCartRequest createShoppingCartRequest) {
         logger.info("Mapping create shopping cart request to shopping cart model");
-        return modelMapper.map(createShoppingCartRequest, ShoppingCart.class);
+        ShoppingCart item = modelMapper.map(createShoppingCartRequest, ShoppingCart.class);
+        item.setActor(actorDao.getById(createShoppingCartRequest.getActorId()).orElseThrow());
+        item.setProduct(productDao.getById(createShoppingCartRequest.getProductId()).orElseThrow());
+        item.setCreatedAt(ZonedDateTime.now());
+        item.setModifiedAt(ZonedDateTime.now());
+        return item;
     }
 
     private ShoppingCartResponse convertEntityToDto(ShoppingCart shoppingCart) {
         logger.info("Mapping shopping cart model to shopping cart response");
+        logger.info("Mapping the following model: " + JsonConverter.asJsonString(shoppingCart));
         return modelMapper.map(shoppingCart, ShoppingCartResponse.class);
     }
 

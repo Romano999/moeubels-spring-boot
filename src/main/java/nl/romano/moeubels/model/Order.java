@@ -18,7 +18,6 @@ import java.util.UUID;
 @NoArgsConstructor(force = true)
 @Builder
 @Jacksonized
-//@IdClass(ShoppingCartCK.class)
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Order {
     @Id

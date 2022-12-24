@@ -20,8 +20,8 @@ public class ReviewResponse {
     private UUID reviewId;
 
     @NonNull
-    @JsonProperty("actorId")
-    private UUID actorId;
+    @JsonProperty("actor")
+    private ActorResponse actor;
 
     @NonNull
     @JsonProperty("productId")

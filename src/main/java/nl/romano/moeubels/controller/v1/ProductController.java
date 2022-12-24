@@ -4,6 +4,7 @@ import nl.romano.moeubels.contract.v1.ApiRoutes;
 import nl.romano.moeubels.controller.v1.request.create.CreateProductRequest;
 import nl.romano.moeubels.controller.v1.request.update.UpdateProductRequest;
 import nl.romano.moeubels.controller.v1.response.ProductResponse;
+import nl.romano.moeubels.dao.CategoryDao;
 import nl.romano.moeubels.dao.ProductDao;
 import nl.romano.moeubels.exceptions.ProductNotFoundException;
 import nl.romano.moeubels.exceptions.ResourceNotFoundException;
@@ -27,6 +28,8 @@ import java.util.UUID;
 public class ProductController {
     @Autowired
     private ProductDao productDao;
+    @Autowired
+    private CategoryDao categoryDao;
 
     private final ModelMapper modelMapper = new ModelMapper();
     private final Logger logger = LoggerFactory.getLogger(ProductController.class);
@@ -36,8 +39,9 @@ public class ProductController {
         logger.info("Getting all products on page " + page + " with size " + size);
         Pageable pageable = Pageable.ofSize(size).withPage(page);
         Page<Product> products = productDao.getAll(pageable);
-
+        logger.info("Found pageable with size " + products.getTotalElements() + " and total pages " + products.getTotalPages());
         Page<ProductResponse> productResponses = convertEntityPageToDtoPage(products, pageable);
+        logger.info("Sending pageable with size " + productResponses.getTotalElements() + " and total pages " + productResponses.getTotalPages());
         return Responses.ResponseEntityOk(productResponses);
     }
 
@@ -78,10 +82,11 @@ public class ProductController {
     }
 
     @PutMapping(ApiRoutes.Product.Update)
-    public ResponseEntity<String> update(@RequestBody UpdateProductRequest productRequest) {
+    public ResponseEntity<String> update(@PathVariable UUID id, @RequestBody UpdateProductRequest productRequest) {
         logger.info("Received following update product request '" + JsonConverter.asJsonString(productRequest) + "'");
         Product product = convertDtoToEntity(productRequest);
-        logger.info("Updating a product");
+        product.setProductId(id);
+        logger.info("Updating a product to '" + JsonConverter.asJsonString(product) + "'");
         productDao.update(product);
         return Responses.jsonOkResponseEntity();
     }
@@ -113,6 +118,6 @@ public class ProductController {
         ArrayList<ProductResponse> productResponses = new ArrayList<>();
         products.forEach(product -> productResponses.add(convertEntityToDto(product)));
         logger.info("Done with mapping a product page to a product response page");
-        return new PageImpl<ProductResponse>(productResponses, pageable,productResponses.size());
+        return new PageImpl<ProductResponse>(productResponses, pageable, products.getTotalElements());
     }
 }

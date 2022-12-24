@@ -29,7 +29,7 @@ public class ReviewDtoUnitTest {
 
         // Assert
         Assertions.assertEquals(review.getReviewId(), reviewResponse.getReviewId());
-        Assertions.assertEquals(review.getActor().getActorId(), reviewResponse.getActorId());
+        Assertions.assertEquals(review.getActor().getActorId(), reviewResponse.getActor());
         Assertions.assertEquals(review.getProduct().getProductId(), reviewResponse.getProductId());
         Assertions.assertEquals(review.getComment(), reviewResponse.getComment());
         Assertions.assertEquals(review.getRating(), reviewResponse.getRating());

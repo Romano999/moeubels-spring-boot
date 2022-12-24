@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -96,7 +97,10 @@ public class ReviewController {
     private Review convertDtoToEntity(CreateReviewRequest createReviewRequest) {
         logger.info("Mapping create review request to review model");
         modelMapper.getConfiguration().setAmbiguityIgnored(true);
-        return modelMapper.map(createReviewRequest, Review.class);
+        Review review = modelMapper.map(createReviewRequest, Review.class);
+        review.setCreatedAt(ZonedDateTime.now());
+        review.setModifiedAt(ZonedDateTime.now());
+        return review;
     }
 
     private ReviewResponse convertEntityToDto(Review review) {

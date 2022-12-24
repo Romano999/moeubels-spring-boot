@@ -102,7 +102,7 @@ class ActorControllerTest {
         Role role = RoleObjectMother.genericRole();
         String requestPath = ApiRoutes.Actor.Create;
 
-        given(roleDao.getById(actorRequest.getRoleId())).willReturn(Optional.of(role));
+//        given(roleDao.getById(actorRequest.getRoleId())).willReturn(Optional.of(role));
 
         // Act
         ResultActions result =  this.mvc.perform(MockMvcRequestBuilders.post(requestPath)

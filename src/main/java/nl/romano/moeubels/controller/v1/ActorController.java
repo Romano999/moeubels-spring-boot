@@ -12,6 +12,7 @@ import nl.romano.moeubels.model.Actor;
 import nl.romano.moeubels.model.Role;
 import nl.romano.moeubels.utils.JsonConverter;
 import nl.romano.moeubels.utils.Responses;
+import nl.romano.moeubels.utils.Roles;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -66,8 +67,8 @@ public class ActorController {
     @PostMapping(ApiRoutes.Actor.Create)
     public ResponseEntity<String> create(@RequestBody CreateActorRequest actorRequest) {
         logger.info("Received following create actor request '" + JsonConverter.asJsonString(actorRequest) + "'");
-        logger.info("Searching for role with id:'" + actorRequest.getRoleId() + "'");
-        Role actorRole = this.roleDao.getById(actorRequest.getRoleId()).orElseThrow();
+        logger.info("Searching for role with name :'" + Roles.ACTOR.label + "'");
+        Role actorRole = roleDao.getByName(Roles.ACTOR.label).orElseThrow();
         logger.info("Role with id '" + actorRole.getRoleId() + "' found");
         Actor actor = convertDtoToEntity(actorRequest);
         actor.setCreatedAt(ZonedDateTime.now());

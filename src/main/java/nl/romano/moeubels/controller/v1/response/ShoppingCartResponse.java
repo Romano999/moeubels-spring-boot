@@ -20,8 +20,8 @@ public class ShoppingCartResponse {
     private UUID actorId;
 
     @NonNull
-    @JsonProperty("productId")
-    private UUID productId;
+    @JsonProperty("product")
+    private ProductResponse product;
 
     @NonNull
     @JsonProperty("amount")
