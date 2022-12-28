@@ -80,9 +80,10 @@ public class ActorController {
     }
 
     @PutMapping(ApiRoutes.Actor.Update)
-    public ResponseEntity<String> update(@RequestBody UpdateActorRequest actorRequest) {
+    public ResponseEntity<String> update(@PathVariable UUID id, @RequestBody UpdateActorRequest actorRequest) {
         logger.info("Received following update actor request '" + JsonConverter.asJsonString(actorRequest) + "'");
         Actor actor = convertDtoToEntity(actorRequest);
+        actor.setActorId(id);
         logger.info("Updating an actor");
         actorDao.update(actor);
         return Responses.jsonOkResponseEntity();

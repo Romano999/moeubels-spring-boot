@@ -17,7 +17,7 @@ import java.util.UUID;
 public class UpdateActorRequest {
     @NonNull
     @JsonProperty("username")
-    private final String username;
+    private String username;
 
     @NonNull
     @JsonProperty("firstName")

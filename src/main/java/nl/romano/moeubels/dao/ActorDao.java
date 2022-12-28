@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
@@ -60,7 +61,10 @@ public class ActorDao implements Dao<Actor>, UserDetailsService {
 
     @Override
     public void update(Actor actor) {
-        actor.setPassword(passwordEncoder.encode(actor.getPassword()));
+        Actor initialActor = getById(actor.getActorId()).orElseThrow();
+        actor.setPassword(initialActor.getPassword());
+        actor.setModifiedAt(ZonedDateTime.now());
+        actor.setCreatedAt(initialActor.getCreatedAt());
         actorRepository.save(actor);
     }
 

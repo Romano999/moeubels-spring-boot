@@ -25,7 +25,7 @@ public class ActorDtoUnitTest {
         Assertions.assertEquals(actor.getUsername(), actorResponse.getUsername());
         Assertions.assertEquals(actor.getFirstName(), actorResponse.getFirstName());
         Assertions.assertEquals(actor.getLastName(), actorResponse.getLastName());
-        Assertions.assertEquals(actor.getRole().getRoleId(), actorResponse.getRoleId());
+        Assertions.assertEquals(actor.getRole().getRoleId(), actorResponse.getRole().getRoleId());
     }
 
     @Test

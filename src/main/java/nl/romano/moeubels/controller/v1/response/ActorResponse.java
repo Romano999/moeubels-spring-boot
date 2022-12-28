@@ -20,8 +20,8 @@ public class ActorResponse {
     private UUID actorId;
 
     @NonNull
-    @JsonProperty("roleId")
-    private UUID roleId;
+    @JsonProperty("role")
+    private RoleResponse role;
 
     @NonNull
     @JsonProperty("username")

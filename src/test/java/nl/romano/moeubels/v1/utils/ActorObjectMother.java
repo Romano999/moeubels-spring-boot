@@ -74,12 +74,13 @@ public class ActorObjectMother {
 
     public static ActorResponse genericActorResponse() {
         Actor actor = genericActor();
+        Role roleReponse = RoleObjectMother.genericRole();
 
         return ActorResponse.builder()
             .actorId(actor.getActorId())
             .firstName(actor.getFirstName())
             .lastName(actor.getLastName())
-            .roleId(actor.getRole().getRoleId())
+//            .role()
             .username(actor.getUsername())
             .build();
     }
