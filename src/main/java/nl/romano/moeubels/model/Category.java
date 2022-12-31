@@ -5,11 +5,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import lombok.extern.jackson.Jacksonized;
-import net.bytebuddy.implementation.bind.annotation.IgnoreForBinding;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
-import java.util.List;
 import java.util.UUID;
 
 @Entity

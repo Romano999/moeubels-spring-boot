@@ -5,11 +5,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import lombok.extern.jackson.Jacksonized;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
-import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -21,7 +21,7 @@ import java.util.UUID;
 @Builder
 @Jacksonized
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-//@JsonIgnoreProperties(ignoreUnknown = true)
+@DynamicUpdate
 public class Product {
     @OneToOne()
     @JoinColumn(name = "category_id")
@@ -47,9 +47,9 @@ public class Product {
     @Column(name = "image_path")
     @JsonProperty("imagePath")
     private String imagePath;
-    @Column(name = "is_on_sale")
-    @JsonProperty("isOnSale")
-    private Boolean isOnSale;
+//    @Column(name = "is_on_sale", nullable = true)
+//    @JsonProperty("isOnSale")
+//    private Boolean isOnSale;
     @Column(name = "created_at", nullable = false)
     @JsonProperty("createdAt")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")

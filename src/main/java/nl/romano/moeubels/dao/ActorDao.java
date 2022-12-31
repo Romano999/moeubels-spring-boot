@@ -1,11 +1,12 @@
 package nl.romano.moeubels.dao;
 
-import nl.romano.moeubels.config.WebSecurityConfig;
 import nl.romano.moeubels.exceptions.ActorNotFoundException;
 import nl.romano.moeubels.exceptions.ResourceNotFoundException;
 import nl.romano.moeubels.model.Actor;
 import nl.romano.moeubels.repository.ActorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,6 +15,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
@@ -47,6 +49,10 @@ public class ActorDao implements Dao<Actor>, UserDetailsService {
         return actorRepository.findByUsername(username);
     }
 
+    public Page<Actor> getAll(Pageable pageable) {
+        return actorRepository.findAll(pageable);
+    }
+
     @Override
     public void save(Actor actor) {
         actor.setPassword(passwordEncoder.encode(actor.getPassword()));
@@ -55,7 +61,10 @@ public class ActorDao implements Dao<Actor>, UserDetailsService {
 
     @Override
     public void update(Actor actor) {
-        actor.setPassword(passwordEncoder.encode(actor.getPassword()));
+        Actor initialActor = getById(actor.getActorId()).orElseThrow();
+        actor.setPassword(initialActor.getPassword());
+        actor.setModifiedAt(ZonedDateTime.now());
+        actor.setCreatedAt(initialActor.getCreatedAt());
         actorRepository.save(actor);
     }
 

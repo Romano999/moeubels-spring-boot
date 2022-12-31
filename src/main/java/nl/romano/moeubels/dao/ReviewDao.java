@@ -5,35 +5,37 @@ import nl.romano.moeubels.exceptions.ReviewNotFoundException;
 import nl.romano.moeubels.model.Review;
 import nl.romano.moeubels.repository.ReviewRespository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public class ReviewDao implements Dao<Review> {
+public class ReviewDao {
     @Autowired
     private ReviewRespository reviewRespository;
+    @Autowired
+    private ActorDao actorDao;
+    @Autowired
+    private ProductDao productDao;
 
-    @Override
     public Optional<Review> getById(UUID id) {
         return reviewRespository.findById(id);
     }
 
-    @Override
+    public Optional<List<Review>> getByProductId(UUID actorId) {
+        return Optional.of(reviewRespository.findByProductId(actorId));
+    }
+
     public void save(Review review) {
         reviewRespository.save(review);
     }
 
-    @Override
     public void update(Review review) {
         reviewRespository.save(review);
     }
 
-    @Override
     public void delete(UUID id) throws ResourceNotFoundException {
         Review review = reviewRespository.findById(id)
                 .orElseThrow(() -> new ReviewNotFoundException("Review with id: " + id + "not found"));
