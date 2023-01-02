@@ -7,6 +7,7 @@ import nl.romano.moeubels.controller.v1.ProductController;
 import nl.romano.moeubels.controller.v1.request.create.CreateProductRequest;
 import nl.romano.moeubels.controller.v1.request.update.UpdateProductRequest;
 import nl.romano.moeubels.controller.v1.response.ProductResponse;
+import nl.romano.moeubels.dao.CategoryDao;
 import nl.romano.moeubels.dao.ProductDao;
 import nl.romano.moeubels.model.Product;
 import nl.romano.moeubels.v1.utils.ProductObjectMother;
@@ -43,6 +44,9 @@ public class ProductControllerTest {
     private UserDetailsService userDetailsService;
     @MockBean
     private ProductDao productDao;
+    @MockBean
+    private CategoryDao categoryDao;
+
     private MockMvc mvc;
 
     private final ModelMapper modelMapper = new ModelMapper();

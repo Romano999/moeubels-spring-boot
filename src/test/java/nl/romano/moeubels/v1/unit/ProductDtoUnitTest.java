@@ -25,7 +25,7 @@ public class ProductDtoUnitTest {
         Assertions.assertEquals(product.getProductName(), productResponse.getProductName());
         Assertions.assertEquals(product.getAmountAvailable(), productResponse.getAmountAvailable());
         Assertions.assertEquals(product.getProductDescription(), productResponse.getProductDescription());
-        Assertions.assertEquals(product.getCategory().getCategoryId(), productResponse.getCategory());
+        Assertions.assertEquals(product.getCategory().getCategoryId(), productResponse.getCategory().getCategoryId());
         Assertions.assertEquals(product.getImagePath(), productResponse.getImagePath());
         Assertions.assertEquals(product.getPrice(), productResponse.getPrice());
     }

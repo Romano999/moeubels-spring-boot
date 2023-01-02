@@ -7,9 +7,15 @@ import nl.romano.moeubels.controller.v1.ShoppingCartController;
 import nl.romano.moeubels.controller.v1.request.create.CreateShoppingCartRequest;
 import nl.romano.moeubels.controller.v1.request.update.UpdateShoppingCartRequest;
 import nl.romano.moeubels.controller.v1.response.ShoppingCartResponse;
+import nl.romano.moeubels.dao.ActorDao;
+import nl.romano.moeubels.dao.ProductDao;
 import nl.romano.moeubels.dao.ShoppingCartDao;
+import nl.romano.moeubels.model.Actor;
+import nl.romano.moeubels.model.Product;
 import nl.romano.moeubels.model.ShoppingCart;
 import nl.romano.moeubels.model.ShoppingCartCK;
+import nl.romano.moeubels.v1.utils.ActorObjectMother;
+import nl.romano.moeubels.v1.utils.ProductObjectMother;
 import nl.romano.moeubels.v1.utils.ShoppingCartObjectMother;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,7 +24,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -39,9 +44,12 @@ class ShoppingCartControllerTest {
     @Autowired
     private WebApplicationContext webApplicationContext;
     @MockBean
-    private UserDetailsService userDetailsService;
-    @MockBean
     private ShoppingCartDao shoppingCartDao;
+    @MockBean
+    private ActorDao actorDao;
+    @MockBean
+    private ProductDao productDao;
+
     @Autowired
     private MockMvc mvc;
 
@@ -77,7 +85,13 @@ class ShoppingCartControllerTest {
     void create() throws Exception {
         // Arrange
         CreateShoppingCartRequest shoppingCartRequest = ShoppingCartObjectMother.genericCreateShoppingCartRequest();
+        Actor actor = ActorObjectMother.genericActor();
+        Product product = ProductObjectMother.genericProduct();
+
         String requestPath = ApiRoutes.ShoppingCart.Create;
+
+        given(actorDao.getById(shoppingCartRequest.getActorId())).willReturn(Optional.of(actor));
+        given(productDao.getById(shoppingCartRequest.getProductId())).willReturn(Optional.of(product));
 
         // Act
         ResultActions result = this.mvc.perform(MockMvcRequestBuilders.post(requestPath)
