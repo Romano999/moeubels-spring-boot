@@ -60,7 +60,7 @@ public class ProductDtoUnitTest {
         Assertions.assertEquals(createProductRequest.getProductName(), product.getProductName());
         Assertions.assertEquals(createProductRequest.getAmountAvailable(), product.getAmountAvailable());
         Assertions.assertEquals(createProductRequest.getProductDescription(), product.getProductDescription());
-        Assertions.assertEquals(createProductRequest.getCategoryId(), product.getCategory().getCategoryId());
+        Assertions.assertEquals(createProductRequest.getCategoryName(), product.getCategory().getCategoryName());
         Assertions.assertEquals(createProductRequest.getImagePath(), product.getImagePath());
         Assertions.assertEquals(createProductRequest.getPrice(), product.getPrice());
     }

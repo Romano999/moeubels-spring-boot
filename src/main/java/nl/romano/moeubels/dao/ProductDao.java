@@ -33,6 +33,8 @@ public class ProductDao implements Dao<Product> {
 
     @Override
     public void save(Product product) {
+        product.setModifiedAt(ZonedDateTime.now());
+        product.setCreatedAt(ZonedDateTime.now());
         productRepository.save(product);
     }
 

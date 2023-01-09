@@ -39,7 +39,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.requiresChannel().antMatchers("**").requiresSecure();
+        http.requiresChannel().antMatchers("**");
         http.csrf().disable();
         http.cors().configurationSource(corsConfigurationSource());
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

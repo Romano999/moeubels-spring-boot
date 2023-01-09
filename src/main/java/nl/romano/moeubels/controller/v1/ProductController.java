@@ -73,9 +73,11 @@ public class ProductController {
     }
 
     @PostMapping(ApiRoutes.Product.Create)
-    public ResponseEntity<String> create(@RequestBody CreateProductRequest productRequest) {
+    public ResponseEntity<String> create(@RequestBody CreateProductRequest productRequest) throws ResourceNotFoundException {
         logger.info("Received following create product request '" + JsonConverter.asJsonString(productRequest) + "'");
         Product product = convertDtoToEntity(productRequest);
+        logger.info("Searching a category by name " + productRequest.getCategoryName());
+        product.setCategory(categoryDao.getByName(productRequest.getCategoryName()));
         logger.info("Creating a product");
         productDao.save(product);
         return Responses.jsonOkResponseEntity();
@@ -92,7 +94,7 @@ public class ProductController {
     }
 
     @DeleteMapping(ApiRoutes.Product.Delete)
-    public ResponseEntity<?> delete(@PathVariable UUID id) throws ResourceNotFoundException{
+    public ResponseEntity<?> delete(@PathVariable UUID id) throws ResourceNotFoundException {
         logger.info("Deleting a product with product id '" + id + "'");
         productDao.delete(id);
         return Responses.jsonOkResponseEntity();

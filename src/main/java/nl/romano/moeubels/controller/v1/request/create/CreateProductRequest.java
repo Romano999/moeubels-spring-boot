@@ -6,7 +6,6 @@ import lombok.*;
 import lombok.extern.jackson.Jacksonized;
 
 import java.math.BigDecimal;
-import java.util.UUID;
 
 @Setter
 @Getter
@@ -18,8 +17,8 @@ import java.util.UUID;
 //@JsonIgnoreProperties(ignoreUnknown = true)
 public class CreateProductRequest {
     @NonNull
-    @JsonProperty("categoryId")
-    private UUID categoryId;
+    @JsonProperty("categoryName")
+    private String categoryName;
 
     @NonNull
     @JsonProperty("productName")
@@ -40,8 +39,4 @@ public class CreateProductRequest {
     @NonNull
     @JsonProperty("imagePath")
     private String imagePath;
-
-    @NonNull
-    @JsonProperty("isOnSale")
-    private Boolean isOnSale;
 }

@@ -7,9 +7,6 @@ import nl.romano.moeubels.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -27,6 +24,11 @@ public class CategoryDao implements Dao<Category> {
     @Override
     public Optional<Category> getById(UUID uuid) {
         return categoryRepository.findById(uuid);
+    }
+
+    public Category getByName(String categoryName) throws ResourceNotFoundException {
+        return Optional.of(categoryRepository.findByCategoryNameIgnoreCaseContaining(categoryName))
+            .orElseThrow(() -> new CategoryNotFoundException("Category with name: " + categoryName + "not found"));
     }
 
     @Override

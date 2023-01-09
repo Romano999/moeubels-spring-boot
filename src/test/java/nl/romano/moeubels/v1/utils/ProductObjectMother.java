@@ -90,8 +90,7 @@ public class ProductObjectMother {
             .productName("Name")
             .productDescription("Description")
             .imagePath("Imagepath")
-            .isOnSale(false)
-            .categoryId(category.getCategoryId())
+            .categoryName(category.getCategoryName())
             .build();
     }
 
