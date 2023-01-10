@@ -68,9 +68,10 @@ public class CategoryController {
     }
 
     @PutMapping(ApiRoutes.Category.Update)
-    public ResponseEntity<String> update(@RequestBody UpdateCategoryRequest categoryRequest) {
+    public ResponseEntity<String> update(@PathVariable UUID id, @RequestBody UpdateCategoryRequest categoryRequest) {
         logger.info("Received following update category request '" + JsonConverter.asJsonString(categoryRequest) + "'");
         Category category = convertDtoToEntity(categoryRequest);
+        category.setCategoryId(id);
         logger.info("Updating a category");
         categoryDao.update(category);
         return Responses.jsonOkResponseEntity();

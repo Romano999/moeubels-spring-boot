@@ -23,7 +23,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -71,8 +70,6 @@ public class ActorController {
         Role actorRole = roleDao.getByName(Roles.ACTOR.label).orElseThrow();
         logger.info("Role with id '" + actorRole.getRoleId() + "' found");
         Actor actor = convertDtoToEntity(actorRequest);
-        actor.setCreatedAt(ZonedDateTime.now());
-        actor.setModifiedAt(ZonedDateTime.now());
         actor.setRole(actorRole);
         logger.info("Creating an actor");
         actorDao.save(actor);

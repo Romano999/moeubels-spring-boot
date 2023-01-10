@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
+import java.time.ZonedDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -33,11 +34,16 @@ public class CategoryDao implements Dao<Category> {
 
     @Override
     public void save(Category category) {
+        Category initialCategory = getById(category.getCategoryId()).orElseThrow();
+        category.setCreatedAt(initialCategory.getCreatedAt());
+        category.setModifiedAt(ZonedDateTime.now());
         categoryRepository.save(category);
     }
 
     @Override
     public void update(Category category) {
+        category.setCreatedAt(ZonedDateTime.now());
+        category.setModifiedAt(ZonedDateTime.now());
         categoryRepository.save(category);
     }
 

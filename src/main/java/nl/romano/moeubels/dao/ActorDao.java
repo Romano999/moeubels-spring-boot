@@ -56,6 +56,8 @@ public class ActorDao implements Dao<Actor>, UserDetailsService {
     @Override
     public void save(Actor actor) {
         actor.setPassword(passwordEncoder.encode(actor.getPassword()));
+        actor.setCreatedAt(ZonedDateTime.now());
+        actor.setModifiedAt(ZonedDateTime.now());
         actorRepository.save(actor);
     }
 

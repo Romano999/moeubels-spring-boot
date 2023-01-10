@@ -7,6 +7,7 @@ import nl.romano.moeubels.repository.ReviewRespository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -29,10 +30,15 @@ public class ReviewDao {
     }
 
     public void save(Review review) {
+        review.setModifiedAt(ZonedDateTime.now());
+        review.setCreatedAt(ZonedDateTime.now());
         reviewRespository.save(review);
     }
 
     public void update(Review review) {
+        Review initialReview = this.getById(review.getReviewId()).orElseThrow();
+        review.setModifiedAt(ZonedDateTime.now());
+        review.setCreatedAt(initialReview.getCreatedAt());
         reviewRespository.save(review);
     }
 

@@ -73,9 +73,10 @@ public class FavouriteController {
     }
 
     @PutMapping(ApiRoutes.Favourite.Update)
-    public ResponseEntity<String> update(@RequestBody UpdateFavouriteRequest favouriteRequest) {
+    public ResponseEntity<String> update(@PathVariable UUID id, @RequestBody UpdateFavouriteRequest favouriteRequest) {
         logger.info("Received following update favourite request '" + JsonConverter.asJsonString(favouriteRequest) + "'");
         Favourite favourite = convertDtoToEntity(favouriteRequest);
+        favourite.setFavouriteId(id);
         logger.info("Updating a favourite");
         favouriteDao.update(favourite);
         return Responses.jsonOkResponseEntity();

@@ -75,9 +75,10 @@ public class RoleController {
     }
 
     @PutMapping(ApiRoutes.Role.Update)
-    public ResponseEntity<String> update(@RequestBody UpdateRoleRequest roleRequest) {
+    public ResponseEntity<String> update(@PathVariable UUID id, @RequestBody UpdateRoleRequest roleRequest) {
         logger.info("Received following update role request '" + JsonConverter.asJsonString(roleRequest) + "'");
         Role role = convertDtoToEntity(roleRequest);
+        role.setRoleId(id);
         logger.info("Updating a role");
         roleDao.update(role);
         return Responses.jsonOkResponseEntity();

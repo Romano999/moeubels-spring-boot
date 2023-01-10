@@ -73,9 +73,10 @@ public class ReviewController {
     }
 
     @PutMapping(ApiRoutes.Review.Update)
-    public ResponseEntity<String> update(@RequestBody UpdateReviewRequest reviewRequest) {
+    public ResponseEntity<String> update(@PathVariable UUID id, @RequestBody UpdateReviewRequest reviewRequest) {
         logger.info("Received following update review request '" + JsonConverter.asJsonString(reviewRequest) + "'");
         Review review = convertDtoToEntity(reviewRequest);
+        review.setReviewId(id);
         logger.info("Updating a review");
         reviewDao.update(review);
         return Responses.jsonOkResponseEntity();

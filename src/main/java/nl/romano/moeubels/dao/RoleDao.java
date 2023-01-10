@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.time.ZonedDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -23,7 +24,6 @@ public class RoleDao implements Dao<Role> {
         return Optional.of(roleRespository.findByRoleName(name));
     }
 
-
     @Override
     public Optional<Role> getById(UUID id) {
         return roleRespository.findById(id);
@@ -31,11 +31,16 @@ public class RoleDao implements Dao<Role> {
 
     @Override
     public void save(Role role) {
+        role.setModifiedAt(ZonedDateTime.now());
+        role.setCreatedAt(ZonedDateTime.now());
         roleRespository.save(role);
     }
 
     @Override
     public void update(Role role) {
+        Role initialRole = this.getById(role.getRoleId()).orElseThrow();
+        role.setModifiedAt(ZonedDateTime.now());
+        role.setCreatedAt(initialRole.getCreatedAt());
         roleRespository.save(role);
     }
 
